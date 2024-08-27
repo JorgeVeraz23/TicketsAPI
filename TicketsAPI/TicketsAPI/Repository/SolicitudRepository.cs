@@ -118,9 +118,27 @@ namespace TicketsAPI.Repository
             }
         }
 
-        public Task<List<MostrarSolicitudDTO>> GetAllSolitudesByFilter(long idUsuario, DateTime fechaIngreso)
+        public async Task<List<MostrarSolicitudDTO>> GetAllSolitudesByFilter(long idUsuario, DateTime fechaIngreso)
         {
-            throw new NotImplementedException();
+            try
+            {
+
+                var filtro = await _context.Solicituds.Where(x => x.IdUsuario == idUsuario && x.FechaIngreso.Date ==  fechaIngreso.Date).Select(c => new MostrarSolicitudDTO
+                {
+                    IdSolicitud = c.
+                    IdUsuario = c.IdUsuario,
+                    tipoSolicitud = c.tipoSolicitud,
+                    DescripcionSolicitud = c.DescripcionSolicitud,
+                    Justificativo = c.Justificativo,
+                    DetalleGestion = c.DetalleGestion,
+
+                })
+
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener solicitudes para el usuario con Id {IdUsuario}", 400);
+                return new List<MostrarSolicitudDTO>();
+            }
         }
 
         public Task<MostrarJustificativoDTO> GetJustificativo(long idUsuario)
