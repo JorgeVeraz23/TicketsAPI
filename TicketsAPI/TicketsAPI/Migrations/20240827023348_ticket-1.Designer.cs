@@ -12,8 +12,8 @@ using TicketsAPI;
 namespace TicketsAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240826221400_uno")]
-    partial class uno
+    [Migration("20240827023348_ticket-1")]
+    partial class ticket1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -97,12 +97,17 @@ namespace TicketsAPI.Migrations
             modelBuilder.Entity("TicketsAPI.Entities.Solicitud", b =>
                 {
                     b.HasOne("TicketsAPI.Entities.Usuario", "Usuario")
-                        .WithMany()
+                        .WithMany("Solicituds")
                         .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Usuario", b =>
+                {
+                    b.Navigation("Solicituds");
                 });
 #pragma warning restore 612, 618
         }

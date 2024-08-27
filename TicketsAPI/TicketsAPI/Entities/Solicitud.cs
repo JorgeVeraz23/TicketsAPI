@@ -18,7 +18,8 @@ namespace TicketsAPI.Entities
         public DateTime FechaGestion { get; set; }
         [ForeignKey("Usuario")]
         public long IdUsuario { get; set; }
-        public virtual Usuario Usuario { get; set; }    
+        public virtual Usuario? Usuario { get; set; }
+       
 
     }
 }

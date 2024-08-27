@@ -10,5 +10,7 @@ namespace TicketsAPI.Entities
         public string UserName { get; set; }
         public string Password { get; set; }    
         public EnumRolUsuarioDTO Rol { get; set; }
+
+        public virtual ICollection<Solicitud>? Solicituds { get; set; }
     }
 }

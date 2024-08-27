@@ -94,12 +94,17 @@ namespace TicketsAPI.Migrations
             modelBuilder.Entity("TicketsAPI.Entities.Solicitud", b =>
                 {
                     b.HasOne("TicketsAPI.Entities.Usuario", "Usuario")
-                        .WithMany()
+                        .WithMany("Solicituds")
                         .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Usuario", b =>
+                {
+                    b.Navigation("Solicituds");
                 });
 #pragma warning restore 612, 618
         }

@@ -6,7 +6,7 @@ namespace TicketsAPI.Interfaces
     {
 
         public Task<bool> CrearUsuario(UsuarioDTO usuarioDTO);
-        public Task<UsuarioDTO> LoginUsuario(string username, string password);
+        public Task<MessageInfoDTO> LoginUsuario(string username, string password);
 
     }
 }

@@ -55,14 +55,19 @@ namespace TicketsAPI.Repository
             }
         }
 
-        public async Task<UsuarioDTO> LoginUsuario(string username, string password)
+        public async Task<MessageInfoDTO> LoginUsuario(string username, string password)
         {
             try
             {
-                var validacion = await _context.Usuarios.FirstOrDefaultAsync(x => x.UserName == username && x.Password == password) ?? throw new Exception("No se encontro el usuario");
+                MessageInfoDTO message = new MessageInfoDTO();
+                var validacion = await _context.Usuarios.FirstOrDefaultAsync(x => x.UserName == username && x.Password == password);
 
+                if (validacion == null)
+                {
+                    message.IsValid = false;
+                    throw new Exception("No se encontró el usuario");
+                }
 
-                
                 UsuarioDTO usuarioEntity = new UsuarioDTO
                 {
                     UserName = validacion.UserName,
@@ -70,23 +75,17 @@ namespace TicketsAPI.Repository
                     Rol = validacion.Rol,
                 };
 
-               
+                message.IsValid = true;
+                message.Rol = usuarioEntity.Rol;
 
-                if(validacion != null)
-                {
-                    return usuarioEntity;
-                }
-                else
-                {
-                    return null;
-                }
-                
-
-            }catch(Exception ex)
+                return message;
+            }
+            catch (Exception ex)
             {
-                _logger.LogError(ex, "Error al intentar iniciar sesion con {UserName}"+ username);
-                return null;
+                _logger.LogError(ex, "Error al intentar iniciar sesión con {UserName} " + username);
+                return new MessageInfoDTO { IsValid = false };
             }
         }
+
     }
 }
