@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using TicketsAPI.DTO;
 using TicketsAPI.Interfaces;
+using TicketsAPI.Repository;
 
 namespace TicketsAPI.Controllers
 {
@@ -17,25 +18,47 @@ namespace TicketsAPI.Controllers
             _solicitudInterface = solicitudInterface;   
         }
 
-        [HttpPost("CrearSolicitud")]
-        public async Task<ActionResult> CrearSolicitud(SolicitudDTO solicitudDTO)
+        //[HttpPost("CrearSolicitud")]
+        //public async Task<ActionResult> CrearSolicitud(SolicitudDTO solicitudDTO)
+        //{
+        //    try
+        //    {
+        //        if(solicitudDTO == null)
+        //        {
+        //            return BadRequest("La solicitud enviada es nula.");
+        //        }
+
+        //        var response = await _solicitudInterface.CreateSolicitud(solicitudDTO);
+
+        //        return Ok(response);
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
+
+
+        [HttpPost]
+        [Route("crear")]
+        public async Task<IActionResult> CreateSolicitud([FromForm] SolicitudDTO solicitud)
         {
-            try
+            if (ModelState.IsValid)
             {
-                if(solicitudDTO == null)
+                var result = await _solicitudInterface.CreateSolicitud(solicitud);
+
+                if (result.Cod == "201")
                 {
-                    return BadRequest("La solicitud enviada es nula.");
+                    return Ok(result);
                 }
-
-                var response = await _solicitudInterface.CreateSolicitud(solicitudDTO);
-
-                return Ok(response);
-
+                else
+                {
+                    return StatusCode(500, result);
+                }
             }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
+
+            return BadRequest("Datos inválidos.");
         }
 
     }

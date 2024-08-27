@@ -14,7 +14,7 @@ namespace TicketsAPI.Interfaces
         //CLIENTE
         public Task<List<SolicitudDTO>> GetAllSolicitudes(long idUsuario);
         public Task<List<SolicitudDTO>> GetAllSolicitudesByFilter(long idUsuario, DateTime FechaIngreso, string Estado);
-        public Task<bool> CreateSolicitud(SolicitudDTO solicitud);
+        public Task<MessageInfoSolicitudDTO> CreateSolicitud(SolicitudDTO solicitud);
         public Task<SolicitudDTO> VerDetalleSolicitud(long idSolicitud);
 
     }

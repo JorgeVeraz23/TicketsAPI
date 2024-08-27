@@ -16,20 +16,33 @@ namespace TicketsAPI.Repository
             _context = context;
             _logger = logger;
         }
-        public async Task<bool> CreateSolicitud(SolicitudDTO solicitud)
+        public async Task<MessageInfoSolicitudDTO> CreateSolicitud(SolicitudDTO solicitud)
         {
             try
             {
+                //Verifica si se subio un archivo
+                string filePath = null;
+                if(solicitud.Justificativo != null)
+                {
+                    //Guardar el archivo en el servidor
+                    filePath = Path.Combine("uploads", solicitud.Justificativo.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
+                    {
+                        await solicitud.Justificativo.CopyToAsync(stream);
+                    }
+                }
+
+
+
                 Solicitud solicitudEntity = new Solicitud
                 {
 
                     tipoSolicitud = solicitud.tipoSolicitud,
                     DescripcionSolicitud = solicitud.DescripcionSolicitud,
-                    Justificativo = solicitud.Justificativo,
+                    Justificativo = filePath,
                     estadoSolicitud = solicitud.estadoSolicitud,
                     DetalleGestion = solicitud.DetalleGestion,
                     FechaIngreso = DateTime.Now,
-                    FechaGestion = solicitud.FechaGestion,
                     IdUsuario = solicitud.IdUsuario,
 
                 };
@@ -37,10 +50,16 @@ namespace TicketsAPI.Repository
                 await _context.Solicituds.AddAsync(solicitudEntity);
                 await _context.SaveChangesAsync();
 
-                return true;
+                
+
+                return new MessageInfoSolicitudDTO
+                {
+                    Cod = "201",
+                    Mensaje = "Se ha registrado la solicitud",
+                };
             }catch(Exception ex) {
                 _logger.LogError(ex, "Error al crear la solicitud con tipo {tipoSolicitud}" + solicitud.tipoSolicitud);
-                return false;
+                return new MessageInfoSolicitudDTO { Mensaje  = "Error al intentar crear la solicitud", Cod = "500"};
             }
         }
 
