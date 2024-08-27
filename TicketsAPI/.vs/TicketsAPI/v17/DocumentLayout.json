@@ -3,16 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\solicitudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\solicitudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\solicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\solicitudcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\solicitudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\solicitudrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\interfaces\\solicitudinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\solicitudinterface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\entities\\solicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\entities\\solicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\solicituddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -23,12 +27,12 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\messageinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\entities\\solicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\entities\\solicitud.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\usuariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\enumdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\enumdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\usuariorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -62,10 +66,6 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\usuariointerface.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\appdev\\documents\\repo\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\enumdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\enumdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826215220_test.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -83,17 +83,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "SolicitudRepository.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\SolicitudRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\SolicitudRepository.cs",
               "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\SolicitudRepository.cs",
               "RelativeToolTip": "TicketsAPI\\Repository\\SolicitudRepository.cs",
-              "ViewState": "AQIAABEAAAAAAAAAAIAwwBoAAAA3AAAA",
+              "ViewState": "AQIAAF8AAAAAAAAAAAAIwGsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T20:36:26.266Z",
               "IsPinned": true,
@@ -101,15 +101,29 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "MessageInfoDTO.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MessageInfoDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\MessageInfoDTO.cs",
               "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MessageInfoDTO.cs",
               "RelativeToolTip": "TicketsAPI\\DTO\\MessageInfoDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAgAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAArAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-27T14:15:48.577Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "SolicitudInterface.cs",
+              "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\SolicitudInterface.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\SolicitudInterface.cs",
+              "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\SolicitudInterface.cs",
+              "RelativeToolTip": "TicketsAPI\\Interfaces\\SolicitudInterface.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAcAAABNAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-26T20:27:12.261Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
@@ -123,20 +137,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "SolicitudController.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\SolicitudController.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\SolicitudController.cs",
               "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\SolicitudController.cs",
               "RelativeToolTip": "TicketsAPI\\Controllers\\SolicitudController.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAIwC0AAAAIAAAA",
+              "ViewState": "AQIAACwAAAAAAAAAAAAAwD4AAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T21:12:18.269Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 3,
               "Title": "Solicitud.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Solicitud.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Solicitud.cs",
@@ -149,26 +163,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "SolicitudInterface.cs",
-              "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\SolicitudInterface.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\SolicitudInterface.cs",
-              "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\SolicitudInterface.cs",
-              "RelativeToolTip": "TicketsAPI\\Interfaces\\SolicitudInterface.cs",
-              "ViewState": "AQIAAAgAAAAAAAAAAADgvxAAAAA8AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-26T20:27:12.261Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "SolicitudDTO.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\SolicitudDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\SolicitudDTO.cs",
               "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\SolicitudDTO.cs",
               "RelativeToolTip": "TicketsAPI\\DTO\\SolicitudDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAcAAAAmAAAA",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAswBwAAAAFAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T20:27:45.905Z",
               "EditorCaption": ""
@@ -181,14 +182,14 @@
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\UsuarioController.cs",
               "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\UsuarioController.cs",
               "RelativeToolTip": "TicketsAPI\\Controllers\\UsuarioController.cs",
-              "ViewState": "AQIAABUAAAAAAAAAAAAmwB8AAAANAAAA",
+              "ViewState": "AQIAABsAAAAAAAAAAAAmwB8AAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T21:40:47.646Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "UsuarioRepository.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\UsuarioRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\UsuarioRepository.cs",
@@ -201,7 +202,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\appsettings.Development.json",
               "RelativeDocumentMoniker": "TicketsAPI\\appsettings.Development.json",
@@ -214,7 +215,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\appsettings.json",
               "RelativeDocumentMoniker": "TicketsAPI\\appsettings.json",
@@ -227,7 +228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Program.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Program.cs",
@@ -240,7 +241,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "UsuarioInterface.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\UsuarioInterface.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\UsuarioInterface.cs",
@@ -252,7 +253,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "Usuario.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Usuario.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Usuario.cs",
@@ -264,7 +265,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "20240826221400_uno.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826221400_uno.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826221400_uno.cs",
@@ -276,7 +277,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\ApplicationDbContext.cs",
@@ -288,15 +289,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 7,
               "Title": "EnumDTO.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\EnumDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\EnumDTO.cs",
               "ToolTip": "C:\\Users\\AppDev\\Documents\\Repo\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\EnumDTO.cs",
               "RelativeToolTip": "TicketsAPI\\DTO\\EnumDTO.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAqwAQAAAALAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAMwA4AAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-26T20:12:52.93Z"
+              "WhenOpened": "2024-08-26T20:12:52.93Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",

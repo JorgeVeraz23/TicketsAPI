@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketsAPI.DTO;
+using TicketsAPI.Entities;
 using TicketsAPI.Interfaces;
 using TicketsAPI.Repository;
 
@@ -18,26 +19,6 @@ namespace TicketsAPI.Controllers
             _solicitudInterface = solicitudInterface;   
         }
 
-        //[HttpPost("CrearSolicitud")]
-        //public async Task<ActionResult> CrearSolicitud(SolicitudDTO solicitudDTO)
-        //{
-        //    try
-        //    {
-        //        if(solicitudDTO == null)
-        //        {
-        //            return BadRequest("La solicitud enviada es nula.");
-        //        }
-
-        //        var response = await _solicitudInterface.CreateSolicitud(solicitudDTO);
-
-        //        return Ok(response);
-
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
 
 
         [HttpPost]
@@ -59,6 +40,41 @@ namespace TicketsAPI.Controllers
             }
 
             return BadRequest("Datos inválidos.");
+        }
+
+
+
+        [HttpGet("GetSolicitudesDeUsuario")]
+        public async Task<ActionResult> MostrarSolicitud(long idUsuario)
+        {
+            try
+            {
+      
+               var result = await _solicitudInterface.GetAllSolicitudes(idUsuario);
+
+
+                return Ok(result);
+                
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("ObtenerTodasLasSolicitudesAdministador")]
+        public async Task<ActionResult> MostrarTodasLasSolicitudes()
+        {
+            try
+            {
+                var result = await _solicitudInterface.GetAllSolicitudesAdministrador();
+
+                return Ok(result);
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using TicketsAPI.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using TicketsAPI.DTO;
 using TicketsAPI.Entities;
 using TicketsAPI.Interfaces;
 
@@ -31,16 +32,14 @@ namespace TicketsAPI.Repository
                         await solicitud.Justificativo.CopyToAsync(stream);
                     }
                 }
-
-
-
+               
                 Solicitud solicitudEntity = new Solicitud
                 {
 
                     tipoSolicitud = solicitud.tipoSolicitud,
                     DescripcionSolicitud = solicitud.DescripcionSolicitud,
                     Justificativo = filePath,
-                    estadoSolicitud = solicitud.estadoSolicitud,
+                    estadoSolicitud = EnumEstadoSolicitud.Ingresada,
                     DetalleGestion = solicitud.DetalleGestion,
                     FechaIngreso = DateTime.Now,
                     IdUsuario = solicitud.IdUsuario,
@@ -63,27 +62,68 @@ namespace TicketsAPI.Repository
             }
         }
 
-        public Task<List<SolicitudDTO>> GetAllSolicitudes(long idUsuario)
+        public async Task<List<MostrarSolicitudDTO>> GetAllSolicitudes(long idUsuario)
+        {
+            try
+            {
+                var solicitudesUsuario = await _context.Solicituds.Where(x => x.IdUsuario == idUsuario).Select(c => new MostrarSolicitudDTO
+                {
+                    IdSolicitud = c.IdSolicitud,
+                    IdUsuario = c.IdUsuario,
+                    DescripcionSolicitud = c.DescripcionSolicitud,
+                    Justificativo = c.Justificativo,
+                    tipoSolicitud = c.tipoSolicitud,
+                    DetalleGestion = c.DetalleGestion,
+                    FechaIngreso = c.FechaIngreso,
+                }).ToListAsync() ;
+
+                //Retorna la lista de solicitudes, puede estar vacia si no hay resultados
+                return solicitudesUsuario;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener solicitudes para el usuario con Id {IdUsuario}", idUsuario);
+                return new List<MostrarSolicitudDTO>();
+            }
+        }
+
+        public Task<List<MostrarSolicitudDTO>> GetAllSolicitudesByFilter(long idUsuario, DateTime FechaIngreso, string Estado)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<SolicitudDTO>> GetAllSolicitudesByFilter(long idUsuario, DateTime FechaIngreso, string Estado)
+        public async Task<List<MostrarSolicitudDTO>> GetAllSolicitudesAdministrador()
+        {
+            try
+            {
+                var solicitudes = await _context.Solicituds.Select(c => new MostrarSolicitudDTO
+                {
+                    IdSolicitud = c.IdSolicitud,
+                    IdUsuario = c.IdUsuario,
+                    tipoSolicitud = c.tipoSolicitud,
+                    DescripcionSolicitud = c.DescripcionSolicitud,
+                    Justificativo = c.Justificativo,
+                    FechaIngreso = c.FechaIngreso,
+                    DetalleGestion = c.DetalleGestion
+
+                } ).ToListAsync();
+
+                return solicitudes;
+
+
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener solicitudes para el usuario con Id {IdUsuario}", 400);
+                return new List<MostrarSolicitudDTO>();
+            }
+        }
+
+        public Task<List<MostrarSolicitudDTO>> GetAllSolitudesByFilter(long idUsuario, DateTime fechaIngreso)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<SolicitudDTO>> GetAllSolictudes()
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<SolicitudDTO>> GetAllSolitudesByFilter(long idUsuario, DateTime fechaIngreso)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<SolicitudDTO> GetJustificativo(long idUsuario)
+        public Task<MostrarJustificativoDTO> GetJustificativo(long idUsuario)
         {
             throw new NotImplementedException();
         }
