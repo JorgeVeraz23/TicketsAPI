@@ -3,6 +3,7 @@ using TicketsAPI;
 using TicketsAPI.Interfaces;
 using TicketsAPI.Repository;
 using System.Text.Json.Serialization;
+using Microsoft.Extensions.FileProviders;
 
 
 
@@ -14,6 +15,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+
+
+
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -23,15 +28,35 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
     );
 
+// Agregar política de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReactApp",
+        policy =>
+        {
+            policy.WithOrigins(["http://localhost:5173", "http://localhost:3000"]) // URL de tu aplicación React
+                  .AllowAnyHeader()
+                  .AllowAnyMethod();
+        });
+});
+
 
 builder.Services.AddScoped<UsuarioInterface, UsuarioRepository>();
 builder.Services.AddScoped<SolicitudInterface, SolicitudRepository>();
 
 var app = builder.Build();
 
+// Usar la política de CORS configurada
+app.UseCors("AllowReactApp");
 
+app.UseStaticFiles(); // Permite servir archivos estáticos
 
-
+// Agrega esta línea para especificar la carpeta "uploads"
+app.UseStaticFiles(new StaticFileOptions
+{
+    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
+    RequestPath = "/uploads"
+});
 
 
 // Configure the HTTP request pipeline.

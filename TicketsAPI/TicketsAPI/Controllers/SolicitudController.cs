@@ -22,7 +22,7 @@ namespace TicketsAPI.Controllers
 
 
         [HttpPost]
-        [Route("crear")]
+        [Route("CrearSolicitud")]
         public async Task<IActionResult> CreateSolicitud([FromForm] SolicitudDTO solicitud)
         {
             if (ModelState.IsValid)
@@ -57,6 +57,37 @@ namespace TicketsAPI.Controllers
                 
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetAllSolicitudesByFilterAdministrador")]
+        public async Task<ActionResult> MostrarSolicitudesAdministrador(long idUsuario, DateTime fechaIngreso)
+        {
+            try
+            {
+                var result = await _solicitudInterface.GetAllSolitudesByFilter(idUsuario, fechaIngreso);
+
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("GetAllSolicitudesByFilterCliente")]
+        public async Task<ActionResult> GetAllSolicitudesByFilter(long idUsuario, DateTime fechaIngreso, EnumEstadoSolicitud Estado)
+        {
+            try {
+                var result = await _solicitudInterface.GetAllSolicitudesByFilterCliente(idUsuario, fechaIngreso, Estado);
+
+
+                return Ok(result);
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }

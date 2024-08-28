@@ -87,9 +87,28 @@ namespace TicketsAPI.Repository
             }
         }
 
-        public Task<List<MostrarSolicitudDTO>> GetAllSolicitudesByFilter(long idUsuario, DateTime FechaIngreso, string Estado)
+        public async Task<List<MostrarSolicitudDTO>> GetAllSolicitudesByFilterCliente(long idUsuario, DateTime FechaIngreso, EnumEstadoSolicitud Estado)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var filtro = await _context.Solicituds.Where(x => x.IdUsuario == idUsuario && x.FechaIngreso == FechaIngreso && x.estadoSolicitud == Estado).Select(c => new MostrarSolicitudDTO
+                {
+                    IdSolicitud = c.IdSolicitud,
+                    IdUsuario = c.IdUsuario,
+                    tipoSolicitud = c.tipoSolicitud,
+                    DescripcionSolicitud = c.DescripcionSolicitud,
+                    Justificativo = c.Justificativo,
+                    FechaIngreso = c.FechaIngreso,
+                    DetalleGestion = c.DetalleGestion,
+                }).ToListAsync();
+
+                return filtro;
+            }
+            catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error al obtener solicitudes para el usuario con Id {IdUsuario}", idUsuario);
+                return new List<MostrarSolicitudDTO>();
+            }
         }
 
         public async Task<List<MostrarSolicitudDTO>> GetAllSolicitudesAdministrador()
@@ -118,26 +137,32 @@ namespace TicketsAPI.Repository
             }
         }
 
-        public async Task<List<MostrarSolicitudDTO>> GetAllSolitudesByFilter(long idUsuario, DateTime fechaIngreso)
+        //Enpoint de obtener solicitudes mediante filtro de administrador
+        public async Task<List<MostrarSolicitudAdministradorDTO>> GetAllSolitudesByFilter(long idUsuario, DateTime fechaIngreso)
         {
             try
             {
 
-                var filtro = await _context.Solicituds.Where(x => x.IdUsuario == idUsuario && x.FechaIngreso.Date ==  fechaIngreso.Date).Select(c => new MostrarSolicitudDTO
+                var filtro = await _context.Solicituds.Where(x => x.IdUsuario == idUsuario && x.FechaIngreso.Date == fechaIngreso.Date).Select(c => new MostrarSolicitudAdministradorDTO
                 {
-                    IdSolicitud = c.
+                    IdSolicitud = c.IdSolicitud,
                     IdUsuario = c.IdUsuario,
                     tipoSolicitud = c.tipoSolicitud,
                     DescripcionSolicitud = c.DescripcionSolicitud,
                     Justificativo = c.Justificativo,
                     DetalleGestion = c.DetalleGestion,
+                    FechaIngreso = c.FechaIngreso,
+                    FechaActualizacion = c.FechaActualizacion,
+                    FechaGestion = c.FechaGestion,
+                    
+                }).ToListAsync();
 
-                })
+                return filtro;
 
             }catch(Exception ex)
             {
                 _logger.LogError(ex, "Error al obtener solicitudes para el usuario con Id {IdUsuario}", 400);
-                return new List<MostrarSolicitudDTO>();
+                return new List<MostrarSolicitudAdministradorDTO>();
             }
         }
 
