@@ -55,6 +55,18 @@ namespace TicketsAPI.Repository
             }
         }
 
+        public async Task<List<KeyValueDTO>> KeyValueCliente()
+        {
+            var selector = await _context.Usuarios.Where(x => x.Rol == 0).Select(c => new KeyValueDTO
+            {
+                Key = c.IdUsuario,
+                Value = c.UserName,
+            }).ToListAsync();
+
+            return selector;
+        }
+
+       
         public async Task<MessageInfoDTO> LoginUsuario(string username, string password)
         {
             try

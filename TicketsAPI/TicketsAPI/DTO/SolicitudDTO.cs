@@ -29,6 +29,7 @@
     {
         public long IdSolicitud { get; set; }
         public EnumTipoSolicitud tipoSolicitud { get; set; }
+        public EnumEstadoSolicitud estadoSolicitud { get; set; }
         public string DescripcionSolicitud { get; set; }
         public string Justificativo { get; set; } // Este debe ser IFormFile
 
@@ -42,7 +43,16 @@
 
     public class MostrarJustificativoDTO
     {
-        public string idSolicitud { get; set; }
+
         public string Justificativo { get; set; }
+    }
+
+    public class ActualizarSolicitudDTO
+    {
+        public long IdSolicitud { get; set; }
+        public EnumEstadoSolicitud estadoSolicitud { get; set; }
+        public string DetalleGestion { get; set; }
+        public DateTime FechaGestion { get; set; }
+        public DateTime FechaActualizacion { get; set; }
     }
 }

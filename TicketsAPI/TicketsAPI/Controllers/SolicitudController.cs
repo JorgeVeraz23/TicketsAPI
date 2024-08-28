@@ -42,6 +42,27 @@ namespace TicketsAPI.Controllers
             return BadRequest("Datos inválidos.");
         }
 
+        [HttpPut]
+        [Route("ActualizarSolicitud")]
+        public async Task<IActionResult> ActualizarSolicitud(ActualizarSolicitudDTO solicitud)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await _solicitudInterface.ActualizarSolicitud(solicitud);
+
+                if (result.Cod == "201")
+                {
+                    return Ok(result);
+                }
+                else
+                {
+                    return StatusCode(500, result);
+                }
+            }
+
+            return BadRequest("Datos inválidos.");
+        }
+
 
 
         [HttpGet("GetSolicitudesDeUsuario")]
@@ -73,6 +94,59 @@ namespace TicketsAPI.Controllers
                 return Ok(result);
             }
             catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("MostrarJustificativo")]
+        public async Task<ActionResult> MostrarJustificativo( long idSolicitud)
+        {
+            try
+            {
+                var result = await _solicitudInterface.GetJustificativo(idSolicitud);
+
+
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("VerDetalleSolicitud")]
+        public async Task<ActionResult> VerDetalleSolicitud(long idSolicitud)
+        {
+            try
+            {
+                var result = await _solicitudInterface.VerDetalleSolicitud(idSolicitud);
+
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet("KeyValueEstados")]
+        public ActionResult<IEnumerable<KeyValueDTO>> GetEstados()
+        {
+            try
+            {
+                var estados = Enum.GetValues(typeof(EnumEstadoSolicitud))
+                    .Cast<EnumEstadoSolicitud>()
+                    .Select(e => new KeyValueDTO
+                    {
+                        Key = (int)e,
+                        Value = e.ToString()
+                    });
+
+                return Ok(estados);
+            }
+            catch(Exception ex)
             {
                 return BadRequest(ex.Message);
             }

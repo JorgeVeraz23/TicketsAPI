@@ -47,5 +47,20 @@ namespace TicketsAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        [HttpGet("KeyValueCliente")]
+        public async Task<ActionResult> KeyValueCliente()
+        {
+            try
+            {
+                var response = await _usuarioInterface.KeyValueCliente();
+
+                return Ok(response);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

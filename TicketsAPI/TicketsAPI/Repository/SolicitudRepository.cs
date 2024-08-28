@@ -166,14 +166,72 @@ namespace TicketsAPI.Repository
             }
         }
 
-        public Task<MostrarJustificativoDTO> GetJustificativo(long idUsuario)
+        public async Task<List<MostrarJustificativoDTO>> GetJustificativo(long idSolicitud)
         {
-            throw new NotImplementedException();
+            var justificacion = await _context.Solicituds.Where(x =>  x.IdSolicitud == idSolicitud).Select(c => new MostrarJustificativoDTO
+            {
+                Justificativo = c.Justificativo
+            }).ToListAsync();
+
+            return justificacion;
         }
 
-        public Task<SolicitudDTO> VerDetalleSolicitud(long idSolicitud)
+        public async Task<MostrarSolicitudAdministradorDTO> VerDetalleSolicitud(long idSolicitud)
         {
-            throw new NotImplementedException();
+            var solicitudoIngresada = await _context.Solicituds.Where(x => x.IdSolicitud == idSolicitud).Select(c => new MostrarSolicitudAdministradorDTO
+            {
+                IdSolicitud = c.IdSolicitud,
+                IdUsuario = c.IdUsuario,
+                FechaIngreso = c.FechaIngreso,
+                DescripcionSolicitud = c.DescripcionSolicitud,
+                Justificativo = c.Justificativo,
+                DetalleGestion = c.DetalleGestion,
+                estadoSolicitud = c.estadoSolicitud,
+                FechaActualizacion = c.FechaActualizacion,
+                FechaGestion = c.FechaGestion,
+                tipoSolicitud = c.tipoSolicitud,
+            }).FirstOrDefaultAsync() ?? new MostrarSolicitudAdministradorDTO { };
+
+            return solicitudoIngresada;
+        }
+
+        public async Task<MessageInfoSolicitudDTO> ActualizarSolicitud(ActualizarSolicitudDTO solicitud)
+        {
+            try
+            {
+                var solicitudToUpdate = await _context.Solicituds.Where(x => x.IdSolicitud == solicitud.IdSolicitud).FirstOrDefaultAsync();
+
+                if(solicitudToUpdate == null)
+                {
+                    return new MessageInfoSolicitudDTO
+                    {
+                        Cod = "404",
+                        Mensaje = "Not Found"
+                    };
+                }
+
+                //Actualiza los valores de la solicitud existente
+                solicitudToUpdate.estadoSolicitud = solicitud.estadoSolicitud;
+                solicitudToUpdate.FechaGestion = solicitud.FechaGestion;
+                solicitudToUpdate.DetalleGestion = solicitud.DetalleGestion;
+                solicitudToUpdate.FechaActualizacion = solicitud.FechaActualizacion;
+
+
+                //Guarda los cambios en la base de datos
+                await _context.SaveChangesAsync();
+
+                return new MessageInfoSolicitudDTO
+                {
+                    Cod = "201",
+                    Mensaje = "Solicitud Gestionada exitosamente"
+                };
+
+
+            }catch(Exception ex)
+            {
+                _logger.LogError(ex, "Error al crear la solicitud con tipo {tipoSolicitud}" + solicitud.IdSolicitud);
+                return new MessageInfoSolicitudDTO { Mensaje = "Error al intentar crear la solicitud", Cod = "500" };
+            }
         }
     }
 }
