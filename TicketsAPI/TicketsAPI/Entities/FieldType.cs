@@ -11,6 +11,6 @@ namespace TicketsAPI.Entities
         public string Name { get; set; } = string.Empty;
 
         // Relación con FormField
-        public ICollection<FormField> FormFields { get; set; } = new List<FormField>();
+        public ICollection<FormField>? FormFields { get; set; } 
     }
 }

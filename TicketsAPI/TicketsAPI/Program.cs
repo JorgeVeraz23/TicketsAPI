@@ -45,6 +45,10 @@ builder.Services.AddScoped<UsuarioInterface, UsuarioRepository>();
 builder.Services.AddScoped<FormInterface, FormRepository>();
 builder.Services.AddScoped<SolicitudInterface, SolicitudRepository>();
 builder.Services.AddScoped<FormGroupInterface, FormGroupRepository>();
+builder.Services.AddScoped<FormFieldInterface, FormFieldRepository>();
+builder.Services.AddScoped<OptionInterface, OptionRepository>();
+builder.Services.AddScoped<FieldTypeInterface, FieldTypeRepository>();
+
 
 var app = builder.Build();
 
