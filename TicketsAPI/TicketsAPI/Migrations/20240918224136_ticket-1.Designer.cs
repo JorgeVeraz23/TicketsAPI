@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TicketsAPI;
 
@@ -11,9 +12,11 @@ using TicketsAPI;
 namespace TicketsAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240918224136_ticket-1")]
+    partial class ticket1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,7 +77,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasKey("IdFieldType");
 
-                    b.ToTable("FieldTypes", (string)null);
+                    b.ToTable("FieldTypes");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.FilledForm", b =>
@@ -133,7 +136,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("FormId");
 
-                    b.ToTable("FilledForms", (string)null);
+                    b.ToTable("FilledForms");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.FilledFormField", b =>
@@ -211,7 +214,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("SelectedOptionId");
 
-                    b.ToTable("FilledFormField", (string)null);
+                    b.ToTable("FilledFormField");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Form", b =>
@@ -269,7 +272,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasKey("IdForm");
 
-                    b.ToTable("Forms", (string)null);
+                    b.ToTable("Forms");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.FormField", b =>
@@ -340,7 +343,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("FormGroupId");
 
-                    b.ToTable("FormFields", (string)null);
+                    b.ToTable("FormFields");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.FormGroup", b =>
@@ -400,7 +403,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("FormId");
 
-                    b.ToTable("FormGroups", (string)null);
+                    b.ToTable("FormGroups");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Option", b =>
@@ -460,7 +463,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("FormFieldIdFormField");
 
-                    b.ToTable("Options", (string)null);
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Solicitud", b =>
@@ -505,7 +508,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("IdUsuario");
 
-                    b.ToTable("Solicituds", (string)null);
+                    b.ToTable("Solicituds");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Usuario", b =>
@@ -529,7 +532,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasKey("IdUsuario");
 
-                    b.ToTable("Usuarios", (string)null);
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.FilledForm", b =>
