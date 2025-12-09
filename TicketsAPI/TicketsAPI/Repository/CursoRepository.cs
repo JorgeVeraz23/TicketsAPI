@@ -25,17 +25,35 @@ namespace TicketsAPI.Repository
             curso.UserRegister = "SYSTEM";
 
             await _context.AddAsync(curso);
+            await _context.SaveChangesAsync();
             return true;
         }
 
-        public Task<bool> EditarCurso(CursoDTO cursotDTO)
+        public async Task<bool> EditarCurso(CursoDTO cursotDTO)
         {
-            throw new NotImplementedException();
+            var curso = _context.Curso.FirstOrDefault(x => x.IdCurso == cursotDTO.IdCurso);
+
+            curso.Nombre = cursotDTO.Nombre;
+            curso.Cupos = cursotDTO.Cupos;
+            curso.DateModification = DateTime.UtcNow;
+            curso.IpModification = "0000";
+            curso.UserModification = "SYSTEM";
+
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> EliminarCurso(long idCurso)
+        public async Task<bool> EliminarCurso(long idCurso)
         {
-            throw new NotImplementedException();
+            var curso = await _context.Curso.FirstOrDefaultAsync(x => x.IdCurso == idCurso);    
+            if (curso == null)
+            {
+                return false;
+            }
+            curso.Active = false;
+            await _context.SaveChangesAsync();
+            return true;
         }
 
         public async Task<List<CursoDTO>> GetAllCursos()
