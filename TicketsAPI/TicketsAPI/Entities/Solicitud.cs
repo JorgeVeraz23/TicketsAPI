@@ -4,7 +4,7 @@ using TicketsAPI.DTO;
 
 namespace TicketsAPI.Entities
 {
-    public class Solicitud
+    public class Solicitud : CrudEntities
     {
         [Key]
         public long IdSolicitud { get; set; }

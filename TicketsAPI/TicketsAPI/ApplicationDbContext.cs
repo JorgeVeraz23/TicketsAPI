@@ -11,6 +11,15 @@ namespace TicketsAPI
         }
 
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Rol> Rols { get; set; }
+        public DbSet<Estudiantes> Estudiantes { get; set; }
+        public DbSet<Matricula> Matriculas { get; set; }
+        public DbSet<Materia> Materias { get; set; }
+        public DbSet<Profesor> Profesor { get; set; }
+        public DbSet<Representante> Representante { get; set; }
+        public DbSet<Curso> Curso { get; set; }
+        public DbSet<Paralelos> Paralelos { get; set; }
+
         public DbSet<Solicitud> Solicituds { get; set; }
         public DbSet<Option> Options { get; set; }
         public DbSet<Form> Forms { get; set; }

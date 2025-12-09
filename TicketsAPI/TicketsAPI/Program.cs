@@ -48,6 +48,35 @@ builder.Services.AddScoped<FormGroupInterface, FormGroupRepository>();
 builder.Services.AddScoped<FormFieldInterface, FormFieldRepository>();
 builder.Services.AddScoped<OptionInterface, OptionRepository>();
 builder.Services.AddScoped<FieldTypeInterface, FieldTypeRepository>();
+builder.Services.AddScoped<ICurso, CursoRepository>();
+
+
+// Agregar servicios al contenedor.
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
+
+
+// Agregar el contexto de la base de datos
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+);
+
+
+builder.Services.AddEndpointsApiExplorer();
+
+
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "Matriculas AMA",  // Cambia esto por el nombre que desees
+        Version = "v1",
+        Description = "Sistema de gestion de matriculas para plantel educativo"
+    });
+});
+
 
 
 var app = builder.Build();

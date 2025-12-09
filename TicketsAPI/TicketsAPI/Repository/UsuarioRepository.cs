@@ -39,7 +39,7 @@ namespace TicketsAPI.Repository
 
                     UserName = usuarioDTO.UserName,
                     Password = usuarioDTO.Password,
-                    Rol = usuarioDTO.Rol,
+                    IdRol = usuarioDTO.Rol,
 
                 };
 
@@ -57,7 +57,7 @@ namespace TicketsAPI.Repository
 
         public async Task<List<KeyValueDTO>> KeyValueCliente()
         {
-            var selector = await _context.Usuarios.Where(x => x.Rol == 0).Select(c => new KeyValueDTO
+            var selector = await _context.Usuarios.Where(x => x.Rols.Active == true).Select(c => new KeyValueDTO
             {
                 Key = c.IdUsuario,
                 Value = c.UserName,
@@ -84,11 +84,11 @@ namespace TicketsAPI.Repository
                 {
                     UserName = validacion.UserName,
                     Password = validacion.Password,
-                    Rol = validacion.Rol,
+                    Rol = validacion.IdRol,
                 };
 
                 message.IsValid = true;
-                message.Rol = usuarioEntity.Rol;
+      
 
                 return message;
             }
