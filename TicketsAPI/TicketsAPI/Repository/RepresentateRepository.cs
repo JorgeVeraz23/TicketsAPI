@@ -22,6 +22,7 @@ namespace TicketsAPI.Repository
                 Celular = represetanteDTO.Celular,
                 FechaNacimiento = represetanteDTO.FechaNacimiento,
                 UserRegister = "SYSTEM",
+                Active = true,
                 DateRegister = DateTime.UtcNow,
                 IpRegister = "0.0.0.0"
             };

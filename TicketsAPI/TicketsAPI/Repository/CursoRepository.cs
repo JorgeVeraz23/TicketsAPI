@@ -21,6 +21,7 @@ namespace TicketsAPI.Repository
             curso.Nombre = cursoDTO.Nombre;
             curso.Cupos = cursoDTO.Cupos;
             curso.DateRegister = DateTime.UtcNow;
+            curso.Active = true;
             curso.IpRegister = "0000";
             curso.UserRegister = "SYSTEM";
 

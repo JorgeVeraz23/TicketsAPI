@@ -52,6 +52,9 @@ builder.Services.AddScoped<ICurso, CursoRepository>();
 builder.Services.AddScoped<IRepresentate, RepresentateRepository>();
 builder.Services.AddScoped<IEstudiante, EstudianteRepository>();
 builder.Services.AddScoped<IProfesor, ProfesorRepository>();
+builder.Services.AddScoped<IMateria, MateriaRepository>();
+builder.Services.AddScoped<IParalelo, ParaleloRepository>();
+
 
 
 // Agregar servicios al contenedor.
