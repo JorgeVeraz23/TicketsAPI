@@ -12,22 +12,19 @@ namespace TicketsAPI
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Rol> Rols { get; set; }
-        public DbSet<Estudiantes> Estudiantes { get; set; }
-        public DbSet<Matricula> Matriculas { get; set; }
+        public DbSet<AnioLectivo> AnioLectivo { get; set; }
+        public DbSet<Documento> Documento { get; set; }
+        public DbSet<Estudiante> Estudiantes { get; set; }
+        public DbSet<Grado> Grados { get; set; }
         public DbSet<Materia> Materias { get; set; }
-        public DbSet<Profesor> Profesor { get; set; }
-        public DbSet<Representante> Representante { get; set; }
-        public DbSet<Curso> Curso { get; set; }
-        public DbSet<Paralelos> Paralelos { get; set; }
+        public DbSet<MateriaParalelo> MateriaParalelos { get; set; }
+        public DbSet<Matricula> Matriculas { get; set; }
+        public DbSet<Pago> Pagos { get; set; }  
+        public DbSet<Paralelo> Paralelos { get; set; }
 
-        public DbSet<Solicitud> Solicituds { get; set; }
-        public DbSet<Option> Options { get; set; }
-        public DbSet<Form> Forms { get; set; }
-        public DbSet<FilledForm> FilledForms { get; set; }
-        public DbSet<FilledFormField> FilledFormField { get; set; }
-        public DbSet<FormGroup> FormGroups { get; set; }
-        public DbSet<FieldType> FieldTypes { get; set; }
-        public DbSet<FormField> FormFields { get; set; }
+
+        
+      
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)

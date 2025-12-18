@@ -2,11 +2,11 @@
 
 namespace TicketsAPI.Entities
 {
-    public class Rol : CrudEntities
+    public class Rol
     {
         [Key]
-        public long IdRol { get; set; }
+        public string Id { get; set; }
         public string Nombre { get; set; }
-        public virtual ICollection<Usuario>? Usuarios { get; set; }
+        
     }
 }

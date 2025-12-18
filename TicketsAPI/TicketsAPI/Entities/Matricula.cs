@@ -1,24 +1,32 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using TicketsAPI.Utils;
 
 namespace TicketsAPI.Entities
 {
     public class Matricula : CrudEntities
     {
         [Key]
-        public long IdMatricula { get; set; }
-        public string Codigo { get; set; }
-        [ForeignKey("Estudiantes")]
+        public long Id { get; set; }
+        [ForeignKey("Estudiante")]
         public long EstudianteId { get; set; }
-        [ForeignKey("Curso")]
-        public long CursoId { get; set; }
-        [ForeignKey("Paralelos")]
-        public long ParaleloId { get; set; }
-        [ForeignKey("Profesor")]
-        public long IdProfesor { get; set; }
-        public virtual Estudiantes Estudiantes { get; set; }
-        public virtual Curso Curso { get; set; }
-        public virtual Paralelos Paralelos { get; set; }
-        public virtual Profesor Profesor { get; set; }
+        [ForeignKey("MateriaParalelo")]
+        public long MateriaParaleloId { get; set; }
+        [Required]
+        [MaxLength(100)]
+        public string EstadoMatricula { get; set; }
+        [Required]
+        public DateTime FechaMatricula { get; set; }
+        public DateTime FechaConfirmacion { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string PagoEstado { get; set; }
+        public DateTime? FechaPago {  get; set; }
+
+
+
+        public virtual Estudiante  Estudiante { get; set; }
+        public virtual MateriaParalelo MateriaParalelo { get; set; }
+        
     }
 }
