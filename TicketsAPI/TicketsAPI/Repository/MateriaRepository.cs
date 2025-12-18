@@ -13,69 +13,103 @@ namespace TicketsAPI.Repository
            _context = context; 
         }
 
-        public async Task<bool> CrearMateria(MateriaDTO materiaDTO)
+        // Crear materia
+        public async Task<MateriaResponseDto> CrearMateriaAsync(MateriaDTO materiaDto)
         {
-            Materia materia = new Materia();
-
-            materia.Nombre = materiaDTO.Name;
-            materia.Active = true;
-            materia.DateRegister = DateTime.UtcNow;
-            materia.UserRegister = "SYSTEM";
-            materia.IpRegister = "0.0.0.0";
-            
-            await _context.Materias.AddAsync(materia);   
-            await _context.SaveChangesAsync();
-
-            return true;
-
-        }
-
-        public async Task<bool> EditarMateria(MateriaDTO materiaDTO)
-        {
-            var materia = await _context.Materias.Where(x => x.IdMateria == materiaDTO.IdMateria).FirstOrDefaultAsync() ?? throw new ArgumentNullException();
-
-            materia.Nombre = materiaDTO.Name;
-            materia.UserModification = "SYSTEM";
-            materia.DateModification = DateTime.UtcNow;
-            materia.IpModification = "0.0.0.0";
-
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<bool> EliminarMateria(long id)
-        {
-            var materia = await _context.Materias.Where(x => x.IdMateria == id).FirstOrDefaultAsync() ?? throw new ArgumentNullException();
-
-            materia.Active = true;
-            await _context.SaveChangesAsync();
-            return true;
-        }
-
-        public async Task<List<MateriaDTO>> GetAllMaterias()
-        {
-            var materias = await _context.Materias.Where(x => x.Active == true).Select(x => new MateriaDTO
+            var materia = new Materia
             {
-                IdMateria = x.IdMateria,
-                Name = x.Nombre
-            }).ToListAsync();
+                Nombre = materiaDto.Nombre,
+                GradoId = materiaDto.GradoId,
+                IsActive = true,
+                FechaCreacion = DateTime.UtcNow,
+                UsuarioCreacion = "SYSTEM"
+            };
 
-            return materias;
+            _context.Materias.Add(materia);
+            await _context.SaveChangesAsync();
+
+            // Cargar el Grado relacionado explícitamente (Eager Loading)
+            var materiaConGrado = await _context.Materias
+                .Include(m => m.Grado)  // Carga explícitamente el Grado relacionado
+                .FirstOrDefaultAsync(m => m.Id == materia.Id);
+
+            // Mapear la entidad Materia a MateriaResponseDto
+            return new MateriaResponseDto
+            {
+                Id = materiaConGrado.Id,
+                Nombre = materiaConGrado.Nombre,
+                GradoId = materiaConGrado.GradoId,
+                GradoNombre = materiaConGrado.Grado?.Nombre // Ahora debería tener el nombre del Grado
+            };
         }
 
-        public async Task<MateriaDTO> GetMateria(long id)
+        // Obtener materia por ID
+        public async Task<MateriaResponseDto> ObtenerMateriaPorIdAsync(int id)
         {
-            var materia = await _context.Materias.Where(x => x.IdMateria == id)
-                .Select(x => new MateriaDTO
-                {
-                    IdMateria = x.IdMateria,
-                    Name = x.Nombre
-                })
-                .FirstOrDefaultAsync() ?? throw new ArgumentNullException();
+            var materia = await _context.Materias
+                .Include(m => m.Grado)
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            return materia;
+            if (materia == null) return null;
 
+            // Mapear la entidad Materia a MateriaResponseDto
+            return new MateriaResponseDto
+            {
+                Id = materia.Id,
+                Nombre = materia.Nombre,
+                GradoId = materia.GradoId,
+                GradoNombre = materia.Grado.Nombre
+            };
+        }
 
+        // Obtener todas las materias por grado
+        public async Task<List<MateriaResponseDto>> ObtenerMateriasPorGradoAsync(int gradoId)
+        {
+            var materias = await _context.Materias
+                .Where(m => m.GradoId == gradoId)
+                .Include(m => m.Grado)
+                .ToListAsync();
+
+            // Mapear las entidades Materia a MateriaResponseDto
+            return materias.Select(m => new MateriaResponseDto
+            {
+                Id = m.Id,
+                Nombre = m.Nombre,
+                GradoId = m.GradoId,
+                GradoNombre = m.Grado.Nombre
+            }).ToList();
+        }
+
+        // Actualizar materia
+        public async Task<bool> ActualizarMateriaAsync(int id, MateriaDTO materiaDto)
+        {
+            var materia = await _context.Materias.FindAsync(id);
+
+            if (materia == null)
+            {
+                return false;
+            }
+
+            materia.Nombre = materiaDto.Nombre;
+            materia.GradoId = materiaDto.GradoId;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        // Eliminar materia
+        public async Task<bool> EliminarMateriaAsync(int id)
+        {
+            var materia = await _context.Materias.FindAsync(id);
+
+            if (materia == null)
+            {
+                return false;
+            }
+
+            _context.Materias.Remove(materia);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

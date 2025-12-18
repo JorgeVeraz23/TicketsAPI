@@ -12,6 +12,6 @@ namespace TicketsAPI.Entities
         [ForeignKey("Grado")]   
         public long GradoId { get; set; }
         public virtual Grado Grado { get; set; }    
-        public virtual ICollection<MateriaParalelo> MateriaParalelos { get; set; }
+        public virtual ICollection<MateriaParalelo>? MateriaParalelos { get; set; }
     }
 }

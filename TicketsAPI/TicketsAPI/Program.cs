@@ -1,9 +1,10 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using System.Text.Json.Serialization;
 using TicketsAPI;
 using TicketsAPI.Interfaces;
 using TicketsAPI.Repository;
-using System.Text.Json.Serialization;
-using Microsoft.Extensions.FileProviders;
+using static TicketsAPI.Interfaces.IEstudiante;
 
 
 
@@ -41,22 +42,12 @@ builder.Services.AddCors(options =>
 });
 
 
-builder.Services.AddScoped<UsuarioInterface, UsuarioRepository>();
-builder.Services.AddScoped<FormInterface, FormRepository>();
-builder.Services.AddScoped<SolicitudInterface, SolicitudRepository>();
-builder.Services.AddScoped<FormGroupInterface, FormGroupRepository>();
-builder.Services.AddScoped<FormFieldInterface, FormFieldRepository>();
-builder.Services.AddScoped<OptionInterface, OptionRepository>();
-builder.Services.AddScoped<FieldTypeInterface, FieldTypeRepository>();
-builder.Services.AddScoped<ICurso, CursoRepository>();
-builder.Services.AddScoped<IRepresentate, RepresentateRepository>();
+
 builder.Services.AddScoped<IEstudiante, EstudianteRepository>();
-builder.Services.AddScoped<IProfesor, ProfesorRepository>();
+builder.Services.AddScoped<IAnioLectiivo, AnioLectivoRepository>();
 builder.Services.AddScoped<IMateria, MateriaRepository>();
+builder.Services.AddScoped<IMatricula, MatriculaRepository>();
 builder.Services.AddScoped<IParalelo, ParaleloRepository>();
-
-
-
 // Agregar servicios al contenedor.
 builder.Services.AddControllers().AddJsonOptions(options =>
 {

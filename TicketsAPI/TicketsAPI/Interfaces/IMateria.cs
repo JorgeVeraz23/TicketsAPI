@@ -4,11 +4,11 @@ namespace TicketsAPI.Interfaces
 {
     public interface IMateria
     {
-        public Task<List<MateriaDTO>> GetAllMaterias();
-        public Task<MateriaDTO> GetMateria(long id);
-        public Task<bool> EliminarMateria(long id);
-        public Task<bool> EditarMateria(MateriaDTO materiaDTO);
-        public Task<bool> CrearMateria(MateriaDTO materiaDTO);
+        Task<MateriaResponseDto> CrearMateriaAsync(MateriaDTO materiaDto);
+        Task<MateriaResponseDto> ObtenerMateriaPorIdAsync(int id);
+        Task<List<MateriaResponseDto>> ObtenerMateriasPorGradoAsync(int gradoId);
+        Task<bool> ActualizarMateriaAsync(int id, MateriaDTO materiaDto);
+        Task<bool> EliminarMateriaAsync(int id);
 
 
     }

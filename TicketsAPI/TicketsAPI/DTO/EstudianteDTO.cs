@@ -1,16 +1,42 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TicketsAPI.DTO
 {
     public class EstudianteDTO
     {
-        public long IdEstudiantes { get; set; }
+        [Required]
         public string Nombre { get; set; }
 
-        public long RepresentanteId { get; set; }
-        public DateTime FechaNacimiento { get; set; }
-        public string Identificacion { get; set; }
-        public string Celular { get; set; }
-        public int Edad { get; set; }
+        [Required]
+        [MaxLength(20)]
+        public string Cedula { get; set; }
+
+        [Required]
+        [MaxLength(100)]
+        public string Representante { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string Telefono { get; set; }
+
+        [EmailAddress]
+        [MaxLength(100)]
+        public string Correo { get; set; }
+
+        [Required]
+        public int Nivel { get; set; }
     }
+
+    public class EstudianteResponseDto
+    {
+        public long Id { get; set; }
+        public string Nombre { get; set; }
+        public string Cedula { get; set; }
+        public string Representante { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public int Nivel { get; set; }
+    }
+
 }

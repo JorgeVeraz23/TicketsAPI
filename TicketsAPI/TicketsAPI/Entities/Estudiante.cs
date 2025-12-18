@@ -20,8 +20,8 @@ namespace TicketsAPI.Entities
         public string Correo { get; set; }
         [Required]
         public int Nivel { get; set; }
-        public virtual ICollection<Documento> Documentos {  get; set; }
-        public virtual ICollection<Matricula> Matriculas { get; set; }
+        public virtual ICollection<Documento>? Documentos {  get; set; }
+        public virtual ICollection<Matricula>? Matriculas { get; set; }
 
 
     }

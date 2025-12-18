@@ -1,40 +1,38 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TicketsAPI.DTO;
-using TicketsAPI.Entities;
+﻿using TicketsAPI.DTO;
 using TicketsAPI.Interfaces;
 
 namespace TicketsAPI.Repository
 {
-    public class ParaleloRepository : IParalelo
+    public class AnioLectivoRepository : IAnioLectiivo
     {
-
         private readonly ApplicationDbContext _context;
-        public ParaleloRepository(ApplicationDbContext context)
+
+        public AnioLectivoRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public Task<bool> CrearParalelo(ParaleloDTO paralelo)
+        public Task<bool> CrearAnioLectivo(AnioLectivoDTO anioLectivoDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> EditarParalelo(ParaleloDTO paralelo)
+        public Task<bool> EditarAnioLectivo(AnioLectivoDTO anioLectivoDTO)
         {
             throw new NotImplementedException();
         }
 
-        public Task<bool> EliminarParalelo(long id)
+        public Task<bool> EliminarAnioLectivo(long id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<ParaleloDTO> GetParalelo(long id)
+        public Task<List<AnioLectivoDTO>> GetAllAnioLectivo()
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<ParaleloDTO>> GetParaleloList()
+        public Task<AnioLectivoDTO> GetAnioLectivoById(long id)
         {
             throw new NotImplementedException();
         }
