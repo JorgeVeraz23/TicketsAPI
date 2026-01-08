@@ -16,7 +16,7 @@ namespace TicketsAPI.Controllers
             _materia = materia;
         }
         // Crear materia
-        [HttpPost]
+        [HttpPost("CrearMateria")]
         public async Task<IActionResult> CrearMateria([FromBody] MateriaDTO materiaDto)
         {
             try
@@ -31,7 +31,7 @@ namespace TicketsAPI.Controllers
         }
 
         // Obtener materia por ID
-        [HttpGet("{id}")]
+        [HttpGet("ObtenerMateria")]
         public async Task<IActionResult> ObtenerMateriaPorId(int id)
         {
             try
@@ -49,8 +49,17 @@ namespace TicketsAPI.Controllers
             }
         }
 
+
+        // GET: api/Materia/GetAllMaterias?idGrado=3
+        [HttpGet("GetAllMaterias")]
+        public async Task<IActionResult> GetAllMaterias([FromQuery] long? idGrado)
+        {
+            var materias = await _materia.GetAllMaterias(idGrado);
+            return Ok(materias);
+        }
+
         // Obtener todas las materias de un grado
-        [HttpGet("grado/{gradoId}")]
+        [HttpGet("ObtenerMateriaPorGrado")]
         public async Task<IActionResult> ObtenerMateriasPorGrado(int gradoId)
         {
             try
@@ -65,7 +74,7 @@ namespace TicketsAPI.Controllers
         }
 
         // Actualizar materia
-        [HttpPut("{id}")]
+        [HttpPut("ActualizarMateria")]
         public async Task<IActionResult> ActualizarMateria(int id, [FromBody] MateriaDTO materiaDto)
         {
             try
@@ -84,7 +93,7 @@ namespace TicketsAPI.Controllers
         }
 
         // Eliminar materia
-        [HttpDelete("{id}")]
+        [HttpDelete("EliminarMateria")]
         public async Task<IActionResult> EliminarMateria(int id)
         {
             try

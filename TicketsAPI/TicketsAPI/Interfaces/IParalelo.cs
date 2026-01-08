@@ -4,10 +4,21 @@ namespace TicketsAPI.Interfaces
 {
     public interface IParalelo
     {
-        public Task<ParaleloDTO> GetParalelo(long id);
-        public Task<List<ParaleloDTO>> GetParaleloList();
-        public Task<bool> CrearParalelo(ParaleloDTO paralelo);
-        public Task<bool> EditarParalelo(ParaleloDTO paralelo);
-        public Task<bool> EliminarParalelo(long id);
+        // Crear un nuevo paralelo
+        Task<ParaleloResponseDto> CrearParaleloAsync(ParaleloDTO paraleloDto);
+
+        // Obtener un paralelo por su ID
+        Task<ParaleloResponseDto> ObtenerParaleloPorIdAsync(long id);
+        Task<List<KeyValueDTO>> SelectorParalelo();
+
+
+        // Obtener todos los paralelos
+        Task<List<ParaleloResponseDto>> ObtenerParalelosAsync();
+
+        // Actualizar un paralelo existente
+        Task<bool> ActualizarParaleloAsync(long id, ParaleloDTO paraleloDto);
+
+        // Eliminar un paralelo por su ID
+        Task<bool> EliminarParaleloAsync(long id);
     }
 }

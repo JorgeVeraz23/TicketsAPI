@@ -14,29 +14,104 @@ namespace TicketsAPI.Repository
             _context = context;
         }
 
-        public Task<bool> CrearParalelo(ParaleloDTO paralelo)
+
+        // Crear paralelo
+        public async Task<ParaleloResponseDto> CrearParaleloAsync(ParaleloDTO paraleloDto)
         {
-            throw new NotImplementedException();
+            var paralelo = new Paralelo
+            {
+                Nombre = paraleloDto.Nombre,
+                IsActive = true,  // Asignar IsActive como true
+                FechaCreacion = DateTime.UtcNow,
+                UsuarioCreacion = "SYSTEM"
+            };
+
+            _context.Paralelos.Add(paralelo);
+            await _context.SaveChangesAsync();
+
+            return new ParaleloResponseDto
+            {
+                Id = paralelo.Id,
+                Nombre = paralelo.Nombre
+            };
         }
 
-        public Task<bool> EditarParalelo(ParaleloDTO paralelo)
+        // Obtener paralelo por ID
+        public async Task<ParaleloResponseDto> ObtenerParaleloPorIdAsync(long id)
         {
-            throw new NotImplementedException();
+            var paralelo = await _context.Paralelos
+                .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (paralelo == null)
+            {
+                return null;
+            }
+
+            return new ParaleloResponseDto
+            {
+                Id = paralelo.Id,
+                Nombre = paralelo.Nombre
+            };
         }
 
-        public Task<bool> EliminarParalelo(long id)
+        // Obtener todos los paralelos
+        public async Task<List<ParaleloResponseDto>> ObtenerParalelosAsync()
         {
-            throw new NotImplementedException();
+            var paralelos = await _context.Paralelos.Where(x => x.IsActive == true).ToListAsync();
+
+            return paralelos.Select(p => new ParaleloResponseDto
+            {
+                Id = p.Id,
+                Nombre = p.Nombre
+            }).ToList();
         }
 
-        public Task<ParaleloDTO> GetParalelo(long id)
+        // Actualizar paralelo
+        public async Task<bool> ActualizarParaleloAsync(long id, ParaleloDTO paraleloDto)
         {
-            throw new NotImplementedException();
+            var paralelo = await _context.Paralelos.FindAsync(id);
+
+            if (paralelo == null)
+            {
+                return false;
+            }
+
+            paralelo.Nombre = paraleloDto.Nombre;
+            paralelo.FechaModificacion = DateTime.UtcNow;
+            paralelo.UsuarioModificacion = "SYSTEM";
+            paralelo.IsActive = true;  // Asignar IsActive como true al actualizar
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<List<ParaleloDTO>> GetParaleloList()
+        // Eliminar paralelo
+        public async Task<bool> EliminarParaleloAsync(long id)
         {
-            throw new NotImplementedException();
+            var paralelo = await _context.Paralelos.FindAsync(id);
+
+            if (paralelo == null)
+            {
+                return false;
+            }
+
+            paralelo.IsActive = false;
+
+            await _context.SaveChangesAsync();
+            return true;
+        }
+
+        public async Task<List<KeyValueDTO>> SelectorParalelo()
+        {
+            var paralelos = await _context.Paralelos
+                .Where(p => p.IsActive == true)
+                .Select(p => new KeyValueDTO
+                {
+                    Key = p.Id,
+                    Value = p.Nombre
+                }).ToListAsync();
+
+            return paralelos;
         }
     }
 }

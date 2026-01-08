@@ -39,4 +39,15 @@ namespace TicketsAPI.DTO
         public int Nivel { get; set; }
     }
 
+    public class EstudianteSearchDto
+    {
+        public long Id { get; set; }
+        public string Nombre { get; set; }
+        public string Cedula { get; set; }
+        public string Representante { get; set; }
+        public string Telefono { get; set; }
+        public string Correo { get; set; }
+        public int Nivel { get; set; }
+    }
+
 }

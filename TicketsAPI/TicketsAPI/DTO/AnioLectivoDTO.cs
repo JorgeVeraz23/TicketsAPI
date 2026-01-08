@@ -5,4 +5,5 @@
         public long Id { get; set; }
         public string Periodo { get; set; }
     }
+
 }

@@ -1,8 +1,93 @@
-﻿using TicketsAPI.Interfaces;
+﻿using Microsoft.EntityFrameworkCore;
+using TicketsAPI.DTO;
+using TicketsAPI.Entities;
+using TicketsAPI.Interfaces;
 
 namespace TicketsAPI.Repository
 {
     public class MatriculaRepository : IMatricula
     {
+        private readonly ApplicationDbContext _context;
+
+        public MatriculaRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<MatriculaResponseDto> CrearMatriculaAsync(CrearMatriculaDto dto)
+        {
+            await using var tx = await _context.Database.BeginTransactionAsync();
+
+            // 1) valida estudiante
+            var estudiante = await _context.Estudiantes
+                .Where(e => e.IsActive == true && e.Id == dto.EstudianteId)
+                .FirstOrDefaultAsync();
+
+            if (estudiante == null)
+                throw new Exception("Estudiante no existe o está inactivo.");
+
+            // 2) valida oferta (grado-paralelo)
+            var oferta = await _context.GradoParalelos
+                .Include(x => x.Grado)
+                .Include(x => x.Paralelo)
+                .Include(x => x.AnioLectivo)
+                .Where(x => x.IsActive == true && x.Id == dto.GradoParaleloId)
+                .FirstOrDefaultAsync();
+
+            if (oferta == null)
+                throw new Exception("La oferta (Grado/Paralelo/Año) no existe o está inactiva.");
+
+            // 3) evita duplicado por año lectivo (RECOMENDADO)
+            var yaMatriculado = await _context.Matriculas.AnyAsync(m =>
+                m.IsActive == true &&
+                m.EstudianteId == dto.EstudianteId &&
+                m.GradoParalelo.AnioLectivoId == oferta.AnioLectivoId &&
+                m.EstadoMatricula != "Anulada"
+            );
+
+            if (yaMatriculado)
+                throw new Exception("El estudiante ya tiene una matrícula en este año lectivo.");
+
+            // 4) cupos disponibles = cupos - confirmadas
+            var confirmadas = await _context.Matriculas.CountAsync(m =>
+                m.IsActive == true &&
+                m.GradoParaleloId == dto.GradoParaleloId &&
+                m.EstadoMatricula == "Confirmada"
+            );
+
+            var disponibles = oferta.Cupos - confirmadas;
+            if (disponibles <= 0)
+                throw new Exception("No hay cupos disponibles para este grado/paralelo.");
+
+            // 5) crea matrícula en estado Pendiente (o Confirmada si ya quieres ocupar cupo)
+            var matricula = new Matricula
+            {
+                EstudianteId = dto.EstudianteId,
+                GradoParaleloId = dto.GradoParaleloId,
+                EstadoMatricula = "Pendiente",
+                FechaMatricula = DateTime.UtcNow,
+                FechaConfirmacion = DateTime.UtcNow, // si no confirmas aún, deja null (si tu campo permite null)
+                PagoEstado = "Pendiente",
+                IsActive = true
+            };
+
+            _context.Matriculas.Add(matricula);
+            await _context.SaveChangesAsync();
+            await tx.CommitAsync();
+
+            return new MatriculaResponseDto
+            {
+                Id = matricula.Id,
+                EstudianteId = estudiante.Id,
+                EstudianteNombre = estudiante.Nombre,
+                GradoParaleloId = oferta.Id,
+                GradoNombre = oferta.Grado.Nombre,
+                ParaleloNombre = oferta.Paralelo.Nombre,
+                Periodo = oferta.AnioLectivo.Periodo,
+                EstadoMatricula = matricula.EstadoMatricula,
+                FechaMatricula = matricula.FechaMatricula
+            };
+        }
     }
+
 }

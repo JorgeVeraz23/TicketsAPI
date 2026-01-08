@@ -10,17 +10,19 @@ namespace TicketsAPI.Interfaces
             Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteDTO estudianteDto);
 
             // Obtener un estudiante por su ID
-            Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(int id);
+            Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(long id);
 
             // Obtener todos los estudiantes
             Task<List<EstudianteResponseDto>> ObtenerTodosEstudiantesAsync();
 
             // Actualizar los detalles de un estudiante
-            Task<bool> ActualizarEstudianteAsync(int id, EstudianteDTO estudianteDto);
+            Task<bool> ActualizarEstudianteAsync(long id, EstudianteDTO estudianteDto);
 
             // Eliminar un estudiante por su ID
-            Task<bool> EliminarEstudianteAsync(int id);
-        
+            Task<bool> EliminarEstudianteAsync(long id);
+            Task<List<EstudianteSearchDto>> SearchAsync(string query, int take = 10);
+
+
 
     }
 }

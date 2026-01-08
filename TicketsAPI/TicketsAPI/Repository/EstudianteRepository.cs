@@ -56,11 +56,11 @@ namespace TicketsAPI.Repository
         }
 
         // Obtener estudiante por ID
-        public async Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(int id)
+        public async Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(long id)
         {
             try
             {
-                var estudiante = await _context.Estudiantes
+                var estudiante = await _context.Estudiantes.Where(x => x.IsActive == true)
                     .FirstOrDefaultAsync(e => e.Id == id);
 
                 if (estudiante == null)
@@ -93,7 +93,7 @@ namespace TicketsAPI.Repository
         {
             try
             {
-                var estudiantes = await _context.Estudiantes.ToListAsync();
+                var estudiantes = await _context.Estudiantes.Where(x => x.IsActive == true).ToListAsync();
 
                 // Mapear las entidades a DTOs
                 return estudiantes.Select(estudiante => new EstudianteResponseDto
@@ -104,7 +104,7 @@ namespace TicketsAPI.Repository
                     Representante = estudiante.Representante,
                     Telefono = estudiante.Telefono,
                     Correo = estudiante.Correo,
-                    Nivel = estudiante.Nivel
+                    Nivel = estudiante.Nivel   
                 }).ToList();
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace TicketsAPI.Repository
         }
 
         // Actualizar estudiante
-        public async Task<bool> ActualizarEstudianteAsync(int id, EstudianteDTO estudianteDto)
+        public async Task<bool> ActualizarEstudianteAsync(long id, EstudianteDTO estudianteDto)
         {
             try
             {
@@ -133,6 +133,9 @@ namespace TicketsAPI.Repository
                 estudiante.Telefono = estudianteDto.Telefono;
                 estudiante.Correo = estudianteDto.Correo;
                 estudiante.Nivel = estudianteDto.Nivel;
+                estudiante.FechaModificacion = DateTime.UtcNow;
+                estudiante.UsuarioModificacion = "SYSTEM";
+               
 
                 await _context.SaveChangesAsync();
                 return true;
@@ -146,7 +149,7 @@ namespace TicketsAPI.Repository
         }
 
         // Eliminar estudiante
-        public async Task<bool> EliminarEstudianteAsync(int id)
+        public async Task<bool> EliminarEstudianteAsync(long id)
         {
             try
             {
@@ -157,7 +160,9 @@ namespace TicketsAPI.Repository
                     return false;
                 }
 
-                _context.Estudiantes.Remove(estudiante);
+
+                estudiante.IsActive = false;
+
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -167,6 +172,45 @@ namespace TicketsAPI.Repository
                 // Logger.LogError(ex, "Error al eliminar el estudiante");
                 throw new Exception($"Hubo un problema al eliminar el estudiante con ID {id}.", ex);
             }
+        }
+
+        public async Task<List<EstudianteSearchDto>> SearchAsync(string query, int take = 10)
+        {
+            query = (query ?? "").Trim();
+
+            if (query.Length < 2)
+                return new List<EstudianteSearchDto>(); // evita spam al backend
+
+            var q = _context.Estudiantes
+                .AsNoTracking()
+                .Where(e => e.IsActive == true);
+
+            // Si el usuario escribe solo números, prioriza búsqueda por cédula
+            var isNumeric = query.All(char.IsDigit);
+
+            if (isNumeric)
+            {
+                q = q.Where(e => e.Cedula.Contains(query));
+            }
+            else
+            {
+                q = q.Where(e => e.Nombre.Contains(query) || e.Cedula.Contains(query));
+            }
+
+            return await q
+                .OrderBy(e => e.Nombre)
+                .Take(take)
+                .Select(e => new EstudianteSearchDto
+                {
+                    Id = e.Id,
+                    Nombre = e.Nombre,
+                    Cedula = e.Cedula,
+                    Representante = e.Representante,
+                    Telefono = e.Telefono,
+                    Correo = e.Correo,
+                    Nivel = e.Nivel
+                })
+                .ToListAsync();
         }
     }
 }

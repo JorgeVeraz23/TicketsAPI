@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketsAPI.DTO;
 using TicketsAPI.Interfaces;
@@ -17,13 +18,14 @@ namespace TicketsAPI.Controllers
             _estudianteRepository = estudianteRepository;
         }
 
-        [HttpPost]
+        [Authorize(Roles = "Administrador")]
+        [HttpPost("CrearEstudiante")]
         public async Task<IActionResult> CrearEstudiante([FromBody] EstudianteDTO estudianteDto)
         {
             try
             {
                 var estudiante = await _estudianteRepository.CrearEstudianteAsync(estudianteDto);
-                return CreatedAtAction(nameof(ObtenerEstudiantePorId), new { id = estudiante.Id }, estudiante);
+                return Ok(estudiante);
             }
             catch (Exception ex)
             {
@@ -31,8 +33,8 @@ namespace TicketsAPI.Controllers
             }
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> ObtenerEstudiantePorId(int id)
+        [HttpGet("ObtenerEstudiante")]
+        public async Task<IActionResult> ObtenerEstudiantePorId(long id)
         {
             try
             {
@@ -49,7 +51,7 @@ namespace TicketsAPI.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("GetAllEstudiantes")]
         public async Task<IActionResult> ObtenerTodosEstudiantes()
         {
             try
@@ -63,8 +65,8 @@ namespace TicketsAPI.Controllers
             }
         }
 
-        [HttpPut("{id}")]
-        public async Task<IActionResult> ActualizarEstudiante(int id, [FromBody] EstudianteDTO estudianteDto)
+        [HttpPut("ActualizarEstudiante")]
+        public async Task<IActionResult> ActualizarEstudiante(long id, [FromBody] EstudianteDTO estudianteDto)
         {
             try
             {
@@ -73,7 +75,7 @@ namespace TicketsAPI.Controllers
                 {
                     return NotFound();
                 }
-                return NoContent();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -81,8 +83,8 @@ namespace TicketsAPI.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> EliminarEstudiante(int id)
+        [HttpDelete("EliminarEstudiante")]
+        public async Task<IActionResult> EliminarEstudiante(long id)
         {
             try
             {
@@ -91,12 +93,20 @@ namespace TicketsAPI.Controllers
                 {
                     return NotFound();
                 }
-                return NoContent();
+                return Ok(result);
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Error al eliminar el estudiante: {ex.Message}");
             }
         }
+
+        [HttpGet("Search")]
+        public async Task<IActionResult> Search([FromQuery] string query, [FromQuery] int take = 10)
+        {
+            var result = await _estudianteRepository.SearchAsync(query, take);
+            return Ok(result);
+        }
+
     }
 }

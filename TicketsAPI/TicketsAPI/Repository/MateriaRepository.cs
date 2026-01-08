@@ -44,7 +44,7 @@ namespace TicketsAPI.Repository
         }
 
         // Obtener materia por ID
-        public async Task<MateriaResponseDto> ObtenerMateriaPorIdAsync(int id)
+        public async Task<MateriaResponseDto> ObtenerMateriaPorIdAsync(long id)
         {
             var materia = await _context.Materias
                 .Include(m => m.Grado)
@@ -63,7 +63,7 @@ namespace TicketsAPI.Repository
         }
 
         // Obtener todas las materias por grado
-        public async Task<List<MateriaResponseDto>> ObtenerMateriasPorGradoAsync(int gradoId)
+        public async Task<List<MateriaResponseDto>> ObtenerMateriasPorGradoAsync(long gradoId)
         {
             var materias = await _context.Materias
                 .Where(m => m.GradoId == gradoId)
@@ -81,7 +81,7 @@ namespace TicketsAPI.Repository
         }
 
         // Actualizar materia
-        public async Task<bool> ActualizarMateriaAsync(int id, MateriaDTO materiaDto)
+        public async Task<bool> ActualizarMateriaAsync(long id, MateriaDTO materiaDto)
         {
             var materia = await _context.Materias.FindAsync(id);
 
@@ -98,7 +98,7 @@ namespace TicketsAPI.Repository
         }
 
         // Eliminar materia
-        public async Task<bool> EliminarMateriaAsync(int id)
+        public async Task<bool> EliminarMateriaAsync(long id)
         {
             var materia = await _context.Materias.FindAsync(id);
 
@@ -110,6 +110,32 @@ namespace TicketsAPI.Repository
             _context.Materias.Remove(materia);
             await _context.SaveChangesAsync();
             return true;
+        }
+
+      public async Task<List<MateriaResponseDto>> GetAllMaterias(long? idGrado)
+{
+    var query =
+        from m in _context.Materias.AsNoTracking()
+        join g in _context.Grados.AsNoTracking() on m.GradoId equals g.Id
+        where m.IsActive == true
+        select new { m, g };
+
+    if (idGrado.HasValue)
+        query = query.Where(x => x.m.GradoId == idGrado.Value);
+
+    return await query.Select(x => new MateriaResponseDto
+    {
+        Id = x.m.Id,
+        Nombre = x.m.Nombre,
+        GradoId = x.m.GradoId,
+        GradoNombre = x.g.Nombre
+    }).ToListAsync();
+}
+
+
+        public Task<List<KeyValueDTO>> SelectorMateria()
+        {
+            throw new NotImplementedException();
         }
     }
 }

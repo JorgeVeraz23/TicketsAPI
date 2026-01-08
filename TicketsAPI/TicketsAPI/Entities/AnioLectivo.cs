@@ -10,6 +10,6 @@ namespace TicketsAPI.Entities
         [Required]
         [MaxLength(10)]
         public string Periodo { get; set; }
-        public  virtual ICollection<MateriaParalelo>? MateriaParalelos { get; set; }
+        public  virtual ICollection<GradoParalelo>? MateriaParalelos { get; set; }
     }
 }

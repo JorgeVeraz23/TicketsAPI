@@ -12,8 +12,8 @@ using TicketsAPI;
 namespace TicketsAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251218173936_matriculas-dos")]
-    partial class matriculasdos
+    [Migration("20260108051714_remake-db")]
+    partial class remakedb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,139 @@ namespace TicketsAPI.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
 
             modelBuilder.Entity("TicketsAPI.Entities.AnioLectivo", b =>
                 {
@@ -62,6 +195,74 @@ namespace TicketsAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AnioLectivo");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Documento", b =>
@@ -214,6 +415,58 @@ namespace TicketsAPI.Migrations
                     b.ToTable("Grados");
                 });
 
+            modelBuilder.Entity("TicketsAPI.Entities.GradoParalelo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AnioLectivoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<int>("Cupos")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long>("GradoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<long>("ParaleloId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnioLectivoId");
+
+                    b.HasIndex("GradoId");
+
+                    b.HasIndex("ParaleloId");
+
+                    b.ToTable("GradoParalelos");
+                });
+
             modelBuilder.Entity("TicketsAPI.Entities.Materia", b =>
                 {
                     b.Property<long>("Id")
@@ -257,58 +510,6 @@ namespace TicketsAPI.Migrations
                     b.ToTable("Materias");
                 });
 
-            modelBuilder.Entity("TicketsAPI.Entities.MateriaParalelo", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("AnioLectivoId")
-                        .HasColumnType("bigint");
-
-                    b.Property<int>("Cupos")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaEliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaModificacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("MateriaId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ParaleloId")
-                        .HasColumnType("bigint");
-
-                    b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnioLectivoId");
-
-                    b.HasIndex("MateriaId");
-
-                    b.HasIndex("ParaleloId");
-
-                    b.ToTable("MateriaParalelos");
-                });
-
             modelBuilder.Entity("TicketsAPI.Entities.Matricula", b =>
                 {
                     b.Property<long>("Id")
@@ -343,11 +544,11 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaPago")
                         .HasColumnType("datetime2");
 
+                    b.Property<long>("GradoParaleloId")
+                        .HasColumnType("bigint");
+
                     b.Property<bool?>("IsActive")
                         .HasColumnType("bit");
-
-                    b.Property<long>("MateriaParaleloId")
-                        .HasColumnType("bigint");
 
                     b.Property<string>("PagoEstado")
                         .IsRequired()
@@ -367,7 +568,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasIndex("EstudianteId");
 
-                    b.HasIndex("MateriaParaleloId");
+                    b.HasIndex("GradoParaleloId");
 
                     b.ToTable("Matriculas");
                 });
@@ -459,36 +660,55 @@ namespace TicketsAPI.Migrations
                     b.ToTable("Paralelos");
                 });
 
-            modelBuilder.Entity("TicketsAPI.Entities.Rol", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Rols");
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("TicketsAPI.Entities.Usuario", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.HasOne("TicketsAPI.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<string>("Contrasenia")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("TicketsAPI.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasKey("Id");
+                    b.HasOne("TicketsAPI.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
 
-                    b.ToTable("Usuarios");
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("TicketsAPI.Entities.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Documento", b =>
@@ -502,18 +722,7 @@ namespace TicketsAPI.Migrations
                     b.Navigation("Estudiante");
                 });
 
-            modelBuilder.Entity("TicketsAPI.Entities.Materia", b =>
-                {
-                    b.HasOne("TicketsAPI.Entities.Grado", "Grado")
-                        .WithMany("Materias")
-                        .HasForeignKey("GradoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Grado");
-                });
-
-            modelBuilder.Entity("TicketsAPI.Entities.MateriaParalelo", b =>
+            modelBuilder.Entity("TicketsAPI.Entities.GradoParalelo", b =>
                 {
                     b.HasOne("TicketsAPI.Entities.AnioLectivo", "AnioLectivo")
                         .WithMany("MateriaParalelos")
@@ -521,9 +730,9 @@ namespace TicketsAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TicketsAPI.Entities.Materia", "Materia")
-                        .WithMany("MateriaParalelos")
-                        .HasForeignKey("MateriaId")
+                    b.HasOne("TicketsAPI.Entities.Grado", "Grado")
+                        .WithMany()
+                        .HasForeignKey("GradoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -535,9 +744,20 @@ namespace TicketsAPI.Migrations
 
                     b.Navigation("AnioLectivo");
 
-                    b.Navigation("Materia");
+                    b.Navigation("Grado");
 
                     b.Navigation("Paralelo");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Materia", b =>
+                {
+                    b.HasOne("TicketsAPI.Entities.Grado", "Grado")
+                        .WithMany("Materias")
+                        .HasForeignKey("GradoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Grado");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Matricula", b =>
@@ -548,15 +768,15 @@ namespace TicketsAPI.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TicketsAPI.Entities.MateriaParalelo", "MateriaParalelo")
+                    b.HasOne("TicketsAPI.Entities.GradoParalelo", "GradoParalelo")
                         .WithMany()
-                        .HasForeignKey("MateriaParaleloId")
+                        .HasForeignKey("GradoParaleloId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Estudiante");
 
-                    b.Navigation("MateriaParalelo");
+                    b.Navigation("GradoParalelo");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Pago", b =>
@@ -585,11 +805,6 @@ namespace TicketsAPI.Migrations
             modelBuilder.Entity("TicketsAPI.Entities.Grado", b =>
                 {
                     b.Navigation("Materias");
-                });
-
-            modelBuilder.Entity("TicketsAPI.Entities.Materia", b =>
-                {
-                    b.Navigation("MateriaParalelos");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.Paralelo", b =>

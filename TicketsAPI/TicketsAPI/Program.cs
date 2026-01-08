@@ -1,97 +1,170 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Text;
 using System.Text.Json.Serialization;
 using TicketsAPI;
+using TicketsAPI.Entities;
 using TicketsAPI.Interfaces;
 using TicketsAPI.Repository;
+using TicketsAPI.Services;
 using static TicketsAPI.Interfaces.IEstudiante;
-
-
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
+// ============================
+// Controllers + JSON Enum as string
+// ============================
 builder.Services.AddControllers().AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
 
-
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-
-    );
-
-// Agregar política de CORS
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowReactApp",
-        policy =>
-        {
-            policy.WithOrigins(["http://localhost:5173", "http://localhost:3000"]) // URL de tu aplicación React
-                  .AllowAnyHeader()
-                  .AllowAnyMethod();
-        });
-});
-
-
-
-builder.Services.AddScoped<IEstudiante, EstudianteRepository>();
-builder.Services.AddScoped<IAnioLectiivo, AnioLectivoRepository>();
-builder.Services.AddScoped<IMateria, MateriaRepository>();
-builder.Services.AddScoped<IMatricula, MatriculaRepository>();
-builder.Services.AddScoped<IParalelo, ParaleloRepository>();
-// Agregar servicios al contenedor.
-builder.Services.AddControllers().AddJsonOptions(options =>
-{
-    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
-
-
-// Agregar el contexto de la base de datos
+// ============================
+// DB Context
+// ============================
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
-
-builder.Services.AddEndpointsApiExplorer();
-
-
-builder.Services.AddSwaggerGen(options =>
+// ============================
+// CORS
+// ============================
+builder.Services.AddCors(options =>
 {
-    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    options.AddPolicy("AllowReactApp", policy =>
     {
-        Title = "Matriculas AMA",  // Cambia esto por el nombre que desees
-        Version = "v1",
-        Description = "Sistema de gestion de matriculas para plantel educativo"
+        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
     });
 });
 
+// ============================
+// Repositories DI
+// ============================
+builder.Services.AddScoped<IEstudiante, EstudianteRepository>();
+builder.Services.AddScoped<IAnioLectiivo, AnioLectivoRepository>();
+builder.Services.AddScoped<IMateria, MateriaRepository>();
+builder.Services.AddScoped<IMatricula, MatriculaRepository>();
+builder.Services.AddScoped<IGrado, GradoRepository>();
+builder.Services.AddScoped<IParalelo, ParaleloRepository>();
+builder.Services.AddScoped<IGradoParalelo, OfertaRepository>();
 
+builder.Services.AddScoped<JwtTokenService>();
+
+// ============================
+// Identity
+// ============================
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+    options.Password.RequireDigit = true;
+    options.Password.RequiredLength = 6;
+    options.Password.RequireNonAlphanumeric = false;
+    options.Password.RequireUppercase = false;
+
+    options.User.RequireUniqueEmail = false;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
+
+// ============================
+// JWT Authentication + Authorization
+// ============================
+builder.Services.AddAuthorization();
+
+var jwtSection = builder.Configuration.GetSection("Jwt");
+var jwtKey = jwtSection["Key"];
+
+if (string.IsNullOrWhiteSpace(jwtKey))
+{
+    throw new InvalidOperationException("Falta configurar Jwt:Key en appsettings.json");
+}
+
+var keyBytes = Encoding.UTF8.GetBytes(jwtKey);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.RequireHttpsMetadata = true;
+    options.SaveToken = true;
+
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidIssuer = jwtSection["Issuer"],
+
+        ValidateAudience = true,
+        ValidAudience = jwtSection["Audience"],
+
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(keyBytes),
+
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.FromSeconds(30)
+    };
+});
+
+// ============================
+// Swagger + Bearer
+// ============================
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "TicketsAPI", Version = "v1" });
+
+    c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "Pega SOLO el token JWT (sin escribir Bearer)."
+    });
+
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
+        }
+    });
+});
 
 var app = builder.Build();
 
-// Usar la política de CORS configurada
+// ============================
+// Middleware pipeline
+// ============================
+
+// CORS
 app.UseCors("AllowReactApp");
 
-app.UseStaticFiles(); // Permite servir archivos estáticos
+// Static files
+app.UseStaticFiles();
 
-// Agrega esta línea para especificar la carpeta "uploads"
+// uploads folder
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "uploads")),
     RequestPath = "/uploads"
 });
 
-
-// Configure the HTTP request pipeline.
+// Swagger in Development
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -100,7 +173,41 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
+
+// ============================
+// Seed (roles + admin) + Apply migrations
+// ============================
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await db.Database.MigrateAsync();
+
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+    if (!await roleManager.RoleExistsAsync("Admin"))
+        await roleManager.CreateAsync(new IdentityRole("Admin"));
+
+    // (Opcional) rol default
+    if (!await roleManager.RoleExistsAsync("User"))
+        await roleManager.CreateAsync(new IdentityRole("User"));
+
+    var admin = await userManager.FindByNameAsync("admin");
+    if (admin == null)
+    {
+        admin = new ApplicationUser
+        {
+            UserName = "admin",
+            Email = "admin@local.test",
+            IsActive = true
+        };
+
+        await userManager.CreateAsync(admin, "Admin123!");
+        await userManager.AddToRoleAsync(admin, "Admin");
+    }
+}
 
 app.MapControllers();
 
