@@ -88,6 +88,48 @@ namespace TicketsAPI.Repository
                 FechaMatricula = matricula.FechaMatricula
             };
         }
+
+        public async Task<List<MatriculaResponseDto>> GetAll(string? periodo)
+        {
+            IQueryable<Matricula> query = _context.Matriculas
+                .AsNoTracking()
+                .Where(m => m.IsActive == true);
+
+            // ✅ FILTRO ANTES DE LOS INCLUDE
+            if (!string.IsNullOrEmpty(periodo))
+            {
+                query = query.Where(m =>
+                    m.GradoParalelo.AnioLectivo.Periodo == periodo
+                );
+            }
+
+            // ✅ INCLUDES DESPUÉS
+            query = query
+                .Include(m => m.Estudiante)
+                .Include(m => m.GradoParalelo)
+                    .ThenInclude(gp => gp.Grado)
+                .Include(m => m.GradoParalelo)
+                    .ThenInclude(gp => gp.Paralelo);
+
+            return await query
+                .OrderByDescending(m => m.FechaMatricula)
+                .Select(m => new MatriculaResponseDto
+                {
+                    Id = m.Id,
+                    EstudianteId = m.EstudianteId,
+                    EstudianteNombre = m.Estudiante.Nombre + " " + m.Estudiante.Apellido,
+
+                    GradoParaleloId = m.GradoParaleloId,
+                    GradoNombre = m.GradoParalelo.Grado.Nombre,
+                    ParaleloNombre = m.GradoParalelo.Paralelo.Nombre,
+                    Periodo = m.GradoParalelo.AnioLectivo.Periodo,
+
+                    EstadoMatricula = m.EstadoMatricula.ToString(),
+                    FechaMatricula = m.FechaMatricula
+                })
+                .ToListAsync();
+        }
+
     }
 
 }

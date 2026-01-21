@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TicketsAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class remakedb : Migration
+    public partial class xd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,6 +18,9 @@ namespace TicketsAPI.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Periodo = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    FechaDesde = table.Column<int>(type: "int", nullable: false),
+                    FechaHasta = table.Column<int>(type: "int", nullable: false),
+                    Vigente = table.Column<bool>(type: "bit", nullable: false),
                     UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),

@@ -48,6 +48,44 @@ namespace TicketsAPI.Repository
             return entity.Id;
         }
 
+        public async Task<List<OfertaDTO>> GetCuposDisponibles(long idEstudiante)
+        {
+
+            var estudiante = await _context.Estudiantes
+                .Where(e => e.Id == idEstudiante && e.IsActive == true)
+                .Select(x => new
+                {
+                    
+                    x.UltimoGradoAprobado
+                }).FirstOrDefaultAsync();
+
+
+            var anioLectivoId = await _context.AnioLectivo.Where(x => x.Vigente == true).Select(c => c.Id).FirstOrDefaultAsync();
+
+            var query = _context.GradoParalelos.Include(x => x.Grado)
+                .Where(x => x.AnioLectivoId == anioLectivoId
+                && x.Grado.Nivel == estudiante!.UltimoGradoAprobado + 1
+                )
+                .Select(x => new OfertaDTO
+                {
+                    gradoParaleloId = x.Id,
+                    paraleloId = x.Paralelo.Id,
+                    disponibles = 0, // se calcula despues
+                    gradoNombre = x.Grado.Nombre,
+                    anioLectivo = x.AnioLectivo.Periodo,
+                    paraleloNombre = x.Paralelo.Nombre,
+                    cupos = x.Cupos,
+                    ocupados = _context.Matriculas.Count(m => m.IsActive == true && m.GradoParaleloId == x.Id)
+                });
+
+            var data = await query.ToListAsync();
+
+            // calcula disponibles en memoria (simple y claro)
+            data.ForEach(d => d.disponibles = d.cupos - d.ocupados);
+
+            return data;
+        }
+
         public async Task<List<OfertaDTO>> GetDisponibles(long anioLectivoId, long gradoId)
         {
             var query = _context.GradoParalelos

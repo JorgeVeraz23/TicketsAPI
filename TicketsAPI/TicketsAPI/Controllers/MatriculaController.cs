@@ -30,6 +30,20 @@ namespace TicketsAPI.Controllers
             }
         }
 
+        [HttpGet("GetAll")]
+        public async Task<IActionResult> GetAll(string? periodo)
+        {
+            try
+            {
+                var result = await _matriculaRepository.GetAll(periodo);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
+        }
+
 
     }
 }

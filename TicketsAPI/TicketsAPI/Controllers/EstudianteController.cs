@@ -18,9 +18,9 @@ namespace TicketsAPI.Controllers
             _estudianteRepository = estudianteRepository;
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Admin")]
         [HttpPost("CrearEstudiante")]
-        public async Task<IActionResult> CrearEstudiante([FromBody] EstudianteDTO estudianteDto)
+        public async Task<IActionResult> CrearEstudiante([FromBody] EstudianteCreateDto estudianteDto)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpPut("ActualizarEstudiante")]
-        public async Task<IActionResult> ActualizarEstudiante(long id, [FromBody] EstudianteDTO estudianteDto)
+        public async Task<IActionResult> ActualizarEstudiante(long id, [FromBody] EstudianteCreateDto estudianteDto)
         {
             try
             {
@@ -105,6 +105,13 @@ namespace TicketsAPI.Controllers
         public async Task<IActionResult> Search([FromQuery] string query, [FromQuery] int take = 10)
         {
             var result = await _estudianteRepository.SearchAsync(query, take);
+            return Ok(result);
+        }
+
+        [HttpGet("SelectorEstudiante")]
+        public async Task<IActionResult> SelectorEstudiante()
+        {
+            var result = await _estudianteRepository.SelectorEstudiante();
             return Ok(result);
         }
 

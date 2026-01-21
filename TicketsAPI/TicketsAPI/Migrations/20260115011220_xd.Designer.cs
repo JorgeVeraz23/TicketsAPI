@@ -12,8 +12,8 @@ using TicketsAPI;
 namespace TicketsAPI.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260108051714_remake-db")]
-    partial class remakedb
+    [Migration("20260115011220_xd")]
+    partial class xd
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -169,8 +169,14 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaCreacion")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("FechaDesde")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("FechaEliminacion")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("FechaHasta")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
@@ -191,6 +197,9 @@ namespace TicketsAPI.Migrations
 
                     b.Property<string>("UsuarioModificacion")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Vigente")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

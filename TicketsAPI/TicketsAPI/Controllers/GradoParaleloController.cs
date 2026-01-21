@@ -28,6 +28,18 @@ namespace TicketsAPI.Controllers
             return Ok(data);
         }
 
+
+        // GET: api/GradoParalelo/Disponibles?anioLectivoId=1&gradoId=2
+        [HttpGet("GetCuposDisponibles")]
+        public async Task<IActionResult> GetCuposDisponibles(long idEstudiante)
+        {
+           
+
+            var data = await _gradoParalelo.GetCuposDisponibles(idEstudiante);
+
+            return Ok(data);
+        }
+
         // POST: api/GradoParalelo/Crear
         [HttpPost("Crear")]
         public async Task<IActionResult> Crear([FromBody] CreateGradoParaleloDto dto)
@@ -49,6 +61,9 @@ namespace TicketsAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
+
 
 
     }

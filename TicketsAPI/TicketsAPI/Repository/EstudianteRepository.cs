@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketsAPI.DTO;
 using TicketsAPI.Entities;
+using TicketsAPI.Enum;
 using TicketsAPI.Interfaces;
 
 namespace TicketsAPI.Repository
@@ -9,183 +10,172 @@ namespace TicketsAPI.Repository
     {
 
         private readonly ApplicationDbContext _context;
+
         public EstudianteRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // Crear estudiante
-        public async Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteDTO estudianteDto)
+        // =========================
+        // CREATE
+        // =========================
+        public async Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto dto)
         {
-            try
-            {
-                var estudiante = new Estudiante
-                {
-                    Nombre = estudianteDto.Nombre,
-                    Cedula = estudianteDto.Cedula,
-                    Representante = estudianteDto.Representante,
-                    Telefono = estudianteDto.Telefono,
-                    Correo = estudianteDto.Correo,
-                    Nivel = estudianteDto.Nivel,
-                    IsActive = true,
-                    FechaCreacion = DateTime.UtcNow,
-                    UsuarioCreacion = "SYSTEM"
-                };
+            // Validar cédula duplicada (activos)
+            var existeCedula = await _context.Estudiantes
+                .AnyAsync(e => e.IsActive == true && e.Cedula == dto.Cedula);
 
-                _context.Estudiantes.Add(estudiante);
-                await _context.SaveChangesAsync();
+            if (existeCedula)
+                throw new Exception("Ya existe un estudiante activo con esa cédula.");
 
-                // Mapear la entidad a DTO
-                return new EstudianteResponseDto
-                {
-                    Id = estudiante.Id,
-                    Nombre = estudiante.Nombre,
-                    Cedula = estudiante.Cedula,
-                    Representante = estudiante.Representante,
-                    Telefono = estudiante.Telefono,
-                    Correo = estudiante.Correo,
-                    Nivel = estudiante.Nivel
-                };
-            }
-            catch (Exception ex)
+            var entity = new Estudiante
             {
-                // Aquí puedes registrar el error
-                // Logger.LogError(ex, "Error al crear el estudiante");
-                throw new Exception("Hubo un problema al crear el estudiante.", ex);
-            }
+                Nombre = dto.Nombre.Trim(),
+                Apellido = dto.Apellido.Trim(),
+                Cedula = dto.Cedula.Trim(),
+                FechaNacimiento = dto.FechaNacimiento,
+
+                Representante = dto.Representante.Trim(),
+                CedulaRepresentante = dto.CedulaRepresentante?.Trim(),
+                TelefonoRepresentante = dto.TelefonoRepresentante?.Trim(),
+                CorreoRepresentante = dto.CorreoRepresentante?.Trim(),
+
+                Telefono = dto.Telefono?.Trim(),
+                Correo = dto.Correo?.Trim(),
+                Direccion = dto.Direccion?.Trim(),
+
+                Nivel = dto.Nivel,
+                UltimoGradoAprobado = dto.UltimoGradoAprobado,
+                Genero = dto.Genero,
+
+                Estado = Enum.EstadoEstudiante.Activo,
+                IsActive = true,
+
+                FechaCreacion = DateTime.UtcNow,
+                UsuarioCreacion = "SYSTEM"
+            };
+
+            _context.Estudiantes.Add(entity);
+            await _context.SaveChangesAsync();
+
+            return MapToResponse(entity);
         }
 
-        // Obtener estudiante por ID
+        // =========================
+        // GET BY ID
+        // =========================
         public async Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(long id)
         {
-            try
-            {
-                var estudiante = await _context.Estudiantes.Where(x => x.IsActive == true)
-                    .FirstOrDefaultAsync(e => e.Id == id);
+            var e = await _context.Estudiantes
+                .AsNoTracking()
+                .Where(x => x.IsActive == true && x.Id == id)
+                .FirstOrDefaultAsync();
 
-                if (estudiante == null)
-                {
-                    return null;
-                }
+            if (e == null) return null;
 
-                // Mapear la entidad a DTO
-                return new EstudianteResponseDto
-                {
-                    Id = estudiante.Id,
-                    Nombre = estudiante.Nombre,
-                    Cedula = estudiante.Cedula,
-                    Representante = estudiante.Representante,
-                    Telefono = estudiante.Telefono,
-                    Correo = estudiante.Correo,
-                    Nivel = estudiante.Nivel
-                };
-            }
-            catch (Exception ex)
-            {
-                // Aquí puedes registrar el error
-                // Logger.LogError(ex, "Error al obtener el estudiante por ID");
-                throw new Exception($"Hubo un problema al obtener el estudiante con ID {id}.", ex);
-            }
+            return MapToResponse(e);
         }
 
-        // Obtener todos los estudiantes
+        // =========================
+        // GET ALL
+        // =========================
         public async Task<List<EstudianteResponseDto>> ObtenerTodosEstudiantesAsync()
         {
-            try
-            {
-                var estudiantes = await _context.Estudiantes.Where(x => x.IsActive == true).ToListAsync();
+            var list = await _context.Estudiantes
+                .AsNoTracking()
+                .Where(x => x.IsActive == true)
+                .OrderByDescending(x => x.Id)
+                .Select(e => MapToResponse(e))
+                .ToListAsync();
 
-                // Mapear las entidades a DTOs
-                return estudiantes.Select(estudiante => new EstudianteResponseDto
-                {
-                    Id = estudiante.Id,
-                    Nombre = estudiante.Nombre,
-                    Cedula = estudiante.Cedula,
-                    Representante = estudiante.Representante,
-                    Telefono = estudiante.Telefono,
-                    Correo = estudiante.Correo,
-                    Nivel = estudiante.Nivel   
-                }).ToList();
-            }
-            catch (Exception ex)
-            {
-                // Aquí puedes registrar el error
-                // Logger.LogError(ex, "Error al obtener todos los estudiantes");
-                throw new Exception("Hubo un problema al obtener todos los estudiantes.", ex);
-            }
+            return list;
         }
 
-        // Actualizar estudiante
-        public async Task<bool> ActualizarEstudianteAsync(long id, EstudianteDTO estudianteDto)
+        // =========================
+        // UPDATE
+        // =========================
+        public async Task<bool> ActualizarEstudianteAsync(long id, EstudianteCreateDto dto)
         {
-            try
+            var entity = await _context.Estudiantes
+                .Where(x => x.IsActive == true && x.Id == id)
+                .FirstOrDefaultAsync();
+
+            if (entity == null) return false;
+
+            // Si cambia la cédula, validar duplicado
+            var cedulaNueva = dto.Cedula.Trim();
+            if (!string.Equals(entity.Cedula, cedulaNueva, StringComparison.OrdinalIgnoreCase))
             {
-                var estudiante = await _context.Estudiantes.FindAsync(id);
+                var existe = await _context.Estudiantes.AnyAsync(e =>
+                    e.IsActive == true &&
+                    e.Cedula == cedulaNueva &&
+                    e.Id != id);
 
-                if (estudiante == null)
-                {
-                    return false;
-                }
-
-                estudiante.Nombre = estudianteDto.Nombre;
-                estudiante.Cedula = estudianteDto.Cedula;
-                estudiante.Representante = estudianteDto.Representante;
-                estudiante.Telefono = estudianteDto.Telefono;
-                estudiante.Correo = estudianteDto.Correo;
-                estudiante.Nivel = estudianteDto.Nivel;
-                estudiante.FechaModificacion = DateTime.UtcNow;
-                estudiante.UsuarioModificacion = "SYSTEM";
-               
-
-                await _context.SaveChangesAsync();
-                return true;
+                if (existe)
+                    throw new Exception("Ya existe otro estudiante activo con esa cédula.");
             }
-            catch (Exception ex)
-            {
-                // Aquí puedes registrar el error
-                // Logger.LogError(ex, "Error al actualizar el estudiante");
-                throw new Exception($"Hubo un problema al actualizar el estudiante con ID {id}.", ex);
-            }
+
+            entity.Nombre = dto.Nombre.Trim();
+            entity.Apellido = dto.Apellido.Trim();
+            entity.Cedula = cedulaNueva;
+            entity.FechaNacimiento = dto.FechaNacimiento;
+
+            entity.Representante = dto.Representante.Trim();
+            entity.CedulaRepresentante = dto.CedulaRepresentante?.Trim();
+            entity.TelefonoRepresentante = dto.TelefonoRepresentante?.Trim();
+            entity.CorreoRepresentante = dto.CorreoRepresentante?.Trim();
+
+            entity.Telefono = dto.Telefono?.Trim();
+            entity.Correo = dto.Correo?.Trim();
+            entity.Direccion = dto.Direccion?.Trim();
+
+            entity.Nivel = dto.Nivel;
+            entity.UltimoGradoAprobado = dto.UltimoGradoAprobado;
+            entity.Genero = dto.Genero;
+
+            entity.FechaModificacion = DateTime.UtcNow;
+            entity.UsuarioModificacion = "SYSTEM";
+
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        // Eliminar estudiante
+        // =========================
+        // DELETE (soft delete)
+        // =========================
         public async Task<bool> EliminarEstudianteAsync(long id)
         {
-            try
-            {
-                var estudiante = await _context.Estudiantes.FindAsync(id);
+            var entity = await _context.Estudiantes
+                .Where(x => x.IsActive == true && x.Id == id)
+                .FirstOrDefaultAsync();
 
-                if (estudiante == null)
-                {
-                    return false;
-                }
+            if (entity == null) return false;
 
+            entity.IsActive = false;
+            entity.Estado = Enum.EstadoEstudiante.Retirado; // opcional
+            entity.FechaEliminacion = DateTime.UtcNow;
+            entity.UsuarioEliminacion = "SYSTEM";
 
-                estudiante.IsActive = false;
-
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                // Aquí puedes registrar el error
-                // Logger.LogError(ex, "Error al eliminar el estudiante");
-                throw new Exception($"Hubo un problema al eliminar el estudiante con ID {id}.", ex);
-            }
+            await _context.SaveChangesAsync();
+            return true;
         }
 
+        // =========================
+        // SEARCH (para matrícula: cédula/nombre/apellido/representante)
+        // =========================
         public async Task<List<EstudianteSearchDto>> SearchAsync(string query, int take = 10)
         {
             query = (query ?? "").Trim();
 
-            if (query.Length < 2)
-                return new List<EstudianteSearchDto>(); // evita spam al backend
+            if (string.IsNullOrWhiteSpace(query))
+                return new List<EstudianteSearchDto>();
 
+            // Búsqueda flexible
             var q = _context.Estudiantes
                 .AsNoTracking()
                 .Where(e => e.IsActive == true);
 
-            // Si el usuario escribe solo números, prioriza búsqueda por cédula
+            // Si es número, prioriza por cédula
             var isNumeric = query.All(char.IsDigit);
 
             if (isNumeric)
@@ -194,23 +184,77 @@ namespace TicketsAPI.Repository
             }
             else
             {
-                q = q.Where(e => e.Nombre.Contains(query) || e.Cedula.Contains(query));
+                q = q.Where(e =>
+                    e.Nombre.Contains(query) ||
+                    e.Apellido.Contains(query) ||
+                    e.Representante.Contains(query) ||
+                    e.Cedula.Contains(query));
             }
 
-            return await q
+            var result = await q
                 .OrderBy(e => e.Nombre)
+                .ThenBy(e => e.Apellido)
                 .Take(take)
                 .Select(e => new EstudianteSearchDto
                 {
                     Id = e.Id,
-                    Nombre = e.Nombre,
                     Cedula = e.Cedula,
                     Representante = e.Representante,
-                    Telefono = e.Telefono,
-                    Correo = e.Correo,
-                    Nivel = e.Nivel
+                    Estado = e.Estado,
+                    NombreCompleto = (e.Nombre + " " + e.Apellido)
+                })
+                .ToListAsync();
+
+            return result;
+        }
+
+        // =========================
+        // MAPPING
+        // =========================
+        private static EstudianteResponseDto MapToResponse(Estudiante e)
+        {
+            return new EstudianteResponseDto
+            {
+                Id = e.Id,
+                Cedula = e.Cedula,
+                FechaNacimiento = e.FechaNacimiento,
+                Edad = DateTime.Today.Year - e.FechaNacimiento.Year -
+                       (e.FechaNacimiento.Date > DateTime.Today.AddYears(-(DateTime.Today.Year - e.FechaNacimiento.Year)) ? 1 : 0),
+
+                NombreCompleto = $"{e.Nombre} {e.Apellido}",
+
+                Representante = e.Representante,
+                CedulaRepresentante = e.CedulaRepresentante,
+                TelefonoRepresentante = e.TelefonoRepresentante,
+                CorreoRepresentante = e.CorreoRepresentante,
+
+                Telefono = e.Telefono,
+                Correo = e.Correo,
+                Direccion = e.Direccion,
+
+                Nivel = e.Nivel,
+                UltimoGradoAprobado = e.UltimoGradoAprobado,
+                Estado = e.Estado,
+                Genero = e.Genero
+            };
+        }
+        public async Task<List<KeyValueDTO>> SelectorEstudiante()
+        {
+            return await _context.Estudiantes
+                .AsNoTracking()
+                .Where(e =>
+                    e.IsActive == true &&
+                    e.Estado == EstadoEstudiante.SinMatricular
+                )
+                .OrderBy(e => e.Apellido)
+                .ThenBy(e => e.Nombre)
+                .Select(e => new KeyValueDTO
+                {
+                    Key = e.Id,
+                    Value = $"{e.Apellido} {e.Nombre} - {e.Cedula}"
                 })
                 .ToListAsync();
         }
+
     }
 }

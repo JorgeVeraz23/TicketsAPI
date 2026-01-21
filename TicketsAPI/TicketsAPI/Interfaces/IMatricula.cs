@@ -5,6 +5,7 @@ namespace TicketsAPI.Interfaces
     public interface IMatricula
     {
         public Task<MatriculaResponseDto> CrearMatriculaAsync(CrearMatriculaDto dto);
+        Task<List<MatriculaResponseDto>> GetAll(string? periodo);
 
 
     }
