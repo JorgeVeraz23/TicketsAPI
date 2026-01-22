@@ -33,7 +33,25 @@ namespace TicketsAPI
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
+
+            modelBuilder.Entity<TipoDocumento>()
+            .HasIndex(x => x.Codigo)
+            .IsUnique();
+
+            modelBuilder.Entity<Documento>()
+                .HasIndex(d => new { d.EstudianteId, d.TipoDocumentoId })
+                .IsUnique()
+                .HasFilter("[IsActive] = 1");
+
+            modelBuilder.Entity<Documento>()
+                .HasOne(d => d.TipoDocumento)
+                .WithMany()
+                .HasForeignKey(d => d.TipoDocumentoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
+
         }
 
         

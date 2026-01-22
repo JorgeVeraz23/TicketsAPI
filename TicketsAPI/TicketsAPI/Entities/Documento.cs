@@ -8,11 +8,41 @@ namespace TicketsAPI.Entities
     {
         [Key]
         public long Id { get; set; }
-        public string Nombre { get; set; }
-        public string Estado { get; set; }
-        public byte[] Archivo { get; set; }
+
+        [Required, MaxLength(200)]
+        public string Nombre { get; set; } = default!;
+
+        [Required, MaxLength(30)]
+        public string Estado { get; set; } = "Pendiente";
+
+        public byte[] Archivo { get; set; } = default!;
         [ForeignKey("Estudiante")]
         public long EstudianteId { get; set; }
-        public virtual Estudiante Estudiante { get; set; }
+        public Estudiante Estudiante { get; set; } = default!;
+
+        // ✅ Relación a TipoDocumento
+        [ForeignKey("TipoDocumento")]
+        public long TipoDocumentoId { get; set; }
+        public TipoDocumento TipoDocumento { get; set; } = default!;
+
+        // ✅ Metadata
+        [MaxLength(100)]
+        public string? MimeType { get; set; }
+
+        [MaxLength(20)]
+        public string? Extension { get; set; }
+
+        public long? TamanoBytes { get; set; }
+
+        public byte[]? HashArchivo { get; set; } // 32 bytes (SHA256)
+
+        [MaxLength(500)]
+        public string? Observacion { get; set; }
+
+        public bool? Aprobado { get; set; }
+        public DateTime? FechaRevision { get; set; }
+
+        [MaxLength(150)]
+        public string? UsuarioRevision { get; set; }
     }
 }
