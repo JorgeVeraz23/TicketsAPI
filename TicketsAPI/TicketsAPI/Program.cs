@@ -35,11 +35,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // ============================
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("http://localhost:5173", "http://localhost:3000")
-              .AllowAnyHeader()
-              .AllowAnyMethod();
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
     });
 });
 
@@ -152,7 +153,8 @@ var app = builder.Build();
 // ============================
 
 // CORS
-app.UseCors("AllowReactApp");
+app.UseCors("AllowAll");
+
 
 // Static files
 app.UseStaticFiles();
