@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketsAPI.DTO;
+using TicketsAPI.Entities;
 using TicketsAPI.Interfaces;
 
 namespace TicketsAPI.Repository
@@ -13,19 +14,65 @@ namespace TicketsAPI.Repository
             _context = context;
         }
 
-        public Task<bool> CrearAnioLectivo(AnioLectivoDTO anioLectivoDTO)
+        public async Task<bool> CrearAnioLectivo(AnioLectivoDTO anioLectivoDTO)
         {
-            throw new NotImplementedException();
+            var anioLectivo = new AnioLectivo
+            {
+                Periodo = anioLectivoDTO.Periodo,
+                IsActive = true,  // Asignar IsActive como true
+                FechaDesde = anioLectivoDTO.FechaDesde.Year,
+                FechaHasta = anioLectivoDTO.FechaHasta.Year,
+                FechaCreacion = DateTime.UtcNow,
+                UsuarioCreacion = "SYSTEM"
+            };
+
+            _context.AnioLectivo.Add(anioLectivo);
+            await _context.SaveChangesAsync();
+
+            return true;
         }
 
-        public Task<bool> EditarAnioLectivo(AnioLectivoDTO anioLectivoDTO)
+        public async Task<bool> EditarAnioLectivo(AnioLectivoDTO anioLectivoDTO)
         {
-            throw new NotImplementedException();
+            var anioLectivo = await _context.AnioLectivo
+               .FirstOrDefaultAsync(p => p.Id == anioLectivoDTO.Id);
+
+            if (anioLectivo == null)
+            {
+                return false;
+            }
+
+            anioLectivo.Periodo = anioLectivoDTO.Periodo;
+            anioLectivo.FechaDesde = anioLectivoDTO.FechaDesde.Year;
+            anioLectivo.FechaHasta = anioLectivoDTO.FechaHasta.Year;
+            anioLectivo.FechaModificacion = DateTime.UtcNow;
+            anioLectivo.UsuarioModificacion = "SYSTEM";
+
+            await _context.SaveChangesAsync();
+
+
+
+            return true;
         }
 
-        public Task<bool> EliminarAnioLectivo(long id)
+        public async Task<bool> EliminarAnioLectivo(long id)
         {
-            throw new NotImplementedException();
+            var anioLectivo = await _context.AnioLectivo
+               .FirstOrDefaultAsync(p => p.Id == id);
+
+            if (anioLectivo == null)
+            {
+                return false;
+            }
+
+            anioLectivo.IsActive = false;
+            anioLectivo.FechaEliminacion = DateTime.UtcNow;
+            anioLectivo.UsuarioEliminacion = "SYSTEM";
+            await _context.SaveChangesAsync();
+
+
+            return true;
+
         }
 
         public Task<List<AnioLectivoDTO>> GetAllAnioLectivo()
@@ -44,7 +91,16 @@ namespace TicketsAPI.Repository
 
         public Task<AnioLectivoDTO> GetAnioLectivoById(long id)
         {
-            throw new NotImplementedException();
+            var anioLectivo = _context.AnioLectivo
+                .Where(a => a.Id == id && a.IsActive == true)
+                .Select(a => new AnioLectivoDTO
+                {
+                    Id = a.Id,
+                    Periodo = a.Periodo,
+                    FechaDesde = new DateTime(a.FechaDesde, 1, 1),
+                    FechaHasta = new DateTime(a.FechaHasta, 1, 1)
+                })
+                .FirstOrDefaultAsync();
         }
 
         public Task<List<KeyValueDTO>> SelectorAnioLectivo()
