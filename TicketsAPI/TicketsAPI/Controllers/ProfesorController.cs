@@ -19,7 +19,7 @@ namespace TicketsAPI.Controllers
         // =========================
         // CREATE
         // =========================
-        [HttpPost]
+        [HttpPost("CrearProfesor")]
         public async Task<IActionResult> Crear([FromBody] ProfesorCreateDto dto)
         {
             var result = await _profesorRepo.CrearProfesorAsync(dto);
@@ -29,7 +29,7 @@ namespace TicketsAPI.Controllers
         // =========================
         // GET BY ID
         // =========================
-        [HttpGet("{id:long}")]
+        [HttpGet("ObtenerPorId")]
         public async Task<IActionResult> ObtenerPorId(long id)
         {
             var result = await _profesorRepo.ObtenerProfesorPorIdAsync(id);
@@ -40,7 +40,7 @@ namespace TicketsAPI.Controllers
         // =========================
         // GET ALL
         // =========================
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<IActionResult> ObtenerTodos()
         {
             var list = await _profesorRepo.ObtenerTodosProfesoresAsync();
@@ -61,7 +61,7 @@ namespace TicketsAPI.Controllers
         // =========================
         // DELETE (soft delete)
         // =========================
-        [HttpDelete("{id:long}")]
+        [HttpDelete("Eliminar")]
         public async Task<IActionResult> Eliminar(long id)
         {
             var ok = await _profesorRepo.EliminarProfesorAsync(id);

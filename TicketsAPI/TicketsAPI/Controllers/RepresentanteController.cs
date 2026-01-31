@@ -14,30 +14,46 @@ namespace TicketsAPI.Controllers
 
         private string UserName => User?.Identity?.Name ?? "system";
 
-        [HttpGet]
-        public async Task<IActionResult> List([FromQuery] string? q, CancellationToken ct)
-            => Ok(await _service.ListAsync(q, ct));
+        [HttpGet("Listar")]
+        public async Task<IActionResult> List(
+     [FromQuery] string? q,
+     CancellationToken ct
+ ) => Ok(await _service.ListAsync(q, ct));
 
-        [HttpGet("{id:long}")]
-        public async Task<IActionResult> Get(long id, CancellationToken ct)
-            => Ok(await _service.GetAsync(id, ct));
+        [HttpGet("ObtenerPorId/{id:long}")]
+        public async Task<IActionResult> Get(
+            long id,
+            CancellationToken ct
+        ) => Ok(await _service.GetAsync(id, ct));
 
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] RepresentanteCreateDto dto, CancellationToken ct)
+        [HttpPost("Crear")]
+        public async Task<IActionResult> Create(
+     [FromBody] RepresentanteCreateDto dto,
+     CancellationToken ct
+ )
         {
             var id = await _service.CreateAsync(dto, UserName, ct);
             return Ok(new { id });
         }
 
-        [HttpPut("{id:long}")]
-        public async Task<IActionResult> Update(long id, [FromBody] RepresentanteUpdateDto dto, CancellationToken ct)
+
+        [HttpPut("Actualizar/{id:long}")]
+        public async Task<IActionResult> Update(
+     long id,
+     [FromBody] RepresentanteUpdateDto dto,
+     CancellationToken ct
+ )
         {
             await _service.UpdateAsync(id, dto, UserName, ct);
             return NoContent();
         }
 
-        [HttpDelete("{id:long}")]
-        public async Task<IActionResult> Delete(long id, CancellationToken ct)
+
+        [HttpDelete("Eliminar/{id:long}")]
+        public async Task<IActionResult> Delete(
+      long id,
+      CancellationToken ct
+  )
         {
             await _service.DeleteAsync(id, UserName, ct);
             return NoContent();
