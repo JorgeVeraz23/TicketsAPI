@@ -4,55 +4,38 @@ using TicketsAPI.Enum;
 
 namespace TicketsAPI.DTO
 {
-    public class EstudianteCreateDto
-    {
-        [Required, MaxLength(100)]
-        public string Nombre { get; set; }
+    public record EstudianteCreateDto(
+     string Nombre,
+     string Apellido,
+     string Cedula,
+     DateTime FechaNacimiento,
+     long IdRepresentante,
+     string? Telefono,
+     string? Correo,
+     string? Direccion,
+     int Nivel,
+     int UltimoGradoAprobado,
+     EstadoEstudiante Estado,
+     Genero Genero
+ );
 
-        [Required, MaxLength(100)]
-        public string Apellido { get; set; }
-
-        [Required, MaxLength(10)]
-        public string Cedula { get; set; }
-
-        [Required]
-        public DateTime FechaNacimiento { get; set; }
-
-        // REPRESENTANTE
-        [Required, MaxLength(100)]
-        public string Representante { get; set; }
-
-        [MaxLength(10)]
-        public string CedulaRepresentante { get; set; }
-
-        [MaxLength(20)]
-        public string TelefonoRepresentante { get; set; }
-
-        [EmailAddress, MaxLength(200)]
-        public string CorreoRepresentante { get; set; }
-
-        // CONTACTO ESTUDIANTE
-        [MaxLength(20)]
-        public string Telefono { get; set; }
-
-        [EmailAddress, MaxLength(200)]
-        public string Correo { get; set; }
-
-        [MaxLength(300)]
-        public string Direccion { get; set; }
-
-        // ACADÉMICO
-        [Required]
-        public int Nivel { get; set; }
-
-        [Required]
-        public int UltimoGradoAprobado { get; set; }
-
-        [Required]
-        public Genero Genero { get; set; } // o enum si ya lo tienes
-
-    }
-
+    public record EstudianteUpdateDto(
+        string Nombre,
+        string Apellido,
+        string Cedula,
+        DateTime FechaNacimiento,
+        string Representante,
+        string CedulaRepresentante,
+        string? TelefonoRepresentante,
+        string? CorreoRepresentante,
+        string? Telefono,
+        string? Correo,
+        string? Direccion,
+        int Nivel,
+        int UltimoGradoAprobado,
+        EstadoEstudiante Estado,
+        Genero Genero
+    );
 
     public class EstudianteResponseDto
     {
@@ -66,12 +49,7 @@ namespace TicketsAPI.DTO
 
         public DateTime FechaNacimiento { get; set; }
 
-        // REPRESENTANTE
-        public string Representante { get; set; }
-        public string CedulaRepresentante { get; set; }
-        public string TelefonoRepresentante { get; set; }
-        public string CorreoRepresentante { get; set; }
-
+ 
         // CONTACTO
         public string Telefono { get; set; }
         public string Correo { get; set; }

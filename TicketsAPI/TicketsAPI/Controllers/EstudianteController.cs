@@ -18,7 +18,7 @@ namespace TicketsAPI.Controllers
             _estudianteRepository = estudianteRepository;
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Secretaria")]
         [HttpPost("CrearEstudiante")]
         public async Task<IActionResult> CrearEstudiante([FromBody] EstudianteCreateDto estudianteDto)
         {

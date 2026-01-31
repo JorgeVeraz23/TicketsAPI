@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketsAPI.DTO;
 using TicketsAPI.Entities;
+using TicketsAPI.Enum;
 using TicketsAPI.Interfaces;
 
 namespace TicketsAPI.Repository
@@ -20,24 +21,28 @@ namespace TicketsAPI.Repository
 
             // 1) valida estudiante
             var estudiante = await _context.Estudiantes
-                .Where(e => e.IsActive == true && e.Id == dto.EstudianteId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(e => e.IsActive == true && e.Id == dto.EstudianteId);
 
             if (estudiante == null)
                 throw new Exception("Estudiante no existe o está inactivo.");
+
+            // Opcional: evitar matricular retirados/graduados/suspendidos
+            if (estudiante.Estado == EstadoEstudiante.Retirado ||
+                estudiante.Estado == EstadoEstudiante.Graduado ||
+                estudiante.Estado == EstadoEstudiante.Suspendido)
+                throw new Exception("El estudiante no puede ser matriculado por su estado actual.");
 
             // 2) valida oferta (grado-paralelo)
             var oferta = await _context.GradoParalelos
                 .Include(x => x.Grado)
                 .Include(x => x.Paralelo)
                 .Include(x => x.AnioLectivo)
-                .Where(x => x.IsActive == true && x.Id == dto.GradoParaleloId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.IsActive == true && x.Id == dto.GradoParaleloId);
 
             if (oferta == null)
                 throw new Exception("La oferta (Grado/Paralelo/Año) no existe o está inactiva.");
 
-            // 3) evita duplicado por año lectivo (RECOMENDADO)
+            // 3) evita duplicado por año lectivo
             var yaMatriculado = await _context.Matriculas.AnyAsync(m =>
                 m.IsActive == true &&
                 m.EstudianteId == dto.EstudianteId &&
@@ -48,7 +53,7 @@ namespace TicketsAPI.Repository
             if (yaMatriculado)
                 throw new Exception("El estudiante ya tiene una matrícula en este año lectivo.");
 
-            // 4) cupos disponibles = cupos - confirmadas
+            // 4) cupos disponibles
             var confirmadas = await _context.Matriculas.CountAsync(m =>
                 m.IsActive == true &&
                 m.GradoParaleloId == dto.GradoParaleloId &&
@@ -59,19 +64,24 @@ namespace TicketsAPI.Repository
             if (disponibles <= 0)
                 throw new Exception("No hay cupos disponibles para este grado/paralelo.");
 
-            // 5) crea matrícula en estado Pendiente (o Confirmada si ya quieres ocupar cupo)
+            // 5) crea matrícula en estado Pendiente
             var matricula = new Matricula
             {
                 EstudianteId = dto.EstudianteId,
                 GradoParaleloId = dto.GradoParaleloId,
                 EstadoMatricula = "Pendiente",
                 FechaMatricula = DateTime.UtcNow,
-                FechaConfirmacion = DateTime.UtcNow, // si no confirmas aún, deja null (si tu campo permite null)
+                FechaConfirmacion = null,  // ✅ pendiente => sin confirmación
                 PagoEstado = "Pendiente",
                 IsActive = true
             };
 
             _context.Matriculas.Add(matricula);
+
+            // 6) cambia estado del estudiante (✅ lo que pediste)
+            estudiante.Estado = EstadoEstudiante.Matriculado;
+            estudiante.FechaModificacion = DateTime.UtcNow;
+
             await _context.SaveChangesAsync();
             await tx.CommitAsync();
 
@@ -89,6 +99,7 @@ namespace TicketsAPI.Repository
             };
         }
 
+
         public async Task<List<MatriculaResponseDto>> GetAll(string? periodo)
         {
             IQueryable<Matricula> query = _context.Matriculas
@@ -99,7 +110,7 @@ namespace TicketsAPI.Repository
             if (!string.IsNullOrEmpty(periodo))
             {
                 query = query.Where(m =>
-                    m.GradoParalelo.AnioLectivo.Periodo == periodo
+                    m.GradoParalelo.AnioLectivo.Periodo.Contains(periodo)
                 );
             }
 

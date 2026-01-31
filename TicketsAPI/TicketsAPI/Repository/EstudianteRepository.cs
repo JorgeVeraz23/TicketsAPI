@@ -21,12 +21,12 @@ namespace TicketsAPI.Repository
         // =========================
         public async Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto dto)
         {
-            // Validar cédula duplicada (activos)
-            var existeCedula = await _context.Estudiantes
-                .AnyAsync(e => e.IsActive == true && e.Cedula == dto.Cedula);
+            // validar que el representante exista
+            var existeRepresentante = await _context.Representantes
+                .AnyAsync(r => r.IsActive == true && r.Id == dto.IdRepresentante);
 
-            if (existeCedula)
-                throw new Exception("Ya existe un estudiante activo con esa cédula.");
+            if (!existeRepresentante)
+                throw new Exception("El representante no existe o no está activo.");
 
             var entity = new Estudiante
             {
@@ -35,25 +35,23 @@ namespace TicketsAPI.Repository
                 Cedula = dto.Cedula.Trim(),
                 FechaNacimiento = dto.FechaNacimiento,
 
-                Representante = dto.Representante.Trim(),
-                CedulaRepresentante = dto.CedulaRepresentante?.Trim(),
-                TelefonoRepresentante = dto.TelefonoRepresentante?.Trim(),
-                CorreoRepresentante = dto.CorreoRepresentante?.Trim(),
+                RepresentanteId = dto.IdRepresentante, // ✅ OK
 
                 Telefono = dto.Telefono?.Trim(),
                 Correo = dto.Correo?.Trim(),
                 Direccion = dto.Direccion?.Trim(),
-
+                
                 Nivel = dto.Nivel,
                 UltimoGradoAprobado = dto.UltimoGradoAprobado,
                 Genero = dto.Genero,
 
-                Estado = Enum.EstadoEstudiante.Activo,
+                Estado = EstadoEstudiante.SinMatricular,
                 IsActive = true,
 
                 FechaCreacion = DateTime.UtcNow,
                 UsuarioCreacion = "SYSTEM"
             };
+
 
             _context.Estudiantes.Add(entity);
             await _context.SaveChangesAsync();
@@ -120,10 +118,6 @@ namespace TicketsAPI.Repository
             entity.Cedula = cedulaNueva;
             entity.FechaNacimiento = dto.FechaNacimiento;
 
-            entity.Representante = dto.Representante.Trim();
-            entity.CedulaRepresentante = dto.CedulaRepresentante?.Trim();
-            entity.TelefonoRepresentante = dto.TelefonoRepresentante?.Trim();
-            entity.CorreoRepresentante = dto.CorreoRepresentante?.Trim();
 
             entity.Telefono = dto.Telefono?.Trim();
             entity.Correo = dto.Correo?.Trim();
@@ -187,7 +181,7 @@ namespace TicketsAPI.Repository
                 q = q.Where(e =>
                     e.Nombre.Contains(query) ||
                     e.Apellido.Contains(query) ||
-                    e.Representante.Contains(query) ||
+                    e.Representante.Nombres.Contains(query) ||
                     e.Cedula.Contains(query));
             }
 
@@ -199,7 +193,7 @@ namespace TicketsAPI.Repository
                 {
                     Id = e.Id,
                     Cedula = e.Cedula,
-                    Representante = e.Representante,
+                    Representante = e.Representante.Nombres,
                     Estado = e.Estado,
                     NombreCompleto = (e.Nombre + " " + e.Apellido)
                 })
@@ -223,11 +217,7 @@ namespace TicketsAPI.Repository
 
                 NombreCompleto = $"{e.Nombre} {e.Apellido}",
 
-                Representante = e.Representante,
-                CedulaRepresentante = e.CedulaRepresentante,
-                TelefonoRepresentante = e.TelefonoRepresentante,
-                CorreoRepresentante = e.CorreoRepresentante,
-
+               
                 Telefono = e.Telefono,
                 Correo = e.Correo,
                 Direccion = e.Direccion,

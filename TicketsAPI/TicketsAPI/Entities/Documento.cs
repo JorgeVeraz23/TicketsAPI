@@ -15,17 +15,25 @@ namespace TicketsAPI.Entities
         [Required, MaxLength(30)]
         public string Estado { get; set; } = "Pendiente";
 
-        public byte[] Archivo { get; set; } = default!;
+        // ❌ QUITAR: ya no guardarás en BD
+        // public byte[] Archivo { get; set; } = default!;
+
+        // ✅ NUEVO: referencia al blob
+        [MaxLength(40)]
+        public string StorageProvider { get; set; } = "AzureBlob";
+
+        [Required, MaxLength(600)]
+        public string StoragePath { get; set; } = default!; // ej: documents/estudiante-10/doc-25.pdf
+
         [ForeignKey("Estudiante")]
         public long EstudianteId { get; set; }
         public Estudiante Estudiante { get; set; } = default!;
 
-        // ✅ Relación a TipoDocumento
         [ForeignKey("TipoDocumento")]
         public long TipoDocumentoId { get; set; }
         public TipoDocumento TipoDocumento { get; set; } = default!;
 
-        // ✅ Metadata
+        // ✅ Metadata (esto está bien)
         [MaxLength(100)]
         public string? MimeType { get; set; }
 
@@ -34,7 +42,7 @@ namespace TicketsAPI.Entities
 
         public long? TamanoBytes { get; set; }
 
-        public byte[]? HashArchivo { get; set; } // 32 bytes (SHA256)
+        public byte[]? HashArchivo { get; set; } // SHA256 ok
 
         [MaxLength(500)]
         public string? Observacion { get; set; }
@@ -45,4 +53,5 @@ namespace TicketsAPI.Entities
         [MaxLength(150)]
         public string? UsuarioRevision { get; set; }
     }
+
 }

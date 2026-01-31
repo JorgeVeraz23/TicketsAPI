@@ -166,14 +166,14 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaCreacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FechaDesde")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("FechaDesde")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("FechaHasta")
-                        .HasColumnType("int");
+                    b.Property<DateTime>("FechaHasta")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
@@ -271,6 +271,68 @@ namespace TicketsAPI.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("TicketsAPI.Entities.Calificacion", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("EstudianteId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Materia")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar(120)");
+
+                    b.Property<decimal>("Nota")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Observacion")
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Periodo")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<long>("ProfesorId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProfesorId");
+
+                    b.HasIndex("EstudianteId", "Materia", "Periodo")
+                        .IsUnique();
+
+                    b.ToTable("Calificaciones");
+                });
+
             modelBuilder.Entity("TicketsAPI.Entities.Documento", b =>
                 {
                     b.Property<long>("Id")
@@ -281,10 +343,6 @@ namespace TicketsAPI.Migrations
 
                     b.Property<bool?>("Aprobado")
                         .HasColumnType("bit");
-
-                    b.Property<byte[]>("Archivo")
-                        .IsRequired()
-                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Estado")
                         .IsRequired()
@@ -329,6 +387,16 @@ namespace TicketsAPI.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("StoragePath")
+                        .IsRequired()
+                        .HasMaxLength(600)
+                        .HasColumnType("nvarchar(600)");
+
+                    b.Property<string>("StorageProvider")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
                     b.Property<long?>("TamanoBytes")
                         .HasColumnType("bigint");
 
@@ -350,11 +418,9 @@ namespace TicketsAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoDocumentoId");
+                    b.HasIndex("EstudianteId");
 
-                    b.HasIndex("EstudianteId", "TipoDocumentoId")
-                        .IsUnique()
-                        .HasFilter("[IsActive] = 1");
+                    b.HasIndex("TipoDocumentoId");
 
                     b.ToTable("Documento");
                 });
@@ -377,23 +443,11 @@ namespace TicketsAPI.Migrations
                         .HasMaxLength(10)
                         .HasColumnType("nvarchar(10)");
 
-                    b.Property<string>("CedulaRepresentante")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
-
                     b.Property<string>("Correo")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)");
-
-                    b.Property<string>("CorreoRepresentante")
-                        .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Direccion")
-                        .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
@@ -426,18 +480,10 @@ namespace TicketsAPI.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("Representante")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                    b.Property<long>("RepresentanteId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Telefono")
-                        .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<string>("TelefonoRepresentante")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -454,6 +500,8 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("RepresentanteId");
 
                     b.ToTable("Estudiantes");
                 });
@@ -611,7 +659,7 @@ namespace TicketsAPI.Migrations
                     b.Property<long>("EstudianteId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime>("FechaConfirmacion")
+                    b.Property<DateTime?>("FechaConfirmacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaCreacion")
@@ -745,6 +793,187 @@ namespace TicketsAPI.Migrations
                     b.ToTable("Paralelos");
                 });
 
+            modelBuilder.Entity("TicketsAPI.Entities.PeriodoEvaluativo", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<long>("AnioLectivoId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaFin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int>("Numero")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Tipo")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AnioLectivoId");
+
+                    b.ToTable("PeriodosEvaluativos");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Profesor", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroDocumento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoDocumento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("TituloProfesional")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipoDocumento", "NumeroDocumento")
+                        .IsUnique();
+
+                    b.ToTable("Profesors");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Representante", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Apellidos")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Direccion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("FechaCreacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaEliminacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("FechaModificacion")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool?>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Nombres")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("NumeroDocumento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Telefono")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TipoDocumento")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UsuarioCreacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioEliminacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UsuarioModificacion")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TipoDocumento", "NumeroDocumento")
+                        .IsUnique();
+
+                    b.ToTable("Representantes");
+                });
+
             modelBuilder.Entity("TicketsAPI.Entities.TipoDocumento", b =>
                 {
                     b.Property<long>("Id")
@@ -795,10 +1024,7 @@ namespace TicketsAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Codigo")
-                        .IsUnique();
-
-                    b.ToTable("TipoDocumento");
+                    b.ToTable("TipoDocumentos");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -852,12 +1078,31 @@ namespace TicketsAPI.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TicketsAPI.Entities.Calificacion", b =>
+                {
+                    b.HasOne("TicketsAPI.Entities.Estudiante", "Estudiante")
+                        .WithMany()
+                        .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TicketsAPI.Entities.Profesor", "Profesor")
+                        .WithMany("Calificaciones")
+                        .HasForeignKey("ProfesorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Estudiante");
+
+                    b.Navigation("Profesor");
+                });
+
             modelBuilder.Entity("TicketsAPI.Entities.Documento", b =>
                 {
                     b.HasOne("TicketsAPI.Entities.Estudiante", "Estudiante")
                         .WithMany("Documentos")
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("TicketsAPI.Entities.TipoDocumento", "TipoDocumento")
@@ -869,6 +1114,17 @@ namespace TicketsAPI.Migrations
                     b.Navigation("Estudiante");
 
                     b.Navigation("TipoDocumento");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Estudiante", b =>
+                {
+                    b.HasOne("TicketsAPI.Entities.Representante", "Representante")
+                        .WithMany("Estudiantes")
+                        .HasForeignKey("RepresentanteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Representante");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.GradoParalelo", b =>
@@ -939,6 +1195,17 @@ namespace TicketsAPI.Migrations
                     b.Navigation("Estudiante");
                 });
 
+            modelBuilder.Entity("TicketsAPI.Entities.PeriodoEvaluativo", b =>
+                {
+                    b.HasOne("TicketsAPI.Entities.AnioLectivo", "AnioLectivo")
+                        .WithMany()
+                        .HasForeignKey("AnioLectivoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AnioLectivo");
+                });
+
             modelBuilder.Entity("TicketsAPI.Entities.AnioLectivo", b =>
                 {
                     b.Navigation("MateriaParalelos");
@@ -959,6 +1226,16 @@ namespace TicketsAPI.Migrations
             modelBuilder.Entity("TicketsAPI.Entities.Paralelo", b =>
                 {
                     b.Navigation("MateriaParalelos");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Profesor", b =>
+                {
+                    b.Navigation("Calificaciones");
+                });
+
+            modelBuilder.Entity("TicketsAPI.Entities.Representante", b =>
+                {
+                    b.Navigation("Estudiantes");
                 });
 #pragma warning restore 612, 618
         }

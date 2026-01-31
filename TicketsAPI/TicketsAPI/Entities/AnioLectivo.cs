@@ -14,5 +14,6 @@ namespace TicketsAPI.Entities
         public DateTime FechaHasta { get; set; }
         public bool Vigente { get; set; }
         public  virtual ICollection<GradoParalelo>? MateriaParalelos { get; set; }
+
     }
 }

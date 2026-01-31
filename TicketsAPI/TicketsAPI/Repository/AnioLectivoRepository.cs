@@ -20,8 +20,8 @@ namespace TicketsAPI.Repository
             {
                 Periodo = anioLectivoDTO.Periodo,
                 IsActive = true,  // Asignar IsActive como true
-                FechaDesde = anioLectivoDTO.FechaDesde.Year,
-                FechaHasta = anioLectivoDTO.FechaHasta.Year,
+                FechaDesde = anioLectivoDTO.FechaDesde,
+                FechaHasta = anioLectivoDTO.FechaHasta,
                 FechaCreacion = DateTime.UtcNow,
                 UsuarioCreacion = "SYSTEM"
             };
@@ -43,8 +43,8 @@ namespace TicketsAPI.Repository
             }
 
             anioLectivo.Periodo = anioLectivoDTO.Periodo;
-            anioLectivo.FechaDesde = anioLectivoDTO.FechaDesde.Year;
-            anioLectivo.FechaHasta = anioLectivoDTO.FechaHasta.Year;
+            anioLectivo.FechaDesde = anioLectivoDTO.FechaDesde;
+            anioLectivo.FechaHasta = anioLectivoDTO.FechaHasta;
             anioLectivo.FechaModificacion = DateTime.UtcNow;
             anioLectivo.UsuarioModificacion = "SYSTEM";
 
@@ -97,10 +97,13 @@ namespace TicketsAPI.Repository
                 {
                     Id = a.Id,
                     Periodo = a.Periodo,
-                    FechaDesde = new DateTime(a.FechaDesde, 1, 1),
-                    FechaHasta = new DateTime(a.FechaHasta, 1, 1)
+                    FechaDesde = a.FechaDesde,
+                    FechaHasta = a.FechaHasta
                 })
                 .FirstOrDefaultAsync();
+
+
+            return anioLectivo;
         }
 
         public Task<List<KeyValueDTO>> SelectorAnioLectivo()

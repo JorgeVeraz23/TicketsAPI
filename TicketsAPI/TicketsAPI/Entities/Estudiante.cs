@@ -11,59 +11,40 @@ namespace TicketsAPI.Entities
         public long Id { get; set; }
 
         [Required, MaxLength(100)]
-        public string Nombre { get; set; }
+        public string Nombre { get; set; } = null!;
 
         [Required, MaxLength(100)]
-        public string Apellido { get; set; }
+        public string Apellido { get; set; } = null!;
 
         [Required, MaxLength(10)]
-        public string Cedula { get; set; }
+        public string Cedula { get; set; } = null!;
 
         [Required]
         public DateTime FechaNacimiento { get; set; }
 
-        [NotMapped]
-        public int Edad =>
-            DateTime.Today.Year - FechaNacimiento.Year -
-            (FechaNacimiento.Date > DateTime.Today.AddYears(
-                -(DateTime.Today.Year - FechaNacimiento.Year)) ? 1 : 0);
+        // ✅ FK al representante
+        [ForeignKey("Representante")]
+        public long RepresentanteId { get; set; }
+        public Representante Representante { get; set; } = null!;
 
-        // REPRESENTANTE
-        [Required, MaxLength(100)]
-        public string Representante { get; set; }
-
-        [MaxLength(10)]
-        public string CedulaRepresentante { get; set; }
-
+        // CONTACTO estudiante
         [MaxLength(20)]
-        public string TelefonoRepresentante { get; set; }
+        public string? Telefono { get; set; }
 
         [MaxLength(200)]
-        public string CorreoRepresentante { get; set; }
-
-        // CONTACTO
-        [MaxLength(20)]
-        public string Telefono { get; set; }
-
-        [MaxLength(200)]
-        public string Correo { get; set; }
+        public string? Correo { get; set; }
 
         [MaxLength(300)]
-        public string Direccion { get; set; }
+        public string? Direccion { get; set; }
 
         // ACADEMICO
         public int Nivel { get; set; }
-
         public int UltimoGradoAprobado { get; set; }
-
         public EstadoEstudiante Estado { get; set; }
-
         public Genero Genero { get; set; }
 
-        // RELACIONES
         public virtual ICollection<Documento>? Documentos { get; set; }
         public virtual ICollection<Matricula>? Matriculas { get; set; }
-
-
     }
+
 }

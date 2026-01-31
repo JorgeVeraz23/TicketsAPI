@@ -21,4 +21,6 @@ namespace TicketsAPI.Entities
         public virtual AnioLectivo AnioLectivo { get;set; }
         public virtual Paralelo Paralelo { get; set; }
     }
+
+
 }

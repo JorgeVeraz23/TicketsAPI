@@ -54,8 +54,14 @@ builder.Services.AddScoped<IMatricula, MatriculaRepository>();
 builder.Services.AddScoped<IGrado, GradoRepository>();
 builder.Services.AddScoped<IParalelo, ParaleloRepository>();
 builder.Services.AddScoped<IGradoParalelo, OfertaRepository>();
+builder.Services.AddScoped<IBlobStorageService, BlobStorageService>();  
+builder.Services.AddScoped<IRepresentante, RepresentanteRepository>();
+builder.Services.AddScoped<IRepresentanteService, RepresentanteService>();
+builder.Services.AddScoped<IProfesor, ProfesorRepository>();
+builder.Services.AddScoped<ICalificacion, CalificacionRepository>();
 
 builder.Services.AddScoped<JwtTokenService>();
+builder.Services.AddScoped<DocumentoService>();
 
 // ============================
 // Identity

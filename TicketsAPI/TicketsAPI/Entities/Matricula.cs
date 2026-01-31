@@ -18,7 +18,7 @@ namespace TicketsAPI.Entities
         public DateTime FechaMatricula { get; set; }
         [ForeignKey("GradoParalelo")]
         public long GradoParaleloId { get; set; }
-        public DateTime FechaConfirmacion { get; set; }
+        public DateTime? FechaConfirmacion { get; set; }
         [Required]
         [MaxLength(50)]
         public string PagoEstado { get; set; }
