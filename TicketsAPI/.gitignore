@@ -21,3 +21,4 @@ Debug/
 *.csproj.user
 *.pubxml
 *user
+*.json
