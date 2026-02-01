@@ -111,5 +111,29 @@ namespace TicketsAPI.Repository
 
             return data;
         }
+
+        public async Task<List<KeyValueDTO>> SelectorGradoParalelo(long? anioLectivoId)
+        {
+            var q = _context.GradoParalelos
+     .AsNoTracking()
+     .Where(gp => gp.IsActive == true);
+
+            if (anioLectivoId.HasValue)
+                q = q.Where(gp => gp.AnioLectivoId == anioLectivoId.Value);
+
+            var data = await q
+                .Include(gp => gp.Grado)
+                .Include(gp => gp.Paralelo)
+                .OrderBy(gp => gp.Grado.Nombre)
+                .ThenBy(gp => gp.Paralelo.Nombre)
+                .Select(gp => new KeyValueDTO
+                {
+                    Key = gp.Id,
+                    Value = gp.Grado.Nombre + " - " + gp.Paralelo.Nombre + " (Cupos: " + gp.Cupos + ")"
+                })
+                .ToListAsync();
+
+            return data;
+        }
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using QuestPDF.Infrastructure;
 using System.Text;
 using System.Text.Json.Serialization;
 using TicketsAPI;
@@ -11,9 +12,12 @@ using TicketsAPI.Entities;
 using TicketsAPI.Interfaces;
 using TicketsAPI.Repository;
 using TicketsAPI.Services;
-using static TicketsAPI.Interfaces.IEstudiante;
+
 
 var builder = WebApplication.CreateBuilder(args);
+
+QuestPDF.Settings.License = LicenseType.Community;
+
 
 // ============================
 // Controllers + JSON Enum as string
@@ -59,6 +63,9 @@ builder.Services.AddScoped<IRepresentante, RepresentanteRepository>();
 builder.Services.AddScoped<IRepresentanteService, RepresentanteService>();
 builder.Services.AddScoped<IProfesor, ProfesorRepository>();
 builder.Services.AddScoped<ICalificacion, CalificacionRepository>();
+builder.Services.AddScoped<ITipoDocumento, TipoDocumentoRepository>();
+builder.Services.AddScoped<IReportesServices, ReporteService>();
+builder.Services.AddScoped<IMatriculaPdfService, MatriculaPdfService>();
 
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddScoped<DocumentoService>();

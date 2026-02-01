@@ -40,6 +40,18 @@ namespace TicketsAPI.Controllers
             return Ok(data);
         }
 
+
+
+        [HttpGet("SelectorGradoParalelo")]
+        public async Task<IActionResult> SelectorGradoParalelo(long idAnioLectivo)
+        {
+
+
+            var data = await _gradoParalelo.SelectorGradoParalelo(idAnioLectivo);
+
+            return Ok(data);
+        }
+
         // POST: api/GradoParalelo/Crear
         [HttpPost("Crear")]
         public async Task<IActionResult> Crear([FromBody] CreateGradoParaleloDto dto)
@@ -61,6 +73,8 @@ namespace TicketsAPI.Controllers
                 return BadRequest(ex.Message);
             }
         }
+
+
 
 
 

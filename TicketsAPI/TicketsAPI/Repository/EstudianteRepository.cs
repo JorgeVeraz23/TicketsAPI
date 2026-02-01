@@ -246,5 +246,22 @@ namespace TicketsAPI.Repository
                 .ToListAsync();
         }
 
+        public async Task<List<KeyValueDTO>> SelectorEstudianteDocs()
+        {
+            return await _context.Estudiantes
+               .AsNoTracking()
+               .Where(e =>
+                   e.IsActive == true &&
+                   e.Estado != EstadoEstudiante.Matriculado
+               )
+               .OrderBy(e => e.Apellido)
+               .ThenBy(e => e.Nombre)
+               .Select(e => new KeyValueDTO
+               {
+                   Key = e.Id,
+                   Value = $"{e.Apellido} {e.Nombre} - {e.Cedula}"
+               })
+               .ToListAsync();
+        }
     }
 }

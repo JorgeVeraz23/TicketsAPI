@@ -115,5 +115,12 @@ namespace TicketsAPI.Controllers
             return Ok(result);
         }
 
+        [HttpGet("SelectorEstudianteDocs")]
+        public async Task<IActionResult> SelectorEstudianteDocs()
+        {
+            var result = await _estudianteRepository.SelectorEstudianteDocs();
+            return Ok(result);
+
+        }
     }
 }

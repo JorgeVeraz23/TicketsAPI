@@ -23,6 +23,26 @@ namespace TicketsAPI.DTO
         public DateTime FechaMatricula { get; set; }
     }
 
+    public class MatriculaListadoInfoDto
+    {
+        public string Institucion { get; set; } = "";
+        public string Periodo { get; set; } = "";
+        public int? FiltroGradoParaleloId { get; set; }
+        public string? FiltroEstado { get; set; }
+    }
+
+    public class MatriculaListadoRowDto
+    {
+        public int Id { get; set; }
+        public string Estudiante { get; set; } = "";
+        public string Documento { get; set; } = "";
+        public string Grado { get; set; } = "";
+        public string Paralelo { get; set; } = "";
+        public string Estado { get; set; } = "";
+        public DateTime Fecha { get; set; }
+    }
+
+
 
 
 
