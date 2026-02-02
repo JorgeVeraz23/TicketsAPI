@@ -18,6 +18,17 @@ namespace TicketsAPI.Repository
         public async Task<MatriculaResponseDto> CrearMatriculaAsync(CrearMatriculaDto dto)
         {
             await using var tx = await _context.Database.BeginTransactionAsync();
+            var documentos = await _context.Documento.ToListAsync();
+            //0)  Validaciones previas
+            //verifico que estudiante tenga tosdos los documentos cargados
+            var documentosRequridos = _context.TipoDocumentos.Where(d => d.IsActive == true).Select(x => x.Id).ToList();
+
+            foreach (var i in documentosRequridos)
+            {
+                var docEstudiante = documentos.Where(x => x.IsActive == true && x.EstudianteId == dto.EstudianteId && x.TipoDocumentoId == i && x.Estado.Equals("Aprobado")).FirstOrDefault();
+                if (docEstudiante == null)
+                    throw new Exception("El estudiante no tiene todos los documentos requeridos cargados.");
+            }
 
             // 1) valida estudiante
             var estudiante = await _context.Estudiantes
@@ -69,10 +80,10 @@ namespace TicketsAPI.Repository
             {
                 EstudianteId = dto.EstudianteId,
                 GradoParaleloId = dto.GradoParaleloId,
-                EstadoMatricula = "Pendiente",
+                EstadoMatricula = "Activa",
                 FechaMatricula = DateTime.UtcNow,
                 FechaConfirmacion = null,  // ✅ pendiente => sin confirmación
-                PagoEstado = "Pendiente",
+                PagoEstado = "No especificado",
                 IsActive = true
             };
 
