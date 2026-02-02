@@ -69,9 +69,10 @@ builder.Services.AddScoped<ICalificacion, CalificacionRepository>();
 builder.Services.AddScoped<ITipoDocumento, TipoDocumentoRepository>();
 builder.Services.AddScoped<IReportesServices, ReporteService>();
 builder.Services.AddScoped<IMatriculaPdfService, MatriculaPdfService>();
-
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 builder.Services.AddScoped<JwtTokenService>();
 builder.Services.AddScoped<DocumentoService>();
+
 
 // ============================
 // Identity
