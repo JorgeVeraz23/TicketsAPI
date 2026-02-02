@@ -5,9 +5,9 @@ namespace TicketsAPI.Interfaces
 {
     public interface IEstudiante
     {
-    
-            // Crear un nuevo estudiante
-            Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto estudianteDto);
+
+        // Crear un nuevo estudiante
+        Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto dto, CancellationToken ct);
 
             // Obtener un estudiante por su ID
             Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(long id);

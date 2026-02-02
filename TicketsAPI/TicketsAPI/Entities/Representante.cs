@@ -7,20 +7,24 @@ namespace TicketsAPI.Entities
     {
         [Key]
         public long Id { get; set; }
-
-        public string Nombres { get; set; } = null!;
-        public string Apellidos { get; set; } = null!;
-
-        public string TipoDocumento { get; set; } = null!;
-        public string NumeroDocumento { get; set; } = null!;
-
+        [Required, MaxLength(100)]
+        public string Nombres { get; set; }
+        [Required, MaxLength(100)]
+        public string Apellidos { get; set; } 
+        [Required, MaxLength(20)]
+        public string TipoDocumento { get; set; } 
+        [Required, MaxLength(20)]
+        public string NumeroDocumento { get; set; }
+        [MaxLength(20)]
         public string? Telefono { get; set; }
+        [MaxLength(200)]
         public string? Email { get; set; }
+        [MaxLength(300)]
         public string? Direccion { get; set; }
 
 
         // Navegación
-        public ICollection<Estudiante> Estudiantes { get; set; } = new List<Estudiante>();
+        public virtual ICollection<Estudiante>? Estudiantes { get; set; } 
     }
 
 }

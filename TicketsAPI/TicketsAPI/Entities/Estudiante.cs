@@ -25,7 +25,7 @@ namespace TicketsAPI.Entities
         // ✅ FK al representante
         [ForeignKey("Representante")]
         public long RepresentanteId { get; set; }
-        public Representante Representante { get; set; } = null!;
+        public virtual Representante Representante { get; set; } = null!;
 
         // CONTACTO estudiante
         [MaxLength(20)]
@@ -36,6 +36,10 @@ namespace TicketsAPI.Entities
 
         [MaxLength(300)]
         public string? Direccion { get; set; }
+        [MaxLength(100)]
+        public string? Nacionalidad { get; set; }
+        [MaxLength(500)]
+        public string? Observacion { get; set; }
 
         // ACADEMICO
         public int Nivel { get; set; }
@@ -45,6 +49,7 @@ namespace TicketsAPI.Entities
 
         public virtual ICollection<Documento>? Documentos { get; set; }
         public virtual ICollection<Matricula>? Matriculas { get; set; }
+        public virtual ICollection<Calificacion>? Calificaciones { get; set; } = new List<Calificacion>();
     }
 
 }

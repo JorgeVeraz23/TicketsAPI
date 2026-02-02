@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TicketsAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initialdb : Migration
+    public partial class dbinitial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -21,13 +21,13 @@ namespace TicketsAPI.Migrations
                     FechaDesde = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaHasta = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Vigente = table.Column<bool>(type: "bit", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,13 +82,13 @@ namespace TicketsAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Nivel = table.Column<int>(type: "int", nullable: true),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -102,13 +102,13 @@ namespace TicketsAPI.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nombre = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -121,20 +121,20 @@ namespace TicketsAPI.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellidos = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TituloProfesional = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TipoDocumento = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NumeroDocumento = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Nombres = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Apellidos = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TituloProfesional = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    TipoDocumento = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    NumeroDocumento = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -147,20 +147,20 @@ namespace TicketsAPI.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombres = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellidos = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TipoDocumento = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    NumeroDocumento = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    Telefono = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Direccion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Nombres = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Apellidos = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    TipoDocumento = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    NumeroDocumento = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Direccion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -178,13 +178,13 @@ namespace TicketsAPI.Migrations
                     EsObligatorio = table.Column<bool>(type: "bit", nullable: false),
                     Orden = table.Column<int>(type: "int", nullable: false),
                     Vigente = table.Column<bool>(type: "bit", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -203,13 +203,13 @@ namespace TicketsAPI.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FechaInicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -334,15 +334,15 @@ namespace TicketsAPI.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
                     GradoId = table.Column<long>(type: "bigint", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -365,13 +365,13 @@ namespace TicketsAPI.Migrations
                     AnioLectivoId = table.Column<long>(type: "bigint", nullable: false),
                     ParaleloId = table.Column<long>(type: "bigint", nullable: false),
                     Cupos = table.Column<int>(type: "int", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -410,17 +410,19 @@ namespace TicketsAPI.Migrations
                     Telefono = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
                     Correo = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
                     Direccion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
+                    Nacionalidad = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    Observacion = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
                     Nivel = table.Column<int>(type: "int", nullable: false),
                     UltimoGradoAprobado = table.Column<int>(type: "int", nullable: false),
                     Estado = table.Column<int>(type: "int", nullable: false),
                     Genero = table.Column<int>(type: "int", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -441,17 +443,17 @@ namespace TicketsAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     EstudianteId = table.Column<long>(type: "bigint", nullable: false),
                     ProfesorId = table.Column<long>(type: "bigint", nullable: false),
-                    Materia = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
-                    Periodo = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Nota = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    MateriaId = table.Column<long>(type: "bigint", nullable: false),
+                    PeriodoEvaluativoId = table.Column<long>(type: "bigint", nullable: false),
+                    Nota = table.Column<decimal>(type: "decimal(5,2)", precision: 5, scale: 2, nullable: false),
                     Observacion = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: true),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -460,6 +462,18 @@ namespace TicketsAPI.Migrations
                         name: "FK_Calificaciones_Estudiantes_EstudianteId",
                         column: x => x.EstudianteId,
                         principalTable: "Estudiantes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Calificaciones_Materias_MateriaId",
+                        column: x => x.MateriaId,
+                        principalTable: "Materias",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Calificaciones_PeriodosEvaluativos_PeriodoEvaluativoId",
+                        column: x => x.PeriodoEvaluativoId,
+                        principalTable: "PeriodosEvaluativos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -490,13 +504,13 @@ namespace TicketsAPI.Migrations
                     Aprobado = table.Column<bool>(type: "bit", nullable: true),
                     FechaRevision = table.Column<DateTime>(type: "datetime2", nullable: true),
                     UsuarioRevision = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -506,7 +520,7 @@ namespace TicketsAPI.Migrations
                         column: x => x.EstudianteId,
                         principalTable: "Estudiantes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Documento_TipoDocumentos_TipoDocumentoId",
                         column: x => x.TipoDocumentoId,
@@ -526,15 +540,14 @@ namespace TicketsAPI.Migrations
                     FechaMatricula = table.Column<DateTime>(type: "datetime2", nullable: false),
                     GradoParaleloId = table.Column<long>(type: "bigint", nullable: false),
                     FechaConfirmacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    PagoEstado = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     FechaPago = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    UsuarioCreacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioModificacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: false),
                     FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
+                    IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -544,42 +557,13 @@ namespace TicketsAPI.Migrations
                         column: x => x.EstudianteId,
                         principalTable: "Estudiantes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Matriculas_GradoParalelos_GradoParaleloId",
                         column: x => x.GradoParaleloId,
                         principalTable: "GradoParalelos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Pagos",
-                columns: table => new
-                {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Monto = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Estado = table.Column<bool>(type: "bit", nullable: false),
-                    FechaPago = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EstudianteId = table.Column<long>(type: "bigint", nullable: false),
-                    UsuarioCreacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioModificacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UsuarioEliminacion = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FechaCreacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FechaEliminacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FechaModificacion = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    IsActive = table.Column<bool>(type: "bit", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Pagos", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Pagos_Estudiantes_EstudianteId",
-                        column: x => x.EstudianteId,
-                        principalTable: "Estudiantes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -622,10 +606,19 @@ namespace TicketsAPI.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Calificaciones_EstudianteId_Materia_Periodo",
+                name: "IX_Calificaciones_EstudianteId",
                 table: "Calificaciones",
-                columns: new[] { "EstudianteId", "Materia", "Periodo" },
-                unique: true);
+                column: "EstudianteId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Calificaciones_MateriaId",
+                table: "Calificaciones",
+                column: "MateriaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Calificaciones_PeriodoEvaluativoId",
+                table: "Calificaciones",
+                column: "PeriodoEvaluativoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Calificaciones_ProfesorId",
@@ -633,14 +626,21 @@ namespace TicketsAPI.Migrations
                 column: "ProfesorId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Documento_EstudianteId",
+                name: "IX_Documento_EstudianteId_TipoDocumentoId",
                 table: "Documento",
-                column: "EstudianteId");
+                columns: new[] { "EstudianteId", "TipoDocumentoId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Documento_TipoDocumentoId",
                 table: "Documento",
                 column: "TipoDocumentoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Estudiantes_Cedula",
+                table: "Estudiantes",
+                column: "Cedula",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Estudiantes_RepresentanteId",
@@ -653,9 +653,10 @@ namespace TicketsAPI.Migrations
                 column: "AnioLectivoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GradoParalelos_GradoId",
+                name: "IX_GradoParalelos_GradoId_ParaleloId_AnioLectivoId",
                 table: "GradoParalelos",
-                column: "GradoId");
+                columns: new[] { "GradoId", "ParaleloId", "AnioLectivoId" },
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_GradoParalelos_ParaleloId",
@@ -678,25 +679,26 @@ namespace TicketsAPI.Migrations
                 column: "GradoParaleloId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pagos_EstudianteId",
-                table: "Pagos",
-                column: "EstudianteId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_PeriodosEvaluativos_AnioLectivoId",
                 table: "PeriodosEvaluativos",
                 column: "AnioLectivoId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Profesors_TipoDocumento_NumeroDocumento",
+                name: "IX_Profesors_NumeroDocumento",
                 table: "Profesors",
-                columns: new[] { "TipoDocumento", "NumeroDocumento" },
+                column: "NumeroDocumento",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Representantes_TipoDocumento_NumeroDocumento",
+                name: "IX_Representantes_NumeroDocumento",
                 table: "Representantes",
-                columns: new[] { "TipoDocumento", "NumeroDocumento" },
+                column: "NumeroDocumento",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TipoDocumentos_Codigo",
+                table: "TipoDocumentos",
+                column: "Codigo",
                 unique: true);
         }
 
@@ -725,16 +727,7 @@ namespace TicketsAPI.Migrations
                 name: "Documento");
 
             migrationBuilder.DropTable(
-                name: "Materias");
-
-            migrationBuilder.DropTable(
                 name: "Matriculas");
-
-            migrationBuilder.DropTable(
-                name: "Pagos");
-
-            migrationBuilder.DropTable(
-                name: "PeriodosEvaluativos");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -743,16 +736,25 @@ namespace TicketsAPI.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
+                name: "Materias");
+
+            migrationBuilder.DropTable(
+                name: "PeriodosEvaluativos");
+
+            migrationBuilder.DropTable(
                 name: "Profesors");
 
             migrationBuilder.DropTable(
                 name: "TipoDocumentos");
 
             migrationBuilder.DropTable(
+                name: "Estudiantes");
+
+            migrationBuilder.DropTable(
                 name: "GradoParalelos");
 
             migrationBuilder.DropTable(
-                name: "Estudiantes");
+                name: "Representantes");
 
             migrationBuilder.DropTable(
                 name: "AnioLectivo");
@@ -762,9 +764,6 @@ namespace TicketsAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Paralelos");
-
-            migrationBuilder.DropTable(
-                name: "Representantes");
         }
     }
 }

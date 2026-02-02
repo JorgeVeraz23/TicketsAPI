@@ -7,8 +7,7 @@ namespace TicketsAPI.Entities
     {
         [Key]
         public long Id { get; set; }
-        [Required]
-        [MaxLength(100)]
+        [Required, MaxLength(100)]
         public string Nombre { get; set; }
         public int? Nivel { get; set; }
         public virtual ICollection<Materia>? Materias { get; set; }

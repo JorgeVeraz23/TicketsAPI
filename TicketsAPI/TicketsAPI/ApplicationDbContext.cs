@@ -20,7 +20,6 @@ namespace TicketsAPI
         public DbSet<Materia> Materias { get; set; }
         public DbSet<GradoParalelo> GradoParalelos { get; set; }
         public DbSet<Matricula> Matriculas { get; set; }
-        public DbSet<Pago> Pagos { get; set; }  
         public DbSet<Paralelo> Paralelos { get; set; }
         public DbSet<TipoDocumento> TipoDocumentos { get; set; }
         public DbSet<Representante> Representantes { get; set; }
@@ -40,53 +39,101 @@ namespace TicketsAPI
             base.OnModelCreating(modelBuilder);
 
 
-            // ---------- ESTUDIANTE ↔ REPRESENTANTE ----------
+            // =============== Defaults / precision =================
+           
+
+            modelBuilder.Entity<Calificacion>()
+                .Property(x => x.Nota)
+                .HasPrecision(5, 2);
+
+            // =============== Unique constraints ===================
             modelBuilder.Entity<Estudiante>()
-                .HasOne(e => e.Representante)
-                .WithMany(r => r.Estudiantes)
-                .HasForeignKey(e => e.RepresentanteId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // ---------- PROFESOR ----------
-            modelBuilder.Entity<Profesor>()
-                .HasIndex(p => new { p.TipoDocumento, p.NumeroDocumento })
+                .HasIndex(x => x.Cedula)
                 .IsUnique();
 
-            // ---------- REPRESENTANTE ----------
             modelBuilder.Entity<Representante>()
-                .HasIndex(r => new { r.TipoDocumento, r.NumeroDocumento })
+                .HasIndex(x => x.NumeroDocumento)
                 .IsUnique();
 
-            // ---------- DOCUMENTO ----------
+            modelBuilder.Entity<Profesor>()
+                .HasIndex(x => x.NumeroDocumento)
+                .IsUnique();
+
+            modelBuilder.Entity<TipoDocumento>()
+                .HasIndex(x => x.Codigo)
+                .IsUnique();
+
+            modelBuilder.Entity<GradoParalelo>()
+                .HasIndex(x => new { x.GradoId, x.ParaleloId, x.AnioLectivoId })
+                .IsUnique();
+
+            // Documento: un tipo por estudiante (si quieres 1 vigente por tipo)
             modelBuilder.Entity<Documento>()
-                .HasOne(d => d.Estudiante)
-                .WithMany(e => e.Documentos)
-                .HasForeignKey(d => d.EstudianteId)
+                .HasIndex(x => new { x.EstudianteId, x.TipoDocumentoId })
+                .IsUnique();
+
+            // =============== Relationships (delete behavior) =======
+            modelBuilder.Entity<Estudiante>()
+                .HasOne(x => x.Representante)
+                .WithMany(x => x.Estudiantes)
+                .HasForeignKey(x => x.RepresentanteId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<Documento>()
-                .HasOne(d => d.TipoDocumento)
+            modelBuilder.Entity<Matricula>()
+                .HasOne(x => x.Estudiante)
+                .WithMany(x => x.Matriculas)
+                .HasForeignKey(x => x.EstudianteId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Matricula>()
+                .HasOne(x => x.GradoParalelo)
                 .WithMany()
-                .HasForeignKey(d => d.TipoDocumentoId)
+                .HasForeignKey(x => x.GradoParaleloId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // ---------- CALIFICACIÓN ----------
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(c => c.Estudiante)
-                .WithMany() // si luego agregas ICollection<Calificacion> en Estudiante, cambia aquí
-                .HasForeignKey(c => c.EstudianteId)
+    
+
+            modelBuilder.Entity<Documento>()
+                .HasOne(x => x.Estudiante)
+                .WithMany(x => x.Documentos)
+                .HasForeignKey(x => x.EstudianteId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Documento>()
+                .HasOne(x => x.TipoDocumento)
+                .WithMany()
+                .HasForeignKey(x => x.TipoDocumentoId)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Calificacion>()
-                .HasOne(c => c.Profesor)
-                .WithMany(p => p.Calificaciones)
-                .HasForeignKey(c => c.ProfesorId)
+                .HasOne(x => x.Estudiante)
+                .WithMany(x => x.Calificaciones)
+                .HasForeignKey(x => x.EstudianteId)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            // Evitar duplicado de calificación por estudiante + materia + periodo
             modelBuilder.Entity<Calificacion>()
-                .HasIndex(c => new { c.EstudianteId, c.Materia, c.Periodo })
-                .IsUnique();
+                .HasOne(x => x.Profesor)
+                .WithMany(x => x.Calificaciones)
+                .HasForeignKey(x => x.ProfesorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Calificacion>()
+                .HasOne(x => x.Materia)
+                .WithMany()
+                .HasForeignKey(x => x.MateriaId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Calificacion>()
+                .HasOne(x => x.PeriodoEvaluativo)
+                .WithMany()
+                .HasForeignKey(x => x.PeriodoEvaluativoId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            // =============== Soft Delete filter (opcional) =========
+            // Si quieres que todo lo inactivo no salga por default:
+            // modelBuilder.Entity<Estudiante>().HasQueryFilter(x => x.IsActive);
+            // modelBuilder.Entity<Matricula>().HasQueryFilter(x => x.IsActive);
+            // ... (y así con cada entidad)
 
 
 

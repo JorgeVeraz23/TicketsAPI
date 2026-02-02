@@ -18,7 +18,7 @@ namespace TicketsAPI.Entities
 
         [ForeignKey("AnioLectivo")]
         public long AnioLectivoId { get; set; }
-        public AnioLectivo AnioLectivo { get; set; } = default!;
+        public virtual AnioLectivo AnioLectivo { get; set; } = default!;
 
         public TipoPeriodoEvaluativo Tipo { get; set; }  // PARCIAL
 

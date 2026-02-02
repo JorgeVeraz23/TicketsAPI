@@ -163,7 +163,7 @@ namespace TicketsAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("FechaDesde")
@@ -178,7 +178,7 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Periodo")
@@ -187,13 +187,16 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("nvarchar(10)");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("Vigente")
                         .HasColumnType("bit");
@@ -282,7 +285,7 @@ namespace TicketsAPI.Migrations
                     b.Property<long>("EstudianteId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -291,44 +294,47 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Materia")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar(120)");
+                    b.Property<long>("MateriaId")
+                        .HasColumnType("bigint");
 
                     b.Property<decimal>("Nota")
-                        .HasColumnType("decimal(18,2)");
+                        .HasPrecision(5, 2)
+                        .HasColumnType("decimal(5,2)");
 
                     b.Property<string>("Observacion")
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
 
-                    b.Property<string>("Periodo")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                    b.Property<long>("PeriodoEvaluativoId")
+                        .HasColumnType("bigint");
 
                     b.Property<long>("ProfesorId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ProfesorId");
+                    b.HasIndex("EstudianteId");
 
-                    b.HasIndex("EstudianteId", "Materia", "Periodo")
-                        .IsUnique();
+                    b.HasIndex("MateriaId");
+
+                    b.HasIndex("PeriodoEvaluativoId");
+
+                    b.HasIndex("ProfesorId");
 
                     b.ToTable("Calificaciones");
                 });
@@ -356,7 +362,7 @@ namespace TicketsAPI.Migrations
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -371,7 +377,7 @@ namespace TicketsAPI.Migrations
                     b.Property<byte[]>("HashArchivo")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("MimeType")
@@ -404,13 +410,16 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioRevision")
                         .HasMaxLength(150)
@@ -418,9 +427,10 @@ namespace TicketsAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstudianteId");
-
                     b.HasIndex("TipoDocumentoId");
+
+                    b.HasIndex("EstudianteId", "TipoDocumentoId")
+                        .IsUnique();
 
                     b.ToTable("Documento");
                 });
@@ -454,7 +464,7 @@ namespace TicketsAPI.Migrations
                     b.Property<int>("Estado")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -469,8 +479,12 @@ namespace TicketsAPI.Migrations
                     b.Property<int>("Genero")
                         .HasColumnType("int");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Nacionalidad")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<int>("Nivel")
                         .HasColumnType("int");
@@ -479,6 +493,10 @@ namespace TicketsAPI.Migrations
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Observacion")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<long>("RepresentanteId")
                         .HasColumnType("bigint");
@@ -491,15 +509,21 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Cedula")
+                        .IsUnique();
 
                     b.HasIndex("RepresentanteId");
 
@@ -514,7 +538,7 @@ namespace TicketsAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -523,7 +547,7 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<int?>("Nivel")
@@ -535,13 +559,16 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -562,7 +589,7 @@ namespace TicketsAPI.Migrations
                     b.Property<int>("Cupos")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -574,28 +601,32 @@ namespace TicketsAPI.Migrations
                     b.Property<long>("GradoId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<long>("ParaleloId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnioLectivoId");
 
-                    b.HasIndex("GradoId");
-
                     b.HasIndex("ParaleloId");
+
+                    b.HasIndex("GradoId", "ParaleloId", "AnioLectivoId")
+                        .IsUnique();
 
                     b.ToTable("GradoParalelos");
                 });
@@ -608,7 +639,7 @@ namespace TicketsAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -620,21 +651,25 @@ namespace TicketsAPI.Migrations
                     b.Property<long>("GradoId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -662,7 +697,7 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaConfirmacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -680,22 +715,20 @@ namespace TicketsAPI.Migrations
                     b.Property<long>("GradoParaleloId")
                         .HasColumnType("bigint");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
-                    b.Property<string>("PagoEstado")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
-
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -706,54 +739,6 @@ namespace TicketsAPI.Migrations
                     b.ToTable("Matriculas");
                 });
 
-            modelBuilder.Entity("TicketsAPI.Entities.Pago", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit");
-
-                    b.Property<long>("EstudianteId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime?>("FechaCreacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaEliminacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("FechaModificacion")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("FechaPago")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool?>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<decimal>("Monto")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("EstudianteId");
-
-                    b.ToTable("Pagos");
-                });
-
             modelBuilder.Entity("TicketsAPI.Entities.Paralelo", b =>
                 {
                     b.Property<long>("Id")
@@ -762,7 +747,7 @@ namespace TicketsAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -771,7 +756,7 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
@@ -780,13 +765,16 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -804,7 +792,7 @@ namespace TicketsAPI.Migrations
                     b.Property<long>("AnioLectivoId")
                         .HasColumnType("bigint");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -819,7 +807,7 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
@@ -834,13 +822,16 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -859,12 +850,14 @@ namespace TicketsAPI.Migrations
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -873,40 +866,48 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NumeroDocumento")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TipoDocumento")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TituloProfesional")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoDocumento", "NumeroDocumento")
+                    b.HasIndex("NumeroDocumento")
                         .IsUnique();
 
                     b.ToTable("Profesors");
@@ -922,15 +923,18 @@ namespace TicketsAPI.Migrations
 
                     b.Property<string>("Apellidos")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Direccion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)");
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -939,36 +943,43 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombres")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("NumeroDocumento")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Telefono")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("TipoDocumento")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TipoDocumento", "NumeroDocumento")
+                    b.HasIndex("NumeroDocumento")
                         .IsUnique();
 
                     b.ToTable("Representantes");
@@ -990,7 +1001,7 @@ namespace TicketsAPI.Migrations
                     b.Property<bool>("EsObligatorio")
                         .HasColumnType("bit");
 
-                    b.Property<DateTime?>("FechaCreacion")
+                    b.Property<DateTime>("FechaCreacion")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("FechaEliminacion")
@@ -999,7 +1010,7 @@ namespace TicketsAPI.Migrations
                     b.Property<DateTime?>("FechaModificacion")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool?>("IsActive")
+                    b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
                     b.Property<string>("Nombre")
@@ -1011,18 +1022,24 @@ namespace TicketsAPI.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UsuarioCreacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioEliminacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("UsuarioModificacion")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<bool>("Vigente")
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Codigo")
+                        .IsUnique();
 
                     b.ToTable("TipoDocumentos");
                 });
@@ -1081,8 +1098,20 @@ namespace TicketsAPI.Migrations
             modelBuilder.Entity("TicketsAPI.Entities.Calificacion", b =>
                 {
                     b.HasOne("TicketsAPI.Entities.Estudiante", "Estudiante")
-                        .WithMany()
+                        .WithMany("Calificaciones")
                         .HasForeignKey("EstudianteId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TicketsAPI.Entities.Materia", "Materia")
+                        .WithMany()
+                        .HasForeignKey("MateriaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("TicketsAPI.Entities.PeriodoEvaluativo", "PeriodoEvaluativo")
+                        .WithMany()
+                        .HasForeignKey("PeriodoEvaluativoId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -1094,6 +1123,10 @@ namespace TicketsAPI.Migrations
 
                     b.Navigation("Estudiante");
 
+                    b.Navigation("Materia");
+
+                    b.Navigation("PeriodoEvaluativo");
+
                     b.Navigation("Profesor");
                 });
 
@@ -1102,7 +1135,7 @@ namespace TicketsAPI.Migrations
                     b.HasOne("TicketsAPI.Entities.Estudiante", "Estudiante")
                         .WithMany("Documentos")
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TicketsAPI.Entities.TipoDocumento", "TipoDocumento")
@@ -1170,29 +1203,18 @@ namespace TicketsAPI.Migrations
                     b.HasOne("TicketsAPI.Entities.Estudiante", "Estudiante")
                         .WithMany("Matriculas")
                         .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("TicketsAPI.Entities.GradoParalelo", "GradoParalelo")
                         .WithMany()
                         .HasForeignKey("GradoParaleloId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Estudiante");
 
                     b.Navigation("GradoParalelo");
-                });
-
-            modelBuilder.Entity("TicketsAPI.Entities.Pago", b =>
-                {
-                    b.HasOne("TicketsAPI.Entities.Estudiante", "Estudiante")
-                        .WithMany()
-                        .HasForeignKey("EstudianteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Estudiante");
                 });
 
             modelBuilder.Entity("TicketsAPI.Entities.PeriodoEvaluativo", b =>
@@ -1213,6 +1235,8 @@ namespace TicketsAPI.Migrations
 
             modelBuilder.Entity("TicketsAPI.Entities.Estudiante", b =>
                 {
+                    b.Navigation("Calificaciones");
+
                     b.Navigation("Documentos");
 
                     b.Navigation("Matriculas");

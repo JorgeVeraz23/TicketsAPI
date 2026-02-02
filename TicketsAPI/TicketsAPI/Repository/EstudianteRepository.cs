@@ -3,6 +3,7 @@ using TicketsAPI.DTO;
 using TicketsAPI.Entities;
 using TicketsAPI.Enum;
 using TicketsAPI.Interfaces;
+using TicketsAPI.Services;
 
 namespace TicketsAPI.Repository
 {
@@ -10,20 +11,65 @@ namespace TicketsAPI.Repository
     {
 
         private readonly ApplicationDbContext _context;
+        private readonly DocumentoService _documentService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IBlobStorageService _blob;
 
-        public EstudianteRepository(ApplicationDbContext context)
+        public EstudianteRepository(ApplicationDbContext context, DocumentoService documentService, IHttpContextAccessor httpContextAccessor, IBlobStorageService blob)
         {
             _context = context;
+            _documentService = documentService;
+            _httpContextAccessor = httpContextAccessor;
+            _blob = blob;
         }
 
         // =========================
         // CREATE
         // =========================
-        public async Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto dto)
+        //public async Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto dto)
+        //{
+        //    // validar que el representante exista
+        //    var existeRepresentante = await _context.Representantes
+        //        .AnyAsync(r => r.IsActive == true && r.Id == dto.IdRepresentante);
+
+        //    if (!existeRepresentante)
+        //        throw new Exception("El representante no existe o no está activo.");
+
+        //    var entity = new Estudiante
+        //    {
+        //        Nombre = dto.Nombre.Trim(),
+        //        Apellido = dto.Apellido.Trim(),
+        //        Cedula = dto.Cedula.Trim(),
+        //        FechaNacimiento = dto.FechaNacimiento,
+
+        //        RepresentanteId = dto.IdRepresentante, // ✅ OK
+
+        //        Telefono = dto.Telefono?.Trim(),
+        //        Correo = dto.Correo?.Trim(),
+        //        Direccion = dto.Direccion?.Trim(),
+
+        //        Nivel = dto.Nivel,
+        //        UltimoGradoAprobado = dto.UltimoGradoAprobado,
+        //        Genero = dto.Genero,
+
+        //        Estado = EstadoEstudiante.SinMatricular,
+        //        IsActive = true,
+
+        //        FechaCreacion = DateTime.UtcNow,
+        //        UsuarioCreacion = "SYSTEM"
+        //    };
+
+
+        //    _context.Estudiantes.Add(entity);
+        //    await _context.SaveChangesAsync();
+
+        //    return MapToResponse(entity);
+        //}
+
+        public async Task<EstudianteResponseDto> CrearEstudianteAsync(EstudianteCreateDto dto, CancellationToken ct)
         {
-            // validar que el representante exista
             var existeRepresentante = await _context.Representantes
-                .AnyAsync(r => r.IsActive == true && r.Id == dto.IdRepresentante);
+                .AnyAsync(r => r.IsActive == true && r.Id == dto.IdRepresentante, ct);
 
             if (!existeRepresentante)
                 throw new Exception("El representante no existe o no está activo.");
@@ -34,30 +80,72 @@ namespace TicketsAPI.Repository
                 Apellido = dto.Apellido.Trim(),
                 Cedula = dto.Cedula.Trim(),
                 FechaNacimiento = dto.FechaNacimiento,
-
-                RepresentanteId = dto.IdRepresentante, // ✅ OK
+                RepresentanteId = dto.IdRepresentante,
 
                 Telefono = dto.Telefono?.Trim(),
                 Correo = dto.Correo?.Trim(),
                 Direccion = dto.Direccion?.Trim(),
-                
+
                 Nivel = dto.Nivel,
                 UltimoGradoAprobado = dto.UltimoGradoAprobado,
                 Genero = dto.Genero,
 
                 Estado = EstadoEstudiante.SinMatricular,
                 IsActive = true,
-
                 FechaCreacion = DateTime.UtcNow,
                 UsuarioCreacion = "SYSTEM"
             };
 
-
             _context.Estudiantes.Add(entity);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync(ct);
+
+            // ✅ Si viene foto, se sube como Documento (TipoDocumento = FOTO_EST)
+            if (dto.Foto != null && dto.Foto.Length > 0)
+            {
+                var tipoFotoId = await _context.TipoDocumentos
+                    .Where(t => t.IsActive == true && t.Vigente == true && t.Codigo == "FOTO_EST")
+                    .Select(t => t.Id)
+                    .FirstOrDefaultAsync(ct);
+
+                if (tipoFotoId == 0)
+                    throw new Exception("No existe TipoDocumento FOTO_EST. Inserta el seed.");
+
+                // (opcional) solo 1 foto activa: desactivar anteriores
+                await DesactivarDocumentosDelTipoAsync(entity.Id, tipoFotoId, "SYSTEM", ct);
+
+                await _documentService.UploadAsync(
+                    estudianteId: entity.Id,
+                    tipoDocumentoId: tipoFotoId,
+                    file: dto.Foto,
+                    observacion: "Foto del estudiante",
+                    usuario: "SYSTEM",
+                    ct: ct
+                );
+            }
 
             return MapToResponse(entity);
         }
+
+        private async Task DesactivarDocumentosDelTipoAsync(long estudianteId, long tipoDocumentoId, string usuario, CancellationToken ct)
+        {
+            var anteriores = await _context.Documento
+                .Where(d => d.IsActive == true && d.EstudianteId == estudianteId && d.TipoDocumentoId == tipoDocumentoId)
+                .ToListAsync(ct);
+
+            if (anteriores.Count == 0) return;
+
+            foreach (var doc in anteriores)
+            {
+                doc.IsActive = false;
+                doc.UsuarioEliminacion = usuario;
+                doc.FechaEliminacion = DateTime.UtcNow;
+                doc.UsuarioModificacion = usuario;
+                doc.FechaModificacion = DateTime.UtcNow;
+            }
+
+            await _context.SaveChangesAsync(ct);
+        }
+
 
         // =========================
         // GET BY ID
@@ -79,15 +167,74 @@ namespace TicketsAPI.Repository
         // =========================
         public async Task<List<EstudianteResponseDto>> ObtenerTodosEstudiantesAsync()
         {
-            var list = await _context.Estudiantes
+            const long FOTO_TIPO_DOCUMENTO_ID = 4; // tu "Foto del estudiante"
+
+            var rows = await _context.Estudiantes
                 .AsNoTracking()
-                .Where(x => x.IsActive == true)
-                .OrderByDescending(x => x.Id)
-                .Select(e => MapToResponse(e))
+                .Where(e => e.IsActive == true)
+                .OrderByDescending(e => e.Id)
+                .Select(e => new
+                {
+                    e.Id,
+                    e.Nombre,
+                    e.Apellido,
+                    e.Cedula,
+                    e.FechaNacimiento,
+                    e.Telefono,
+                    e.Correo,
+                    e.Direccion,
+                    e.Nacionalidad,
+                    e.Observacion,
+                    e.Nivel,
+                    e.UltimoGradoAprobado,
+                    e.Estado,
+                    e.Genero,
+
+                    Foto = _context.Documento
+                        .Where(d => d.IsActive == true
+                                    && d.EstudianteId == e.Id
+                                    && d.TipoDocumentoId == FOTO_TIPO_DOCUMENTO_ID)
+                        .OrderByDescending(d => d.FechaCreacion)
+                        .Select(d => new { d.Id, d.StoragePath })
+                        .FirstOrDefault()
+                })
                 .ToListAsync();
 
-            return list;
+            return rows.Select(x => new EstudianteResponseDto
+            {
+                Id = x.Id,
+                NombreCompleto = $"{x.Nombre} {x.Apellido}".Trim(),
+                Cedula = x.Cedula,
+                FechaNacimiento = x.FechaNacimiento,
+                Edad = CalcularEdad(x.FechaNacimiento),
+
+                Telefono = x.Telefono,
+                Correo = x.Correo,
+                Direccion = x.Direccion,
+                Nacionalidad = x.Nacionalidad,
+                Observacion = x.Observacion,
+
+                Nivel = x.Nivel,
+                UltimoGradoAprobado = x.UltimoGradoAprobado,
+                Estado = x.Estado,
+                Genero = x.Genero,
+
+                FotoDocumentoId = x.Foto?.Id,
+                FotoUrl = x.Foto?.StoragePath == null ? null : _blob.GetReadSasUrl(x.Foto.StoragePath, expiresMinutes: 10)
+            })
+            .ToList();
         }
+
+
+        private static int CalcularEdad(DateTime fechaNacimiento)
+        {
+            var hoy = DateTime.UtcNow.Date;
+            var edad = hoy.Year - fechaNacimiento.Date.Year;
+            if (fechaNacimiento.Date > hoy.AddYears(-edad)) edad--;
+            return edad < 0 ? 0 : edad;
+        }
+
+
 
         // =========================
         // UPDATE

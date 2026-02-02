@@ -4,20 +4,41 @@ using TicketsAPI.Enum;
 
 namespace TicketsAPI.DTO
 {
-    public record EstudianteCreateDto(
-     string Nombre,
-     string Apellido,
-     string Cedula,
-     DateTime FechaNacimiento,
-     long IdRepresentante,
-     string? Telefono,
-     string? Correo,
-     string? Direccion,
-     int Nivel,
-     int UltimoGradoAprobado,
-     EstadoEstudiante Estado,
-     Genero Genero
- );
+    //   public record EstudianteCreateDto(
+    //    string Nombre,
+    //    string Apellido,
+    //    string Cedula,
+    //    DateTime FechaNacimiento,
+    //    long IdRepresentante,
+    //    string? Telefono,
+    //    string? Correo,
+    //    string? Direccion,
+    //    int Nivel,
+    //    int UltimoGradoAprobado,
+    //    EstadoEstudiante Estado,
+    //    Genero Genero
+    //);
+
+    public class EstudianteCreateDto
+    {
+        public string Nombre { get; set; } = default!;
+        public string Apellido { get; set; } = default!;
+        public string Cedula { get; set; } = default!;
+        public DateTime FechaNacimiento { get; set; }
+        public long IdRepresentante { get; set; }
+
+        public string? Telefono { get; set; }
+        public string? Correo { get; set; }
+        public string? Direccion { get; set; }
+
+        public int Nivel { get; set; }
+        public int UltimoGradoAprobado { get; set; }
+        public Genero Genero { get; set; }
+
+        // ✅ Foto opcional (se guarda como Documento)
+        public IFormFile? Foto { get; set; }
+    }
+
 
     public record EstudianteUpdateDto(
         string Nombre,
@@ -40,27 +61,29 @@ namespace TicketsAPI.DTO
     public class EstudianteResponseDto
     {
         public long Id { get; set; }
-
-        public string NombreCompleto { get; set; }
-
-        public string Cedula { get; set; }
-
+        public string NombreCompleto { get; set; } = default!;
+        public string Cedula { get; set; } = default!;
         public int Edad { get; set; }
-
         public DateTime FechaNacimiento { get; set; }
 
- 
-        // CONTACTO
-        public string Telefono { get; set; }
-        public string Correo { get; set; }
-        public string Direccion { get; set; }
+        public string? Telefono { get; set; }
+        public string? Correo { get; set; }
+        public string? Direccion { get; set; }
 
-        // ACADÉMICO
+        public string? Nacionalidad { get; set; }
+        public string? Observacion { get; set; }
+
         public int Nivel { get; set; }
         public int UltimoGradoAprobado { get; set; }
         public EstadoEstudiante Estado { get; set; }
         public Genero Genero { get; set; }
+
+        // ✅ FOTO via SAS
+        public long? FotoDocumentoId { get; set; }
+        public string? FotoUrl { get; set; }
     }
+
+
 
 
     public class EstudianteSearchDto

@@ -8,6 +8,7 @@ namespace TicketsAPI.Entities
     {
         [Key]
         public long Id { get; set; }
+        [Required, MaxLength(150)]
         public string Nombre { get; set; }
         [ForeignKey("Grado")]   
         public long GradoId { get; set; }

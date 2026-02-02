@@ -9,20 +9,21 @@ namespace TicketsAPI.Entities
         [Key]
         public long Id { get; set; }
 
-        // Relaciones
+        [ForeignKey("Estudiante")]
         public long EstudianteId { get; set; }
-        public Estudiante Estudiante { get; set; } = null!;
+        public virtual Estudiante Estudiante { get; set; } 
 
         [ForeignKey("Profesor")]
         public long ProfesorId { get; set; }
-        public Profesor Profesor { get; set; } = null!;
+        public virtual Profesor Profesor { get; set; } 
 
-        // Datos académicos mínimos
-        [Required, MaxLength(120)]
-        public string Materia { get; set; } = null!;  // luego lo cambias a MateriaId si creas tabla Materia
+        [ForeignKey("Materia")]
+        public long MateriaId { get; set; }
+        public virtual Materia Materia { get; set; }
+        [ForeignKey("PeriodoEvaluativo")]
+        public long PeriodoEvaluativoId { get; set; }
+        public virtual PeriodoEvaluativo PeriodoEvaluativo { get; set; } 
 
-        [Required, MaxLength(50)]
-        public string Periodo { get; set; } = "2025-2026"; // ejemplo
 
         [Required, Range(0, 10)]
         public decimal Nota { get; set; }

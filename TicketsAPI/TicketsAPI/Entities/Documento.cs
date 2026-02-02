@@ -27,11 +27,11 @@ namespace TicketsAPI.Entities
 
         [ForeignKey("Estudiante")]
         public long EstudianteId { get; set; }
-        public Estudiante Estudiante { get; set; } = default!;
+        public virtual Estudiante Estudiante { get; set; } = default!;
 
         [ForeignKey("TipoDocumento")]
         public long TipoDocumentoId { get; set; }
-        public TipoDocumento TipoDocumento { get; set; } = default!;
+        public virtual TipoDocumento TipoDocumento { get; set; } = default!;
 
         // ✅ Metadata (esto está bien)
         [MaxLength(100)]

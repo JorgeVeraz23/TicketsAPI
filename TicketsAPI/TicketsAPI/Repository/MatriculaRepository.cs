@@ -83,7 +83,6 @@ namespace TicketsAPI.Repository
                 EstadoMatricula = "Activa",
                 FechaMatricula = DateTime.UtcNow,
                 FechaConfirmacion = null,  // ✅ pendiente => sin confirmación
-                PagoEstado = "No especificado",
                 IsActive = true
             };
 

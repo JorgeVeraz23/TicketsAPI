@@ -18,19 +18,14 @@ namespace TicketsAPI.Controllers
             _estudianteRepository = estudianteRepository;
         }
 
-        [Authorize(Roles = "Secretaria")]
+
+
         [HttpPost("CrearEstudiante")]
-        public async Task<IActionResult> CrearEstudiante([FromBody] EstudianteCreateDto estudianteDto)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<EstudianteResponseDto>> Crear([FromForm] EstudianteCreateDto dto, CancellationToken ct)
         {
-            try
-            {
-                var estudiante = await _estudianteRepository.CrearEstudianteAsync(estudianteDto);
-                return Ok(estudiante);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al crear el estudiante: {ex.Message}");
-            }
+            var res = await _estudianteRepository.CrearEstudianteAsync(dto, ct);
+            return Ok(res);
         }
 
         [HttpGet("ObtenerEstudiante")]
@@ -52,18 +47,12 @@ namespace TicketsAPI.Controllers
         }
 
         [HttpGet("GetAllEstudiantes")]
-        public async Task<IActionResult> ObtenerTodosEstudiantes()
+        public async Task<ActionResult<List<EstudianteResponseDto>>> GetAll()
         {
-            try
-            {
-                var estudiantes = await _estudianteRepository.ObtenerTodosEstudiantesAsync();
-                return Ok(estudiantes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, $"Error al obtener todos los estudiantes: {ex.Message}");
-            }
+            var res = await _estudianteRepository.ObtenerTodosEstudiantesAsync();
+            return Ok(res);
         }
+
 
         [HttpPut("ActualizarEstudiante")]
         public async Task<IActionResult> ActualizarEstudiante(long id, [FromBody] EstudianteCreateDto estudianteDto)
