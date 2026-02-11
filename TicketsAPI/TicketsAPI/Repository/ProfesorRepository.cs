@@ -69,12 +69,27 @@ namespace TicketsAPI.Repository
         // =========================
         public async Task<List<ProfesorResponseDto>> ObtenerTodosProfesoresAsync()
         {
-            return await _context.Profesors
+            var response = await _context.Profesors
                 .AsNoTracking()
                 .Where(x => x.IsActive == true)
                 .OrderByDescending(x => x.Id)
-                .Select(p => MapToResponse(p))
+                .Select(p => new ProfesorResponseDto
+                {
+                    Id = p.Id,
+                    NombreCompleto = p.Nombres + p.Apellidos,
+                    Nombres = p.Nombres,
+                    Apellidos = p.Apellidos,
+                    IsTutor = p.IsTutor,
+                    Telefono = p.Telefono,
+                    TipoDocumento = p.TipoDocumento,
+                    TituloProfesional = p.TituloProfesional,
+                    Email = p.Email,
+                    IsActive = p.IsActive,
+                    NumeroDocumento = p.NumeroDocumento,
+                })
                 .ToListAsync();
+
+            return response;
         }
 
         // =========================
