@@ -19,10 +19,11 @@ namespace TicketsAPI.Entities
         public string NumeroDocumento { get; set; }
         [MaxLength(20)]
         public string? Telefono { get; set; }
+        public bool IsTutor { get; set; } = false;
         [MaxLength(200)]
         public string? Email { get; set; }
-
-        // Navegación
+        public virtual ICollection<Materia> Materias { get; set; } = new List<Materia>();
+        public virtual ICollection<GradoParalelo>? GradoParalelos { get; set; } 
         public virtual ICollection<Calificacion> Calificaciones { get; set; } = new List<Calificacion>();
     }
 

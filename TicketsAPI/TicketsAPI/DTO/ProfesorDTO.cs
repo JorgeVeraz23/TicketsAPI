@@ -9,6 +9,7 @@
         public string NumeroDocumento { get; set; } = null!;
         public string? Telefono { get; set; }
         public string? Email { get; set; }
+        public bool IsTutor { get; set; }  
     }
 
     public class ProfesorResponseDto
@@ -23,6 +24,7 @@
         public string? Telefono { get; set; }
         public string? Email { get; set; }
         public bool? IsActive { get; set; }
+        public bool IsTutor { get; set; }   
     }
 
     public class ProfesorSearchDto

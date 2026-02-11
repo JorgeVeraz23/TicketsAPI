@@ -10,6 +10,8 @@ namespace TicketsAPI.DTO
 
         [Required]
         public long GradoId { get; set; }  // El grado al que pertenece la materia
+        [Required]
+        public long ProfesorId { get; set; }  // El profesor que imparte la materia
     }
 
     public class MateriaResponseDto
@@ -18,6 +20,7 @@ namespace TicketsAPI.DTO
         public string Nombre { get; set; }
         public long GradoId { get; set; }
         public string GradoNombre { get; set; }  // Nombre del grado, como "Primero de Básica"
+        public string ProfesorNombre { get; set; }  // Nombre del profesor, como "Juan Pérez"
     }
 
 }

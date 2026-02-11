@@ -20,6 +20,7 @@ namespace TicketsAPI.Repository
             {
                 Nombre = materiaDto.Nombre,
                 GradoId = materiaDto.GradoId,
+                IdProfesor = materiaDto.ProfesorId,
                 IsActive = true,
                 FechaCreacion = DateTime.UtcNow,
                 UsuarioCreacion = "SYSTEM"
@@ -39,7 +40,8 @@ namespace TicketsAPI.Repository
                 Id = materiaConGrado.Id,
                 Nombre = materiaConGrado.Nombre,
                 GradoId = materiaConGrado.GradoId,
-                GradoNombre = materiaConGrado.Grado?.Nombre // Ahora debería tener el nombre del Grado
+                GradoNombre = materiaConGrado.Grado?.Nombre, // Ahora debería tener el nombre del Grado
+                ProfesorNombre = materiaConGrado.Profesor?.Nombres // Si también quieres incluir el nombre del Profesor
             };
         }
 
@@ -58,7 +60,8 @@ namespace TicketsAPI.Repository
                 Id = materia.Id,
                 Nombre = materia.Nombre,
                 GradoId = materia.GradoId,
-                GradoNombre = materia.Grado.Nombre
+                GradoNombre = materia.Grado.Nombre,
+                ProfesorNombre = materia.Profesor?.Nombres // Si también quieres incluir el nombre del Profesor
             };
         }
 
@@ -76,7 +79,8 @@ namespace TicketsAPI.Repository
                 Id = m.Id,
                 Nombre = m.Nombre,
                 GradoId = m.GradoId,
-                GradoNombre = m.Grado.Nombre
+                GradoNombre = m.Grado.Nombre,
+                ProfesorNombre = m.Profesor?.Nombres // Si también quieres incluir el nombre del Profesor
             }).ToList();
         }
 
@@ -128,7 +132,8 @@ namespace TicketsAPI.Repository
         Id = x.m.Id,
         Nombre = x.m.Nombre,
         GradoId = x.m.GradoId,
-        GradoNombre = x.g.Nombre
+        GradoNombre = x.g.Nombre,
+        ProfesorNombre = x.m.Profesor != null ? x.m.Profesor.Nombres : null
     }).ToListAsync();
 }
 

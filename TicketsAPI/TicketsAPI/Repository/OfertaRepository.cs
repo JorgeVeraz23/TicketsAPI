@@ -25,6 +25,7 @@ namespace TicketsAPI.Repository
                 x.IsActive == true &&
                 x.GradoId == dto.GradoId &&
                 x.ParaleloId == dto.ParaleloId &&
+                x.ProfesorId == dto.ProfesorId &&
                 x.AnioLectivoId == dto.AnioLectivoId
             );
 
@@ -38,6 +39,7 @@ namespace TicketsAPI.Repository
                 ParaleloId = dto.ParaleloId,
                 AnioLectivoId = dto.AnioLectivoId,
                 Cupos = dto.Cupos,
+                ProfesorId = dto.ProfesorId,
                 IsActive = true,
                 FechaCreacion = DateTime.UtcNow
             };
@@ -73,7 +75,9 @@ namespace TicketsAPI.Repository
                     disponibles = 0, // se calcula despues
                     gradoNombre = x.Grado.Nombre,
                     anioLectivo = x.AnioLectivo.Periodo,
+                    profesorNombre = x.Profesor.Nombres,
                     paraleloNombre = x.Paralelo.Nombre,
+                    
                     cupos = x.Cupos,
                     ocupados = _context.Matriculas.Count(m => m.IsActive == true && m.GradoParaleloId == x.Id)
                 });
@@ -100,6 +104,7 @@ namespace TicketsAPI.Repository
                     gradoNombre = x.Grado.Nombre,
                     anioLectivo = x.AnioLectivo.Periodo,
                     paraleloNombre = x.Paralelo.Nombre,
+                    profesorNombre = x.Profesor.Nombres,
                     cupos = x.Cupos,
                     ocupados = _context.Matriculas.Count(m => m.IsActive == true && m.GradoParaleloId == x.Id)
                 });

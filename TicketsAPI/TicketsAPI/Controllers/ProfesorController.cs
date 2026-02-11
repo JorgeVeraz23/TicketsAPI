@@ -47,6 +47,20 @@ namespace TicketsAPI.Controllers
             return Ok(list);
         }
 
+        [HttpGet("SelectorProfesores")]
+        public async Task<IActionResult> SelectorProfesores()
+        {
+            var list = await _profesorRepo.SelectorProfesor();
+            return Ok(list);
+        }
+
+        [HttpGet("SelectorProfesorTutor")]
+        public async Task<IActionResult> SelectorProfesorTutor()
+        {
+            var list = await _profesorRepo.SelectorProfesorTutor();
+            return Ok(list);
+        }
+
         // =========================
         // UPDATE
         // =========================

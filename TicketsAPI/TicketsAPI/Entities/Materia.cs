@@ -10,8 +10,13 @@ namespace TicketsAPI.Entities
         public long Id { get; set; }
         [Required, MaxLength(150)]
         public string Nombre { get; set; }
+        [ForeignKey("Profesor")]
+        public long IdProfesor { get; set; }
         [ForeignKey("Grado")]   
         public long GradoId { get; set; }
-        public virtual Grado Grado { get; set; }    
+        public virtual Grado Grado { get; set; }
+     
+        public virtual Profesor Profesor { get; set; }
+
     }
 }

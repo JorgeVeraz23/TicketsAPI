@@ -39,7 +39,7 @@ namespace TicketsAPI.Repository
                 NumeroDocumento = numDoc,
                 Telefono = string.IsNullOrWhiteSpace(dto.Telefono) ? null : dto.Telefono.Trim(),
                 Email = string.IsNullOrWhiteSpace(dto.Email) ? null : dto.Email.Trim(),
-
+                IsTutor =dto.IsTutor,
                 IsActive = true,
                 FechaCreacion = DateTime.UtcNow,
                 UsuarioCreacion = "SYSTEM"
@@ -112,7 +112,7 @@ namespace TicketsAPI.Repository
             entity.NumeroDocumento = numDoc;
             entity.Telefono = string.IsNullOrWhiteSpace(dto.Telefono) ? null : dto.Telefono.Trim();
             entity.Email = string.IsNullOrWhiteSpace(dto.Email) ? null : dto.Email.Trim();
-
+            entity.IsTutor = dto.IsTutor;
             entity.FechaModificacion = DateTime.UtcNow;
             entity.UsuarioModificacion = "SYSTEM";
 
@@ -200,6 +200,40 @@ namespace TicketsAPI.Repository
                 Email = p.Email,
                 IsActive = p.IsActive
             };
+        }
+
+        public async Task<List<KeyValueDTO>> SelectorProfesor()
+        {
+            var selector = await _context.Profesors
+                .AsNoTracking()
+                .Where(p => p.IsActive == true)
+                .OrderBy(p => p.Apellidos)
+                .ThenBy(p => p.Nombres)
+                .Select(p => new KeyValueDTO
+                {
+                    Key = p.Id,
+                    Value = $"{p.Nombres} {p.Apellidos}"
+                })
+                .ToListAsync();
+
+            return selector;
+        }
+
+        public async Task<List<KeyValueDTO>> SelectorProfesorTutor()
+        {
+            var selector = await _context.Profesors
+               .AsNoTracking()
+               .Where(p => p.IsActive == true && p.IsTutor == true)
+               .OrderBy(p => p.Apellidos)
+               .ThenBy(p => p.Nombres)
+               .Select(p => new KeyValueDTO
+               {
+                   Key = p.Id,
+                   Value = $"{p.Nombres} {p.Apellidos}"
+               })
+               .ToListAsync();
+
+            return selector;
         }
     }
 }
