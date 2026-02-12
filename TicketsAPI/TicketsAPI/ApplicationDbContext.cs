@@ -28,7 +28,6 @@ namespace TicketsAPI
 
 
         public DbSet<PeriodoEvaluativo> PeriodosEvaluativos { get; set; }
-        public DbSet<Calificacion> Calificaciones { get; set; }
 
 
 
@@ -42,9 +41,7 @@ namespace TicketsAPI
             // =============== Defaults / precision =================
            
 
-            modelBuilder.Entity<Calificacion>()
-                .Property(x => x.Nota)
-                .HasPrecision(5, 2);
+          
 
             // =============== Unique constraints ===================
             modelBuilder.Entity<Estudiante>()
@@ -104,36 +101,6 @@ namespace TicketsAPI
                 .WithMany()
                 .HasForeignKey(x => x.TipoDocumentoId)
                 .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(x => x.Estudiante)
-                .WithMany(x => x.Calificaciones)
-                .HasForeignKey(x => x.EstudianteId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(x => x.Profesor)
-                .WithMany(x => x.Calificaciones)
-                .HasForeignKey(x => x.ProfesorId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(x => x.Materia)
-                .WithMany()
-                .HasForeignKey(x => x.MateriaId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Calificacion>()
-                .HasOne(x => x.PeriodoEvaluativo)
-                .WithMany()
-                .HasForeignKey(x => x.PeriodoEvaluativoId)
-                .OnDelete(DeleteBehavior.Restrict);
-
-            // =============== Soft Delete filter (opcional) =========
-            // Si quieres que todo lo inactivo no salga por default:
-            // modelBuilder.Entity<Estudiante>().HasQueryFilter(x => x.IsActive);
-            // modelBuilder.Entity<Matricula>().HasQueryFilter(x => x.IsActive);
-            // ... (y así con cada entidad)
 
 
 

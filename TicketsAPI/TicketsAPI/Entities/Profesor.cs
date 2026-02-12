@@ -24,7 +24,6 @@ namespace TicketsAPI.Entities
         public string? Email { get; set; }
         public virtual ICollection<Materia> Materias { get; set; } = new List<Materia>();
         public virtual ICollection<GradoParalelo>? GradoParalelos { get; set; } 
-        public virtual ICollection<Calificacion> Calificaciones { get; set; } = new List<Calificacion>();
     }
 
 }

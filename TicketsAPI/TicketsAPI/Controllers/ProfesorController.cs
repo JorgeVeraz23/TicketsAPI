@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using ClosedXML.Excel;
+using LiveCharts;
+using LiveCharts.Wpf;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TicketsAPI.DTO;
 using TicketsAPI.Interfaces;
@@ -61,6 +64,7 @@ namespace TicketsAPI.Controllers
             return Ok(list);
         }
 
+    
         // =========================
         // UPDATE
         // =========================

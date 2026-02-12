@@ -49,7 +49,6 @@ namespace TicketsAPI.Entities
 
         public virtual ICollection<Documento>? Documentos { get; set; }
         public virtual ICollection<Matricula>? Matriculas { get; set; }
-        public virtual ICollection<Calificacion>? Calificaciones { get; set; } = new List<Calificacion>();
     }
 
 }
