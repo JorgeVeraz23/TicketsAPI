@@ -16,10 +16,11 @@ namespace TicketsAPI.Interfaces
             Task<List<EstudianteResponseDto>> ObtenerTodosEstudiantesAsync();
 
             // Actualizar los detalles de un estudiante
-            Task<bool> ActualizarEstudianteAsync(long id, EstudianteCreateDto estudianteDto);
+        Task<EstudianteResponseDto?> ActualizarEstudianteAsync(long id, EstudianteUpdateDto dto);
 
-            // Eliminar un estudiante por su ID
-            Task<bool> EliminarEstudianteAsync(long id);
+
+        // Eliminar un estudiante por su ID
+        Task<bool> EliminarEstudianteAsync(long id);
             Task<List<EstudianteSearchDto>> SearchAsync(string query, int take = 10);
             Task<List<KeyValueDTO>> SelectorEstudiante();
             Task<List<KeyValueDTO>> SelectorEstudianteDocs();

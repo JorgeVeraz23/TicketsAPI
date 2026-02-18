@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Sas;
+using TicketsAPI.Entities;
 using TicketsAPI.Interfaces;
 
 namespace TicketsAPI.Services
@@ -65,6 +66,8 @@ namespace TicketsAPI.Services
             await blob.UploadAsync(stream, new BlobHttpHeaders { ContentType = contentType }, cancellationToken: ct);
             return blobPath;
         }
+
+    
 
         public async Task<(Stream stream, string contentType)> DownloadAsync(string blobPath, CancellationToken ct)
         {

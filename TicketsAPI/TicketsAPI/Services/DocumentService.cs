@@ -17,63 +17,116 @@ namespace TicketsAPI.Services
             _blob = blob;
         }
 
+  
         public async Task<long> UploadAsync(
             long estudianteId,
             long tipoDocumentoId,
             IFormFile file,
             string? observacion,
             string usuario,
-            CancellationToken ct)
+            CancellationToken ct = default)
         {
-            if (file == null || file.Length <= 0) throw new ArgumentException("Archivo vacío.");
+            if (file == null || file.Length == 0)
+                throw new Exception("Archivo inválido.");
 
-            // Recomendado (mínimo):
-            var allowed = new[] { "application/pdf", "image/png", "image/jpeg" };
-            if (!allowed.Contains(file.ContentType))
-                throw new InvalidOperationException("Tipo de archivo no permitido (solo PDF/PNG/JPG).");
+            var existeEstudiante = await _db.Estudiantes
+                .AnyAsync(e => e.IsActive == true && e.Id == estudianteId, ct);
 
-            // 1) Crear registro en BD primero (para obtener Id si quieres usarlo en path)
-            var ext = Path.GetExtension(file.FileName);
+            if (!existeEstudiante)
+                throw new Exception("El estudiante no existe o no está activo.");
+
+            var tipo = await _db.TipoDocumentos
+                .AsNoTracking()
+                .FirstOrDefaultAsync(t => t.IsActive == true && t.Vigente == true && t.Id == tipoDocumentoId, ct);
+
+            if (tipo == null)
+                throw new Exception("Tipo de documento no válido.");
+
+            var ext = Path.GetExtension(file.FileName)?.ToLowerInvariant() ?? "";
+            var mime = file.ContentType ?? "application/octet-stream";
+            var size = file.Length;
+
+            byte[] fileBytes;
+            byte[] hashBytes;
+
+            await using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms, ct);
+                fileBytes = ms.ToArray();
+
+                using var sha = System.Security.Cryptography.SHA256.Create();
+                hashBytes = sha.ComputeHash(fileBytes);
+            }
+
+            var newStoragePath = $"documents/estudiante-{estudianteId}/doc-{tipoDocumentoId}/{Guid.NewGuid():N}{ext}";
+            await using (var uploadStream = new MemoryStream(fileBytes))
+            {
+                await _blob.UploadAsync(uploadStream, mime, newStoragePath, ct);
+            }
+
+            var existente = await _db.Documento
+                .FirstOrDefaultAsync(d =>
+                    d.EstudianteId == estudianteId &&
+                    d.TipoDocumentoId == tipoDocumentoId, ct);
+
+            if (existente != null)
+            {
+                if (!string.IsNullOrWhiteSpace(existente.StoragePath))
+                {
+                    try { await _blob.DeleteIfExistsAsync(existente.StoragePath, ct); } catch { }
+                }
+
+                existente.Nombre = file.FileName;
+                existente.StorageProvider = "AzureBlob";
+                existente.StoragePath = newStoragePath;
+                existente.MimeType = mime;
+                existente.Extension = ext;
+                existente.TamanoBytes = size;
+                existente.HashArchivo = hashBytes;
+                existente.Observacion = observacion;
+                existente.Estado = "Pendiente";
+                existente.Aprobado = null;
+                existente.FechaRevision = null;
+                existente.UsuarioRevision = null;
+
+                existente.IsActive = true;
+                existente.UsuarioEliminacion = null;
+                existente.FechaEliminacion = null;
+
+                existente.UsuarioModificacion = usuario;
+                existente.FechaModificacion = DateTime.UtcNow;
+
+                await _db.SaveChangesAsync(ct);
+                return existente.Id;
+            }
+
             var doc = new Documento
             {
-                Nombre = Path.GetFileName(file.FileName),
+                Nombre = file.FileName,
                 Estado = "Pendiente",
+                StorageProvider = "AzureBlob",
+                StoragePath = newStoragePath,
                 EstudianteId = estudianteId,
                 TipoDocumentoId = tipoDocumentoId,
-                MimeType = file.ContentType,
+                MimeType = mime,
                 Extension = ext,
-                TamanoBytes = file.Length,
+                TamanoBytes = size,
+                HashArchivo = hashBytes,
                 Observacion = observacion,
                 Aprobado = null,
                 FechaRevision = null,
                 UsuarioRevision = null,
                 UsuarioCreacion = usuario,
                 FechaCreacion = DateTime.UtcNow,
-                IsActive = true,
-                StorageProvider = "AzureBlob",
-                StoragePath = "TEMP" // se actualiza luego
+                IsActive = true
             };
 
             _db.Documento.Add(doc);
             await _db.SaveChangesAsync(ct);
 
-            // 2) Subir a Blob (path ordenado)
-            var safeExt = string.IsNullOrWhiteSpace(ext) ? "" : ext.ToLowerInvariant();
-            var blobPath = $"documents/estudiante-{estudianteId}/doc-{doc.Id}/{Guid.NewGuid():N}{safeExt}";
-
-            await using var stream = file.OpenReadStream();
-            await _blob.UploadAsync(stream, file.ContentType, blobPath, ct);
-
-            // 3) Calcular hash opcional (SHA256) (si lo usas)
-            // OJO: hay que reabrir stream para calcular hash
-            await using var stream2 = file.OpenReadStream();
-            doc.HashArchivo = await ComputeSha256Async(stream2, ct);
-
-            doc.StoragePath = blobPath;
-            await _db.SaveChangesAsync(ct);
-
             return doc.Id;
         }
+
 
         public async Task<List<Documento>> ListarPorEstudianteAsync(long estudianteId, CancellationToken ct)
         {

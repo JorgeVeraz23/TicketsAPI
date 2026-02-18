@@ -150,17 +150,68 @@ namespace TicketsAPI.Repository
         // =========================
         // GET BY ID
         // =========================
-        public async Task<EstudianteResponseDto> ObtenerEstudiantePorIdAsync(long id)
+        public async Task<EstudianteResponseDto?> ObtenerEstudiantePorIdAsync(long id)
         {
-            var e = await _context.Estudiantes
+            const long FOTO_TIPO_DOCUMENTO_ID = 4; // FOTO_EST
+
+            var row = await _context.Estudiantes
                 .AsNoTracking()
-                .Where(x => x.IsActive == true && x.Id == id)
+                .Where(e => e.IsActive == true && e.Id == id)
+                .Select(e => new
+                {
+                    e.Id,
+                    e.Nombre,
+                    e.Apellido,
+                    e.Cedula,
+                    e.FechaNacimiento,
+                    e.RepresentanteId,
+                    e.Telefono,
+                    e.Correo,
+                    e.Direccion,
+                    e.Nacionalidad,
+                    e.Observacion,
+                    e.Nivel,
+                    e.UltimoGradoAprobado,
+                    e.Estado,
+                    e.Genero,
+                    Foto = _context.Documento
+                        .Where(d => d.IsActive == true
+                                    && d.EstudianteId == e.Id
+                                    && d.TipoDocumentoId == FOTO_TIPO_DOCUMENTO_ID)
+                        .OrderByDescending(d => d.FechaCreacion)
+                        .Select(d => new { d.Id, d.StoragePath })
+                        .FirstOrDefault()
+                })
                 .FirstOrDefaultAsync();
 
-            if (e == null) return null;
+            if (row == null) return null;
 
-            return MapToResponse(e);
+            return new EstudianteResponseDto
+            {
+                Id = row.Id,
+                NombreCompleto = $"{row.Nombre} {row.Apellido}".Trim(),
+                Cedula = row.Cedula,
+                FechaNacimiento = row.FechaNacimiento,
+                Edad = CalcularEdad(row.FechaNacimiento),
+
+                IdRepresentante = row.RepresentanteId,
+
+                Telefono = row.Telefono,
+                Correo = row.Correo,
+                Direccion = row.Direccion,
+                Nacionalidad = row.Nacionalidad,
+                Observacion = row.Observacion,
+
+                Nivel = row.Nivel,
+                UltimoGradoAprobado = row.UltimoGradoAprobado,
+                Estado = row.Estado,
+                Genero = row.Genero,
+
+                FotoDocumentoId = row.Foto?.Id,
+                FotoUrl = row.Foto?.StoragePath == null ? null : _blob.GetReadSasUrl(row.Foto.StoragePath, 10)
+            };
         }
+
 
         // =========================
         // GET ALL
@@ -236,19 +287,15 @@ namespace TicketsAPI.Repository
 
 
 
-        // =========================
-        // UPDATE
-        // =========================
-        public async Task<bool> ActualizarEstudianteAsync(long id, EstudianteCreateDto dto)
+        public async Task<EstudianteResponseDto?> ActualizarEstudianteAsync(long id, EstudianteUpdateDto dto)
         {
             var entity = await _context.Estudiantes
-                .Where(x => x.IsActive == true && x.Id == id)
-                .FirstOrDefaultAsync();
+                .FirstOrDefaultAsync(x => x.IsActive == true && x.Id == id);
 
-            if (entity == null) return false;
+            if (entity == null) return null;
 
-            // Si cambia la cédula, validar duplicado
-            var cedulaNueva = dto.Cedula.Trim();
+            // Validar cédula duplicada (si cambió)
+            var cedulaNueva = (dto.Cedula ?? string.Empty).Trim();
             if (!string.Equals(entity.Cedula, cedulaNueva, StringComparison.OrdinalIgnoreCase))
             {
                 var existe = await _context.Estudiantes.AnyAsync(e =>
@@ -260,11 +307,19 @@ namespace TicketsAPI.Repository
                     throw new Exception("Ya existe otro estudiante activo con esa cédula.");
             }
 
-            entity.Nombre = dto.Nombre.Trim();
-            entity.Apellido = dto.Apellido.Trim();
+            // Validar representante
+            var existeRepresentante = await _context.Representantes
+                .AnyAsync(r => r.IsActive == true && r.Id == dto.IdRepresentante);
+
+            if (!existeRepresentante)
+                throw new Exception("El representante no existe o no está activo.");
+
+            // Actualizar campos
+            entity.Nombre = (dto.Nombre ?? string.Empty).Trim();
+            entity.Apellido = (dto.Apellido ?? string.Empty).Trim();
             entity.Cedula = cedulaNueva;
             entity.FechaNacimiento = dto.FechaNacimiento;
-
+            entity.RepresentanteId = dto.IdRepresentante;
 
             entity.Telefono = dto.Telefono?.Trim();
             entity.Correo = dto.Correo?.Trim();
@@ -278,8 +333,81 @@ namespace TicketsAPI.Repository
             entity.UsuarioModificacion = "SYSTEM";
 
             await _context.SaveChangesAsync();
-            return true;
+
+            // Si viene foto, subir como FOTO_EST (opcional)
+            if (dto.Foto != null && dto.Foto.Length > 0)
+            {
+                var tipoFotoId = await _context.TipoDocumentos
+                    .Where(t => t.IsActive == true && t.Vigente == true && t.Codigo == "FOTO_EST")
+                    .Select(t => t.Id)
+                    .FirstOrDefaultAsync();
+
+                if (tipoFotoId == 0)
+                    throw new Exception("No existe TipoDocumento FOTO_EST. Inserta el seed.");
+
+                await DesactivarDocumentosDelTipoAsync(entity.Id, tipoFotoId, "SYSTEM", CancellationToken.None);
+
+                await _documentService.UploadAsync(
+                    estudianteId: entity.Id,
+                    tipoDocumentoId: tipoFotoId,
+                    file: dto.Foto,
+                    observacion: "Foto del estudiante",
+                    usuario: "SYSTEM",
+                    ct: CancellationToken.None
+                );
+            }
+
+            var result = await _context.Estudiantes
+    .AsNoTracking()
+    .Where(e => e.IsActive && e.Id == id)
+    .Select(e => new
+    {
+        e.Id,
+        e.Nombre,
+        e.Apellido,
+        e.Cedula,
+        e.FechaNacimiento,
+        e.Telefono,
+        e.Correo,
+        e.Direccion,
+        e.Nacionalidad,
+        e.Observacion,
+        e.Nivel,
+        e.UltimoGradoAprobado,
+        e.Estado,
+        e.Genero,
+        Foto = _context.Documento
+            .Where(d => d.IsActive && d.EstudianteId == e.Id && d.TipoDocumentoId == 4)
+            .OrderByDescending(d => d.FechaCreacion)
+            .Select(d => new { d.Id, d.StoragePath })
+            .FirstOrDefault()
+    })
+    .FirstOrDefaultAsync();
+
+            if (result == null) return null;
+
+            return new EstudianteResponseDto
+            {
+                Id = result.Id,
+                NombreCompleto = $"{result.Nombre} {result.Apellido}".Trim(),
+                Cedula = result.Cedula,
+                FechaNacimiento = result.FechaNacimiento,
+                Edad = CalcularEdad(result.FechaNacimiento),
+                Telefono = result.Telefono,
+                Correo = result.Correo,
+                Direccion = result.Direccion,
+                Nacionalidad = result.Nacionalidad,
+                Observacion = result.Observacion,
+                Nivel = result.Nivel,
+                UltimoGradoAprobado = result.UltimoGradoAprobado,
+                Estado = result.Estado,
+                Genero = result.Genero,
+                FotoDocumentoId = result.Foto?.Id,
+                FotoUrl = result.Foto?.StoragePath == null ? null : _blob.GetReadSasUrl(result.Foto.StoragePath, 10)
+            };
+
         }
+
 
         // =========================
         // DELETE (soft delete)
@@ -348,6 +476,117 @@ namespace TicketsAPI.Repository
 
             return result;
         }
+
+        public async Task<long> UploadAsync(
+            long estudianteId,
+            long tipoDocumentoId,
+            IFormFile file,
+            string? observacion,
+            string usuario,
+            CancellationToken ct = default)
+        {
+            if (file == null || file.Length == 0)
+                throw new Exception("Archivo inválido.");
+
+            var existeEstudiante = await _context.Estudiantes
+                .AnyAsync(e => e.IsActive == true && e.Id == estudianteId, ct);
+
+            if (!existeEstudiante)
+                throw new Exception("El estudiante no existe o no está activo.");
+
+            var tipo = await _context.TipoDocumentos
+                .AsNoTracking()
+                .FirstOrDefaultAsync(t => t.IsActive == true && t.Vigente == true && t.Id == tipoDocumentoId, ct);
+
+            if (tipo == null)
+                throw new Exception("Tipo de documento no válido.");
+
+            var ext = Path.GetExtension(file.FileName)?.ToLowerInvariant() ?? "";
+            var mime = file.ContentType ?? "application/octet-stream";
+            var size = file.Length;
+
+            byte[] fileBytes;
+            byte[] hashBytes;
+
+            await using (var ms = new MemoryStream())
+            {
+                await file.CopyToAsync(ms, ct);
+                fileBytes = ms.ToArray();
+
+                using var sha = System.Security.Cryptography.SHA256.Create();
+                hashBytes = sha.ComputeHash(fileBytes);
+            }
+
+            var newStoragePath = $"documents/estudiante-{estudianteId}/doc-{tipoDocumentoId}/{Guid.NewGuid():N}{ext}";
+            await using (var uploadStream = new MemoryStream(fileBytes))
+            {
+                await _blob.UploadAsync(uploadStream, mime, newStoragePath, ct);
+            }
+
+            var existente = await _context.Documento
+                .FirstOrDefaultAsync(d =>
+                    d.EstudianteId == estudianteId &&
+                    d.TipoDocumentoId == tipoDocumentoId, ct);
+
+            if (existente != null)
+            {
+                if (!string.IsNullOrWhiteSpace(existente.StoragePath))
+                {
+                    try { await _blob.DeleteIfExistsAsync(existente.StoragePath, ct); } catch { }
+                }
+
+                existente.Nombre = file.FileName;
+                existente.StorageProvider = "AzureBlob";
+                existente.StoragePath = newStoragePath;
+                existente.MimeType = mime;
+                existente.Extension = ext;
+                existente.TamanoBytes = size;
+                existente.HashArchivo = hashBytes;
+                existente.Observacion = observacion;
+                existente.Estado = "Pendiente";
+                existente.Aprobado = null;
+                existente.FechaRevision = null;
+                existente.UsuarioRevision = null;
+
+                existente.IsActive = true;
+                existente.UsuarioEliminacion = null;
+                existente.FechaEliminacion = null;
+
+                existente.UsuarioModificacion = usuario;
+                existente.FechaModificacion = DateTime.UtcNow;
+
+                await _context.SaveChangesAsync(ct);
+                return existente.Id;
+            }
+
+            var doc = new Documento
+            {
+                Nombre = file.FileName,
+                Estado = "Pendiente",
+                StorageProvider = "AzureBlob",
+                StoragePath = newStoragePath,
+                EstudianteId = estudianteId,
+                TipoDocumentoId = tipoDocumentoId,
+                MimeType = mime,
+                Extension = ext,
+                TamanoBytes = size,
+                HashArchivo = hashBytes,
+                Observacion = observacion,
+                Aprobado = null,
+                FechaRevision = null,
+                UsuarioRevision = null,
+                UsuarioCreacion = usuario,
+                FechaCreacion = DateTime.UtcNow,
+                IsActive = true
+            };
+
+            _context.Documento.Add(doc);
+            await _context.SaveChangesAsync(ct);
+
+            return doc.Id;
+        }
+
+
 
         // =========================
         // MAPPING

@@ -55,15 +55,18 @@ namespace TicketsAPI.Controllers
 
 
         [HttpPut("ActualizarEstudiante")]
-        public async Task<IActionResult> ActualizarEstudiante(long id, [FromBody] EstudianteCreateDto estudianteDto)
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult<EstudianteResponseDto>> ActualizarEstudiante([FromForm] EstudianteUpdateDto dto)
         {
             try
             {
-                var result = await _estudianteRepository.ActualizarEstudianteAsync(id, estudianteDto);
-                if (!result)
-                {
-                    return NotFound();
-                }
+                if (dto.Id <= 0)
+                    return BadRequest("El id del estudiante es obligatorio.");
+
+                var result = await _estudianteRepository.ActualizarEstudianteAsync(dto.Id, dto);
+                if (result == null)
+                    return NotFound($"Estudiante con ID {dto.Id} no encontrado.");
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -71,6 +74,8 @@ namespace TicketsAPI.Controllers
                 return StatusCode(500, $"Error al actualizar el estudiante: {ex.Message}");
             }
         }
+
+
 
         [HttpDelete("EliminarEstudiante")]
         public async Task<IActionResult> EliminarEstudiante(long id)
