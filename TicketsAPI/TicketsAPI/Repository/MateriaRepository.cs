@@ -111,7 +111,9 @@ namespace TicketsAPI.Repository
                 return false;
             }
 
-            _context.Materias.Remove(materia);
+            materia.IsActive = false;
+            materia.FechaEliminacion = DateTime.UtcNow;
+            materia.UsuarioEliminacion = "SYSTEM";
             await _context.SaveChangesAsync();
             return true;
         }

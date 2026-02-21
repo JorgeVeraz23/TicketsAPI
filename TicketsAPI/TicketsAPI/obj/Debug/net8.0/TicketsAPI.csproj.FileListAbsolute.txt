@@ -492,6 +492,7 @@ C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\OpenAI.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\QuestPDF.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\RBush.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\SixLabors.Fonts.dll
@@ -512,6 +513,7 @@ C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.IO.Hashing.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.IO.Packaging.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.Memory.Data.dll
+C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.Net.ServerSentEvents.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.Runtime.Caching.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.Security.Permissions.dll
@@ -633,5 +635,3 @@ C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\obj\Debug\net8.
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\obj\Debug\net8.0\TicketsAPI.pdb
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\obj\Debug\net8.0\TicketsAPI.genruntimeconfig.cache
 C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\obj\Debug\net8.0\ref\TicketsAPI.dll
-C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\OpenAI.dll
-C:\Users\Jorge\Documents\GitHub\TicketsAPI\TicketsAPI\TicketsAPI\bin\Debug\net8.0\System.Net.ServerSentEvents.dll
