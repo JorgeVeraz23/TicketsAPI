@@ -57,15 +57,16 @@ namespace TicketsAPI.Repository
                 .Where(e => e.Id == idEstudiante && e.IsActive == true)
                 .Select(x => new
                 {
-                    
+
                     x.UltimoGradoAprobado
                 }).FirstOrDefaultAsync();
 
 
-
+            var anioLectivoId = await _context.AnioLectivo.Where(x => x.Vigente == true).Select(c => c.Id).FirstOrDefaultAsync();
 
             var query = _context.GradoParalelos.Include(x => x.Grado)
-                .Where(x => x.Grado.Nivel == estudiante!.UltimoGradoAprobado + 1
+                .Where(x => x.AnioLectivoId == anioLectivoId
+                && x.Grado.Nivel == estudiante!.UltimoGradoAprobado + 1
                 )
                 .Select(x => new OfertaDTO
                 {
@@ -76,7 +77,7 @@ namespace TicketsAPI.Repository
                     anioLectivo = x.AnioLectivo.Periodo,
                     profesorNombre = x.Profesor.Nombres,
                     paraleloNombre = x.Paralelo.Nombre,
-                    
+
                     cupos = x.Cupos,
                     ocupados = _context.Matriculas.Count(m => m.IsActive == true && m.GradoParaleloId == x.Id)
                 });
@@ -88,7 +89,6 @@ namespace TicketsAPI.Repository
 
             return data;
         }
-
         public async Task<List<OfertaDTO>> GetDisponibles(long anioLectivoId, long gradoId)
         {
             var query = _context.GradoParalelos

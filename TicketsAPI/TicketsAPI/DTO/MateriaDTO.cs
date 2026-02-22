@@ -21,6 +21,7 @@ namespace TicketsAPI.DTO
         public long GradoId { get; set; }
         public string GradoNombre { get; set; }  // Nombre del grado, como "Primero de Básica"
         public string ProfesorNombre { get; set; }  // Nombre del profesor, como "Juan Pérez"
+        public long ProfesorId { get; set; }
     }
 
 }

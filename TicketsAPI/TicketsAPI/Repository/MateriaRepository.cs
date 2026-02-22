@@ -96,6 +96,7 @@ namespace TicketsAPI.Repository
 
             materia.Nombre = materiaDto.Nombre;
             materia.GradoId = materiaDto.GradoId;
+            materia.IdProfesor = materiaDto.ProfesorId;
 
             await _context.SaveChangesAsync();
             return true;
@@ -118,26 +119,29 @@ namespace TicketsAPI.Repository
             return true;
         }
 
-      public async Task<List<MateriaResponseDto>> GetAllMaterias(long? idGrado)
-{
-    var query =
-        from m in _context.Materias.AsNoTracking()
-        join g in _context.Grados.AsNoTracking() on m.GradoId equals g.Id
-        where m.IsActive == true
-        select new { m, g };
+        public async Task<List<MateriaResponseDto>> GetAllMaterias(long? idGrado)
+        {
+            var query = _context.Materias
+                .AsNoTracking()
+                .Where(m => m.IsActive == true);
 
-    if (idGrado.HasValue)
-        query = query.Where(x => x.m.GradoId == idGrado.Value);
+            if (idGrado.HasValue)
+                query = query.Where(m => m.GradoId == idGrado.Value);
 
-    return await query.Select(x => new MateriaResponseDto
-    {
-        Id = x.m.Id,
-        Nombre = x.m.Nombre,
-        GradoId = x.m.GradoId,
-        GradoNombre = x.g.Nombre,
-        ProfesorNombre = x.m.Profesor != null ? x.m.Profesor.Nombres : null
-    }).ToListAsync();
-}
+            return await query
+                .Select(m => new MateriaResponseDto
+                {
+                    Id = m.Id,
+                    Nombre = m.Nombre,
+                    GradoId = m.GradoId,
+                    GradoNombre = m.Grado.Nombre,
+                    ProfesorId = m.IdProfesor,
+                    ProfesorNombre = m.Profesor != null
+                        ? m.Profesor.Nombres + " " + m.Profesor.Apellidos
+                        : null
+                })
+                .ToListAsync();
+        }
 
 
         public Task<List<KeyValueDTO>> SelectorMateria()
