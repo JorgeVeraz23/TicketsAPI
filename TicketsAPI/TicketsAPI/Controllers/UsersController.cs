@@ -149,7 +149,6 @@ namespace TicketsAPI.Controllers
             public string TemporaryPassword { get; set; } = "";
         }
 
-        [Authorize(Roles = "Admin")] // MUY recomendado
         [HttpPost("ResetearContrasena/{id}")]
         public async Task<IActionResult> ResetearContrasena(string id)
         {

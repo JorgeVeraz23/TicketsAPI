@@ -13,20 +13,6 @@ namespace TicketsAPI.Services
         private readonly StorageSharedKeyCredential _sharedKey;
         private readonly string _containerName;
         private readonly Uri _containerUri;
-        //public BlobStorageService(IConfiguration config)
-        //{
-        //    var cs = config["BlobStorage:ConnectionString"]!;
-        //    var container = config["BlobStorage:Container"]!;
-
-        //    if (string.IsNullOrWhiteSpace(cs))
-        //        throw new Exception("BlobStorage:ConnectionString está vacío o no se encontró en la configuración.");
-
-        //    if (string.IsNullOrWhiteSpace(container))
-        //        throw new Exception("BlobStorage:Container está vacío o no se encontró en la configuración.");
-
-        //    _container = new BlobContainerClient(cs, container);
-        //    _container.CreateIfNotExists(PublicAccessType.None);
-        //}
 
         public BlobStorageService(IConfiguration config)
         {

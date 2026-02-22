@@ -2,6 +2,7 @@
 {
     public class MatriculaPdfDto
     {
+
         public string Institucion { get; set; } = "";
         public string Periodo { get; set; } = "";
         public string CodigoMatricula { get; set; } = "";
@@ -16,6 +17,8 @@
         public DateTime Fecha { get; set; }
 
         public List<string> Materias { get; set; } = new();
+        public List<string> Profesor { get; set; } = new();
+        public byte[]? FotoEstudiante { get; set; }
     }
 
 }

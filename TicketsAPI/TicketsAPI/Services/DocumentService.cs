@@ -170,6 +170,30 @@ namespace TicketsAPI.Services
             return (stream, contentType, name);
         }
 
+
+        public async Task<(byte[] bytes, string contentType, string fileName)> DescargarBytesAsync(long documentoId)
+        {
+            var doc = await _db.Documento.AsNoTracking()
+                .FirstOrDefaultAsync(x => x.Id == documentoId && x.IsActive == true)
+                ?? throw new KeyNotFoundException("Documento no existe.");
+
+            if (string.IsNullOrWhiteSpace(doc.StoragePath))
+                throw new InvalidOperationException("Documento sin ruta en storage.");
+
+            // Si tu DownloadAsync requiere CancellationToken, pásale CancellationToken.None
+            var (stream, contentType) = await _blob.DownloadAsync(doc.StoragePath, CancellationToken.None);
+
+            await using (stream)
+            await using (var ms = new MemoryStream())
+            {
+                await stream.CopyToAsync(ms);
+                var name = string.IsNullOrWhiteSpace(doc.Nombre)
+                    ? $"documento_{doc.Id}{doc.Extension}"
+                    : doc.Nombre;
+
+                return (ms.ToArray(), contentType, name);
+            }
+        }
         private static async Task<byte[]> ComputeSha256Async(Stream stream, CancellationToken ct)
         {
             using var sha = SHA256.Create();

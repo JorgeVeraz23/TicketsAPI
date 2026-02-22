@@ -80,7 +80,7 @@ namespace TicketsAPI.Services
                     CedulaRepresentante = m.Estudiante.Representante != null
                         ? m.Estudiante.Representante.NumeroDocumento
                         : null,
-
+                        
                     // ✅ estos salen desde GradoParalelo.AnioLectivo
                     AnioLectivoId = (int)m.GradoParalelo.AnioLectivoId,
                     AnioLectivo = m.GradoParalelo.AnioLectivo.Periodo,
