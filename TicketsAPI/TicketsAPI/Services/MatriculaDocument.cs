@@ -109,9 +109,17 @@ namespace TicketsAPI.Services
 
                         row.RelativeItem().Element(card => CardCell(card, "Datos del Representante", body =>
                         {
-                            InfoGrid(body,
-                                ("Representante", _m.Representante),
-                                ("Documento", _m.DocumentoRepresentante));
+                            //InfoGrid(body,
+                            //    ("Representante", _m.Representante),
+                            //    ("Documento", _m.DocumentoRepresentante));
+                            body.Column(c =>
+                            {
+                                c.Spacing(8);
+
+                                c.Item().Element(x => InfoBoxOneLine(x, "Estudiante", _m.Estudiante));
+                                c.Item().Element(x => InfoBoxOneLine(x, "Documento", _m.DocumentoEstudiante));
+                            });
+
                         }));
                     });
 

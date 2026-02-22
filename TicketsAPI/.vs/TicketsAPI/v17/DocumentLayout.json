@@ -11,28 +11,68 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\services\\matriculapdfservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\matriculapdfdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\matriculapdfdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\services\\documentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\services\\reporteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\services\\reporteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\reportecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\reportecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\reportedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\reportedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\documentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\estudiantecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\gradocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\gradocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\profesorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\profesorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\services\\reporteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\services\\reporteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\gradoparalelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\gradoparalelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\materiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\materiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\ofertarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\ofertarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\entities\\aniolectivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\entities\\aniolectivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\interfaces\\igradoparalelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\igradoparalelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\matriculacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\matriculacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\interfaces\\ireportesservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\ireportesservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\matriculapdfdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\matriculapdfdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\estudianterepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -103,14 +143,6 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\entities\\paralelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\matriculacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\matriculacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\profesorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\profesorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -121,10 +153,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\materiarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\materiarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\materiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\materiacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\profesorrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -155,10 +183,6 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\paralelorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\ofertarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\ofertarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\gradorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\gradorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -183,16 +207,8 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\messageinfodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\reportecontroller.charts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\reportecontroller.charts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\entities\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\entities\\aniolectivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\entities\\aniolectivo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\profesordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -235,10 +251,6 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\dashboarddto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\gradoparalelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\gradoparalelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\repository\\calificacionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\repository\\calificacionrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -263,20 +275,8 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\ticketsapi.http||{5703B403-55E7-4C63-8C88-A8F52C7A45C5}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\interfaces\\ireportesservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\ireportesservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\interfaces\\imatricula.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\imatricula.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\interfaces\\igradoparalelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\interfaces\\igradoparalelo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\dto\\reportedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\reportedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\tipodocumentocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -391,10 +391,6 @@
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\dto\\usuariodto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\gradocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\gradocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|c:\\users\\jorge\\documents\\github\\ticketsapi\\ticketsapi\\ticketsapi\\controllers\\paralelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{FF4B2A0F-BFE1-441E-85CA-7E4A5C7EC88A}|TicketsAPI\\TicketsAPI.csproj|solutionrelative:ticketsapi\\controllers\\paralelocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -495,11 +491,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 44,
+              "DocumentIndex": 50,
               "Title": "MessageInfoDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MessageInfoDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\MessageInfoDTO.cs",
@@ -512,7 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 33,
+              "DocumentIndex": 40,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\ApplicationDbContext.cs",
@@ -525,7 +521,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 29,
               "Title": "Estudiante.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Estudiante.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Estudiante.cs",
@@ -538,7 +534,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 36,
+              "DocumentIndex": 43,
               "Title": "EstudianteDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\EstudianteDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\EstudianteDTO.cs",
@@ -565,9 +561,22 @@
               "RelativeDocumentMoniker": "TicketsAPI\\Services\\MatriculaPdfService.cs",
               "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\MatriculaPdfService.cs",
               "RelativeToolTip": "TicketsAPI\\Services\\MatriculaPdfService.cs",
-              "ViewState": "AgIAAEcAAAAAAAAAAAAAAD0AAAApAAAAAAAAAA==",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAAAF4AAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-01T07:47:43.432Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DocumentService.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DocumentService.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Services\\DocumentService.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DocumentService.cs",
+              "RelativeToolTip": "TicketsAPI\\Services\\DocumentService.cs",
+              "ViewState": "AgIAAKgAAAAAAAAAAAAAwMMAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T05:10:54.663Z",
               "EditorCaption": ""
             },
             {
@@ -578,69 +587,68 @@
               "RelativeDocumentMoniker": "TicketsAPI\\Services\\MatriculaDocument.cs",
               "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\MatriculaDocument.cs",
               "RelativeToolTip": "TicketsAPI\\Services\\MatriculaDocument.cs",
-              "ViewState": "AgIAAF4AAAAAAAAAAAAAAGEAAAAXAAAAAAAAAA==",
+              "ViewState": "AgIAAFwAAAAAAAAAAAAQwHIAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-02-01T07:50:54.46Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "MatriculaPdfDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
-              "RelativeToolTip": "TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAWAAAAAAAAAA==",
+              "DocumentIndex": 3,
+              "Title": "ReporteController.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ReporteController.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\ReporteController.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ReporteController.cs",
+              "RelativeToolTip": "TicketsAPI\\Controllers\\ReporteController.cs",
+              "ViewState": "AgIAABUDAAAAAAAAAAAAALQDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-01T07:06:32.83Z",
+              "WhenOpened": "2026-02-01T08:48:09.883Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DocumentService.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DocumentService.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Services\\DocumentService.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DocumentService.cs",
-              "RelativeToolTip": "TicketsAPI\\Services\\DocumentService.cs",
-              "ViewState": "AgIAAKcAAAAAAAAAAAAqwMMAAAAJAAAAAAAAAA==",
+              "DocumentIndex": 7,
+              "Title": "GradoController.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoController.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\GradoController.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoController.cs",
+              "RelativeToolTip": "TicketsAPI\\Controllers\\GradoController.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAuwBkAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T05:10:54.663Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-12-18T22:45:25.133Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
-              "Title": "ReporteService.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\ReporteService.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Services\\ReporteService.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\ReporteService.cs",
-              "RelativeToolTip": "TicketsAPI\\Services\\ReporteService.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAowB0AAAAxAAAAAAAAAA==",
+              "Title": "EstudianteController.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\EstudianteController.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\EstudianteController.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\EstudianteController.cs",
+              "RelativeToolTip": "TicketsAPI\\Controllers\\EstudianteController.cs",
+              "ViewState": "AgIAADkAAAAAAAAAAAAAADsAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-01T05:47:20.606Z",
+              "WhenOpened": "2025-12-18T17:28:34.36Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "ReporteController.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ReporteController.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\ReporteController.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ReporteController.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\ReporteController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAwAAAAAAAAAA==",
+              "Title": "ReporteDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\ReporteDTO.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\DTO\\ReporteDTO.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\ReporteDTO.cs",
+              "RelativeToolTip": "TicketsAPI\\DTO\\ReporteDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-01T08:48:09.883Z",
+              "WhenOpened": "2026-02-01T05:37:02.696Z",
               "EditorCaption": ""
             },
             {
@@ -651,237 +659,13 @@
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\DocumentController.cs",
               "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\DocumentController.cs",
               "RelativeToolTip": "TicketsAPI\\Controllers\\DocumentController.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAAAAADEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAC0AAAAAAAAAAAAAADwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T05:14:35.67Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "EstudianteController.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\EstudianteController.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\EstudianteController.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\EstudianteController.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\EstudianteController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAcwDsAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T17:28:34.36Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-01-29T05:14:35.67Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "EstudianteRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\EstudianteRepository.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Repository\\EstudianteRepository.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\EstudianteRepository.cs",
-              "RelativeToolTip": "TicketsAPI\\Repository\\EstudianteRepository.cs",
-              "ViewState": "AgIAAOMAAAAAAAAAAAAAAPIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-09T02:24:45.835Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "IMatriculaPdfService.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
-              "RelativeToolTip": "TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-01T07:48:33.09Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BlobStorageService.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\BlobStorageService.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Services\\BlobStorageService.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\BlobStorageService.cs",
-              "RelativeToolTip": "TicketsAPI\\Services\\BlobStorageService.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T05:10:09.536Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "RepresentanteRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\RepresentanteRepository.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Repository\\RepresentanteRepository.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\RepresentanteRepository.cs",
-              "RelativeToolTip": "TicketsAPI\\Repository\\RepresentanteRepository.cs",
-              "ViewState": "AgIAACYAAAAAAAAAAAAuwDsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T07:07:24.659Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "DashboardService.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DashboardService.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Services\\DashboardService.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DashboardService.cs",
-              "RelativeToolTip": "TicketsAPI\\Services\\DashboardService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-02T07:29:23.463Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "RepresentanteService.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\RepresentanteService.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Services\\RepresentanteService.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\RepresentanteService.cs",
-              "RelativeToolTip": "TicketsAPI\\Services\\RepresentanteService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAABHAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T07:08:39.676Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "PeriodoEvaluativo.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAuwCEAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T03:56:54.916Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "Profesor.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Profesor.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Profesor.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Profesor.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Profesor.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T02:18:56.735Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Representante.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Representante.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Representante.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Representante.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Representante.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-29T02:18:03.543Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "TipoDocumento.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\TipoDocumento.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\TipoDocumento.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\TipoDocumento.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\TipoDocumento.cs",
-              "ViewState": "AgIAAAEAAAAAAAAAAAAAwBcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-21T22:13:16.685Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
-              "Title": "Documento.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Documento.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Documento.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Documento.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Documento.cs",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:17:30.468Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "Grado.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Grado.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Grado.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Grado.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Grado.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:15:44.557Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "GradoParalelo.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\GradoParalelo.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\GradoParalelo.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\GradoParalelo.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\GradoParalelo.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAA+wBUAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:26:16.631Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
-              "Title": "Materia.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Materia.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Materia.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Materia.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Materia.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:16:33.737Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "Matricula.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Matricula.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Matricula.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Matricula.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Matricula.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAuwB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:17:00.553Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
-              "Title": "Paralelo.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Paralelo.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Paralelo.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Paralelo.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\Paralelo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:15:57.48Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 25,
-              "Title": "MatriculaController.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MatriculaController.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\MatriculaController.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MatriculaController.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\MatriculaController.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T22:32:06.255Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 26,
               "Title": "ProfesorController.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ProfesorController.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\ProfesorController.cs",
@@ -893,7 +677,307 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ReporteService.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\ReporteService.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Services\\ReporteService.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\ReporteService.cs",
+              "RelativeToolTip": "TicketsAPI\\Services\\ReporteService.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAowBEAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T05:47:20.606Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GradoParaleloController.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoParaleloController.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\GradoParaleloController.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoParaleloController.cs",
+              "RelativeToolTip": "TicketsAPI\\Controllers\\GradoParaleloController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAACUAAAA/AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-08T06:03:04.267Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "OfertaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\OfertaRepository.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Repository\\OfertaRepository.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\OfertaRepository.cs",
+              "RelativeToolTip": "TicketsAPI\\Repository\\OfertaRepository.cs",
+              "ViewState": "AgIAAFgAAAAAAAAAAAAAAGQAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-08T05:43:06.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "MateriaController.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MateriaController.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\MateriaController.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MateriaController.cs",
+              "RelativeToolTip": "TicketsAPI\\Controllers\\MateriaController.cs",
+              "ViewState": "AgIAAEYAAAAAAAAAAAAAAGQAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-11T05:26:19.025Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "AnioLectivo.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\AnioLectivo.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\AnioLectivo.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\AnioLectivo.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\AnioLectivo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:15:34.674Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IGradoParalelo.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IGradoParalelo.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IGradoParalelo.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IGradoParalelo.cs",
+              "RelativeToolTip": "TicketsAPI\\Interfaces\\IGradoParalelo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-08T05:39:51.913Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IReportesServices.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IReportesServices.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IReportesServices.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IReportesServices.cs",
+              "RelativeToolTip": "TicketsAPI\\Interfaces\\IReportesServices.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAATAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T05:37:44.369Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MatriculaController.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MatriculaController.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\MatriculaController.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MatriculaController.cs",
+              "RelativeToolTip": "TicketsAPI\\Controllers\\MatriculaController.cs",
+              "ViewState": "AgIAABEAAAAAAAAAAAAAAC8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T22:32:06.255Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "MatriculaPdfDTO.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
+              "RelativeToolTip": "TicketsAPI\\DTO\\MatriculaPdfDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T07:06:32.83Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "EstudianteRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\EstudianteRepository.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Repository\\EstudianteRepository.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\EstudianteRepository.cs",
+              "RelativeToolTip": "TicketsAPI\\Repository\\EstudianteRepository.cs",
+              "ViewState": "AgIAAOMAAAAAAAAAAAAAAPIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-09T02:24:45.835Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "IMatriculaPdfService.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
+              "RelativeToolTip": "TicketsAPI\\Interfaces\\IMatriculaPdfService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-01T07:48:33.09Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "BlobStorageService.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\BlobStorageService.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Services\\BlobStorageService.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\BlobStorageService.cs",
+              "RelativeToolTip": "TicketsAPI\\Services\\BlobStorageService.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T05:10:09.536Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "RepresentanteRepository.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\RepresentanteRepository.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Repository\\RepresentanteRepository.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\RepresentanteRepository.cs",
+              "RelativeToolTip": "TicketsAPI\\Repository\\RepresentanteRepository.cs",
+              "ViewState": "AgIAACYAAAAAAAAAAAAuwDsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T07:07:24.659Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "DashboardService.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DashboardService.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Services\\DashboardService.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\DashboardService.cs",
+              "RelativeToolTip": "TicketsAPI\\Services\\DashboardService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-02T07:29:23.463Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "RepresentanteService.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\RepresentanteService.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Services\\RepresentanteService.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\RepresentanteService.cs",
+              "RelativeToolTip": "TicketsAPI\\Services\\RepresentanteService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAADUAAABHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T07:08:39.676Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 24,
+              "Title": "PeriodoEvaluativo.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\PeriodoEvaluativo.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAuwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T03:56:54.916Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 25,
+              "Title": "Profesor.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Profesor.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Profesor.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Profesor.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Profesor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T02:18:56.735Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 26,
+              "Title": "Representante.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Representante.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Representante.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Representante.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Representante.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-29T02:18:03.543Z"
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 27,
+              "Title": "TipoDocumento.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\TipoDocumento.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\TipoDocumento.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\TipoDocumento.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\TipoDocumento.cs",
+              "ViewState": "AgIAAAEAAAAAAAAAAAAAwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-21T22:13:16.685Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 28,
+              "Title": "Documento.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Documento.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Documento.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Documento.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Documento.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAAADkAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:17:30.468Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
+              "Title": "Grado.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Grado.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Grado.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Grado.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Grado.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:15:44.557Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 31,
+              "Title": "GradoParalelo.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\GradoParalelo.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\GradoParalelo.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\GradoParalelo.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\GradoParalelo.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAA+wBUAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:26:16.631Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "Materia.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Materia.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Materia.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Materia.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Materia.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:16:33.737Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 33,
+              "Title": "Matricula.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Matricula.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Matricula.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Matricula.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Matricula.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAuwB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:17:00.553Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 34,
+              "Title": "Paralelo.cs",
+              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Paralelo.cs",
+              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\Paralelo.cs",
+              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\Paralelo.cs",
+              "RelativeToolTip": "TicketsAPI\\Entities\\Paralelo.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-12-18T06:15:57.48Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 35,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Program.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Program.cs",
@@ -905,7 +989,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 36,
               "Title": "UsersController.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\UsersController.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\UsersController.cs",
@@ -917,7 +1001,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 37,
               "Title": "MateriaRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\MateriaRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\MateriaRepository.cs",
@@ -929,19 +1013,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
-              "Title": "MateriaController.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MateriaController.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\MateriaController.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\MateriaController.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\MateriaController.cs",
-              "ViewState": "AgIAAFYAAAAAAAAAAAAYwGQAAAA9AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-11T05:26:19.025Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 38,
               "Title": "ProfesorRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\ProfesorRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\ProfesorRepository.cs",
@@ -953,7 +1025,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 32,
+              "DocumentIndex": 39,
               "Title": "AnioLectivoRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\AnioLectivoRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\AnioLectivoRepository.cs",
@@ -965,7 +1037,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 34,
+              "DocumentIndex": 41,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\appsettings.json",
               "RelativeDocumentMoniker": "TicketsAPI\\appsettings.json",
@@ -977,7 +1049,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 35,
+              "DocumentIndex": 42,
               "Title": "appsettings.Development.json",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\appsettings.Development.json",
               "RelativeDocumentMoniker": "TicketsAPI\\appsettings.Development.json",
@@ -989,7 +1061,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 37,
+              "DocumentIndex": 44,
               "Title": "ParaleloRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\ParaleloRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\ParaleloRepository.cs",
@@ -1001,19 +1073,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 38,
-              "Title": "OfertaRepository.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\OfertaRepository.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Repository\\OfertaRepository.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\OfertaRepository.cs",
-              "RelativeToolTip": "TicketsAPI\\Repository\\OfertaRepository.cs",
-              "ViewState": "AgIAAGsAAAAAAAAAAAAAAGwAAAA2AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-08T05:43:06.561Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 39,
+              "DocumentIndex": 45,
               "Title": "GradoRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\GradoRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\GradoRepository.cs",
@@ -1025,7 +1085,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 40,
+              "DocumentIndex": 46,
               "Title": "IBlobStorageService.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IBlobStorageService.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IBlobStorageService.cs",
@@ -1037,7 +1097,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 41,
+              "DocumentIndex": 47,
               "Title": "Genero.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Enum\\Genero.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Enum\\Genero.cs",
@@ -1049,7 +1109,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 42,
+              "DocumentIndex": 48,
               "Title": "IEstudiante.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IEstudiante.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IEstudiante.cs",
@@ -1061,7 +1121,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 43,
+              "DocumentIndex": 49,
               "Title": "MatriculaRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\MatriculaRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\MatriculaRepository.cs",
@@ -1073,19 +1133,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 45,
-              "Title": "ReporteController.Charts.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ReporteController.Charts.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\ReporteController.Charts.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ReporteController.Charts.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\ReporteController.Charts.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-12T10:23:23.041Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 46,
+              "DocumentIndex": 51,
               "Title": "ApplicationUser.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\ApplicationUser.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Entities\\ApplicationUser.cs",
@@ -1097,19 +1145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 47,
-              "Title": "AnioLectivo.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\AnioLectivo.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Entities\\AnioLectivo.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Entities\\AnioLectivo.cs",
-              "RelativeToolTip": "TicketsAPI\\Entities\\AnioLectivo.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAIBJwAUAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T06:15:34.674Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 121,
+              "DocumentIndex": 120,
               "Title": "20260212062338_calificacion-none.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260212062338_calificacion-none.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260212062338_calificacion-none.cs",
@@ -1121,7 +1157,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 48,
+              "DocumentIndex": 52,
               "Title": "ProfesorDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\ProfesorDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\ProfesorDTO.cs",
@@ -1133,7 +1169,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 49,
+              "DocumentIndex": 53,
               "Title": "MateriaDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MateriaDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\MateriaDTO.cs",
@@ -1145,7 +1181,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 50,
+              "DocumentIndex": 54,
               "Title": "CreateGradoParaleloDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\CreateGradoParaleloDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\CreateGradoParaleloDTO.cs",
@@ -1157,7 +1193,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 51,
+              "DocumentIndex": 55,
               "Title": "OfertaDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\OfertaDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\OfertaDTO.cs",
@@ -1169,7 +1205,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 120,
+              "DocumentIndex": 119,
               "Title": "20260210050522_new-campos.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260210050522_new-campos.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260210050522_new-campos.cs",
@@ -1181,7 +1217,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 52,
+              "DocumentIndex": 56,
               "Title": "20260210050220_new-campos.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260210050220_new-campos.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260210050220_new-campos.cs",
@@ -1192,7 +1228,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 53,
+              "DocumentIndex": 57,
               "Title": "IProfesor.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IProfesor.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IProfesor.cs",
@@ -1204,7 +1240,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 54,
+              "DocumentIndex": 58,
               "Title": "CrudEntities.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Utils\\CrudEntities.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Utils\\CrudEntities.cs",
@@ -1216,7 +1252,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 55,
+              "DocumentIndex": 59,
               "Title": "DashboardController.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\DashboardController.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\DashboardController.cs",
@@ -1228,7 +1264,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 56,
+              "DocumentIndex": 60,
               "Title": "IDashboardService.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IDashboardService.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IDashboardService.cs",
@@ -1240,7 +1276,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 57,
+              "DocumentIndex": 61,
               "Title": "DashboardDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\DashboardDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\DashboardDTO.cs",
@@ -1252,19 +1288,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 58,
-              "Title": "GradoParaleloController.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoParaleloController.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\GradoParaleloController.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoParaleloController.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\GradoParaleloController.cs",
-              "ViewState": "AgIAACcAAAAAAAAAAAAnwDkAAAAIAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-08T06:03:04.267Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 59,
+              "DocumentIndex": 62,
               "Title": "CalificacionRepository.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Repository\\CalificacionRepository.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Repository\\CalificacionRepository.cs",
@@ -1276,7 +1300,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 119,
+              "DocumentIndex": 118,
               "Title": "20260202041611_db-initial.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260202041611_db-initial.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260202041611_db-initial.cs",
@@ -1288,7 +1312,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 60,
+              "DocumentIndex": 63,
               "Title": "EstadoEstudiante.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Enum\\EstadoEstudiante.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Enum\\EstadoEstudiante.cs",
@@ -1300,7 +1324,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 61,
+              "DocumentIndex": 64,
               "Title": "RepresentanteController.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\RepresentanteController.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\RepresentanteController.cs",
@@ -1312,7 +1336,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 62,
+              "DocumentIndex": 65,
               "Title": "MatriculaListadoDocument.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\MatriculaListadoDocument.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Services\\MatriculaListadoDocument.cs",
@@ -1324,7 +1348,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 63,
+              "DocumentIndex": 66,
               "Title": "MatriculaDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\MatriculaDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\MatriculaDTO.cs",
@@ -1336,7 +1360,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 64,
+              "DocumentIndex": 67,
               "Title": "TicketsAPI.http",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\TicketsAPI.http",
               "RelativeDocumentMoniker": "TicketsAPI\\TicketsAPI.http",
@@ -1348,19 +1372,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 65,
-              "Title": "IReportesServices.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IReportesServices.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IReportesServices.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IReportesServices.cs",
-              "RelativeToolTip": "TicketsAPI\\Interfaces\\IReportesServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAUAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-01T05:37:44.369Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 66,
+              "DocumentIndex": 68,
               "Title": "IMatricula.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IMatricula.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IMatricula.cs",
@@ -1369,30 +1381,6 @@
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-12-18T06:56:35.401Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 67,
-              "Title": "IGradoParalelo.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IGradoParalelo.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IGradoParalelo.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IGradoParalelo.cs",
-              "RelativeToolTip": "TicketsAPI\\Interfaces\\IGradoParalelo.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-01-08T05:39:51.913Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 68,
-              "Title": "ReporteDTO.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\ReporteDTO.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\DTO\\ReporteDTO.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\ReporteDTO.cs",
-              "RelativeToolTip": "TicketsAPI\\DTO\\ReporteDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAABBwAQAAAAvAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-02-01T05:37:02.696Z"
             },
             {
               "$type": "Document",
@@ -1728,18 +1716,6 @@
             {
               "$type": "Document",
               "DocumentIndex": 97,
-              "Title": "GradoController.cs",
-              "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoController.cs",
-              "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\GradoController.cs",
-              "ToolTip": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\GradoController.cs",
-              "RelativeToolTip": "TicketsAPI\\Controllers\\GradoController.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAuwBkAAAANAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-12-18T22:45:25.133Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 98,
               "Title": "ParaleloController.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Controllers\\ParaleloController.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Controllers\\ParaleloController.cs",
@@ -1751,7 +1727,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 99,
+              "DocumentIndex": 98,
               "Title": "IParalelo.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IParalelo.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IParalelo.cs",
@@ -1763,7 +1739,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 100,
+              "DocumentIndex": 99,
               "Title": "IGrado.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IGrado.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IGrado.cs",
@@ -1775,7 +1751,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 101,
+              "DocumentIndex": 100,
               "Title": "20260108051159_remake-db.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260108051159_remake-db.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260108051159_remake-db.cs",
@@ -1786,7 +1762,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 102,
+              "DocumentIndex": 101,
               "Title": "20260108050330_remake-db.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260108050330_remake-db.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260108050330_remake-db.cs",
@@ -1797,7 +1773,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 103,
+              "DocumentIndex": 102,
               "Title": "20260108045937_remake-db.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Migrations\\20260108045937_remake-db.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Migrations\\20260108045937_remake-db.cs",
@@ -1808,7 +1784,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 104,
+              "DocumentIndex": 103,
               "Title": "IMateria.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IMateria.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IMateria.cs",
@@ -1820,7 +1796,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 105,
+              "DocumentIndex": 104,
               "Title": "LoginRequestDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\LoginRequestDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\LoginRequestDTO.cs",
@@ -1832,7 +1808,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 106,
+              "DocumentIndex": 105,
               "Title": "ChangePasswordRequestDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\Auth\\ChangePasswordRequestDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\Auth\\ChangePasswordRequestDTO.cs",
@@ -1844,7 +1820,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 107,
+              "DocumentIndex": 106,
               "Title": "RegisterRequestDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\Auth\\RegisterRequestDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\Auth\\RegisterRequestDTO.cs",
@@ -1856,7 +1832,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 108,
+              "DocumentIndex": 107,
               "Title": "MessageResponseDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\Auth\\MessageResponseDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\Auth\\MessageResponseDTO.cs",
@@ -1868,7 +1844,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 109,
+              "DocumentIndex": 108,
               "Title": "JwtTokenService.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Services\\JwtTokenService.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Services\\JwtTokenService.cs",
@@ -1880,7 +1856,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 110,
+              "DocumentIndex": 109,
               "Title": "TicketsAPI.csproj",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\TicketsAPI.csproj",
               "RelativeDocumentMoniker": "TicketsAPI\\TicketsAPI.csproj",
@@ -1892,7 +1868,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 111,
+              "DocumentIndex": 110,
               "Title": "GradoDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\GradoDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\GradoDTO.cs",
@@ -1904,7 +1880,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 112,
+              "DocumentIndex": 111,
               "Title": "PagoDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\PagoDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\PagoDTO.cs",
@@ -1916,7 +1892,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 113,
+              "DocumentIndex": 112,
               "Title": "DocumentoDTO.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\DTO\\DocumentoDTO.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\DTO\\DocumentoDTO.cs",
@@ -1928,7 +1904,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 114,
+              "DocumentIndex": 113,
               "Title": "IPago.cs",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\Interfaces\\IPago.cs",
               "RelativeDocumentMoniker": "TicketsAPI\\Interfaces\\IPago.cs",
@@ -1940,7 +1916,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 115,
+              "DocumentIndex": 114,
               "Title": "WhatsApp Image 2024-03-26 at 15.38.43.jpeg",
               "DocumentMoniker": "C:\\Users\\Jorge\\Documents\\GitHub\\TicketsAPI\\TicketsAPI\\TicketsAPI\\uploads\\WhatsApp Image 2024-03-26 at 15.38.43.jpeg",
               "RelativeDocumentMoniker": "TicketsAPI\\uploads\\WhatsApp Image 2024-03-26 at 15.38.43.jpeg",
@@ -1951,7 +1927,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 116,
+              "DocumentIndex": 115,
               "Title": "20240826221400_uno.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826221400_uno.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826221400_uno.cs",
@@ -1962,7 +1938,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 117,
+              "DocumentIndex": 116,
               "Title": "20240826215220_test.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826215220_test.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826215220_test.cs",
@@ -1973,7 +1949,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 118,
+              "DocumentIndex": 117,
               "Title": "20240826211935_tickets-3.cs",
               "DocumentMoniker": "C:\\Users\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826211935_tickets-3.cs",
               "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\AppDev\\source\\repos\\TicketsAPI\\TicketsAPI\\Migrations\\20240826211935_tickets-3.cs",

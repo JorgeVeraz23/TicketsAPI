@@ -62,317 +62,341 @@ namespace TicketsAPI.Controllers
             }
         }
 
-        // GET: /api/Reporte/matriculas/listado/excel?periodo=2025-2026
-        [HttpGet("matriculas/listado/excel")]
-        public async Task<IActionResult> ListadoMatriculasExcel([FromQuery] string periodo)
-        {
-            if (string.IsNullOrWhiteSpace(periodo))
-                return BadRequest("El período es obligatorio.");
 
-            var rows = await _context.Matriculas
-                .AsNoTracking()
-                .Where(m => m.IsActive == true
-                            && m.GradoParalelo.AnioLectivo.Periodo == periodo)
-                .Include(m => m.Estudiante)
-                .Include(m => m.GradoParalelo).ThenInclude(gp => gp.Grado)
-                .Include(m => m.GradoParalelo).ThenInclude(gp => gp.Paralelo)
-                .Include(m => m.GradoParalelo).ThenInclude(gp => gp.AnioLectivo)
-                .OrderBy(m => m.GradoParalelo.Grado.Nombre)
-                .ThenBy(m => m.GradoParalelo.Paralelo.Nombre)
-                .ThenBy(m => m.Estudiante.Apellido)
-                .Select(m => new
-                {
-                    m.Id,
-                    Estudiante = (m.Estudiante.Apellido + " " + m.Estudiante.Nombre),
-                    Documento = m.Estudiante.Cedula,
-                    Grado = m.GradoParalelo.Grado.Nombre,
-                    Paralelo = m.GradoParalelo.Paralelo.Nombre,
-                    Periodo = m.GradoParalelo.AnioLectivo.Periodo,
-                    Estado = m.EstadoMatricula,
-                    Fecha = m.FechaMatricula
-                })
-                .ToListAsync();
-
-            using var wb = new XLWorkbook();
-            var sheetName = ReporteChartHelper.GetSafeSheetName($"Matriculas {periodo}");
-            var ws = wb.Worksheets.Add(sheetName);
-
-            // Encabezado institucional
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-            ws.Cell(2, 1).Value = "Listado de Matrículas";
-            ws.Cell(3, 1).Value = $"Período: {periodo}";
-            ws.Cell(4, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
-
-            ws.Range(1, 1, 1, 8).Merge().Style.Font.SetBold().Font.SetFontSize(14);
-            ws.Range(2, 1, 2, 8).Merge().Style.Font.SetBold().Font.SetFontSize(12);
-            ws.Range(3, 1, 4, 8).Merge().Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
-
-            // Header tabla (fila 6)
-            var headerRow = 6;
-            var headers = new[] { "ID", "Estudiante", "Documento", "Grado", "Paralelo", "Período", "Estado", "Fecha" };
-            for (int i = 0; i < headers.Length; i++)
-            {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-            }
-
-            // Data
-            var r = headerRow + 1;
-            foreach (var item in rows)
-            {
-                ws.Cell(r, 1).Value = item.Id;
-                ws.Cell(r, 2).Value = item.Estudiante;
-                ws.Cell(r, 3).Value = item.Documento;
-                ws.Cell(r, 4).Value = item.Grado;
-                ws.Cell(r, 5).Value = item.Paralelo;
-                ws.Cell(r, 6).Value = item.Periodo;
-                ws.Cell(r, 7).Value = item.Estado;
-                ws.Cell(r, 8).Value = item.Fecha;
-
-                ws.Cell(r, 8).Style.DateFormat.Format = "dd/MM/yyyy HH:mm";
-                r++;
-            }
-
-            // AutoFilter + Ajustes
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), 8).SetAutoFilter();
-            ws.Columns(1, 8).AdjustToContents();
-            ws.SheetView.FreezeRows(headerRow);
-
-            // Gráfico: conteo por grado (columna)
-            var byGrado = rows.GroupBy(x => x.Grado).OrderBy(g => g.Key).ToDictionary(g => g.Key ?? "(sin grado)", g => (double)g.Count());
-            using (var chartStream = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.ColumnVertical, byGrado, 700, 320))
-            {
-                ws.AddPicture(chartStream).MoveTo(ws.Cell(r + 2, 1)).WithSize(700, 320);
-            }
-
-            using var stream = new MemoryStream();
-            wb.SaveAs(stream);
-            var content = stream.ToArray();
-
-            var safePeriodo = periodo.Replace("/", "-").Replace(" ", "");
-            var fileName = $"Listado_Matriculas_{safePeriodo}.xlsx";
-
-            return File(
-                content,
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                fileName
-            );
-        }
-
-        // GET: /api/Reporte/estudiantes/listado/excel?estado=Activo&q=juan
+      
+        // GET: /api/Reporte/estudiantes/listado/excel
         [HttpGet("estudiantes/listado/excel")]
-        public async Task<IActionResult> ListadoEstudiantesExcel(
-            [FromQuery] string? estado,
-            [FromQuery] string? q,
-            [FromQuery] string? genero,
-            [FromQuery] long? gradoParaleloId,
-            [FromQuery] bool? conMatricula
-        )
+        public async Task<IActionResult> ListadoEstudiantesExcel()
         {
-            var query = _context.Estudiantes
+            // SOLO ACTIVOS (sin filtros)
+            var rows = await _context.Estudiantes
                 .AsNoTracking()
                 .Include(x => x.Representante)
                 .Include(x => x.Matriculas)
-                .AsQueryable();
-
-            if (!string.IsNullOrWhiteSpace(estado))
-            {
-                var e = estado.Trim().ToLower();
-                if (e == "activo") query = query.Where(x => x.IsActive == true);
-                else if (e == "inactivo") query = query.Where(x => x.IsActive == false);
-            }
-
-            if (!string.IsNullOrWhiteSpace(q))
-            {
-                var term = q.Trim().ToLower();
-                query = query.Where(x =>
-                    (x.Nombre + " " + x.Apellido).ToLower().Contains(term) ||
-                    (x.Apellido + " " + x.Nombre).ToLower().Contains(term) ||
-                    (x.Cedula ?? "").ToLower().Contains(term)
-                );
-            }
-    
-
-            if (gradoParaleloId.HasValue && gradoParaleloId.Value > 0)
-            {
-                query = query.Where(x => x.Matriculas.Any(m => m.IsActive == true && m.GradoParaleloId == gradoParaleloId.Value));
-            }
-
-            if (conMatricula.HasValue)
-            {
-                if (conMatricula.Value)
-                    query = query.Where(x => x.Matriculas.Any(m => m.IsActive == true));
-                else
-                    query = query.Where(x => !x.Matriculas.Any(m => m.IsActive == true));
-            }
-
-            var rows = await query
+                .Where(x => x.IsActive == true)
                 .OrderBy(x => x.Apellido)
                 .ThenBy(x => x.Nombre)
                 .Select(x => new
                 {
-                    // No incluir Id en el Excel según lo solicitado
-                    x.Nombre,
-                    x.Apellido,
+                    Nombres = (x.Nombre ?? "").Trim(),
+                    Apellidos = (x.Apellido ?? "").Trim(),
                     Cedula = x.Cedula ?? "",
-                    Estado = x.IsActive != null && x.IsActive == true ? "Activo" : "Inactivo",
-                    Representante = x.Representante != null ? (x.Representante.Nombres + " " + x.Representante.Apellidos) : "",
+                    FechaNacimiento = x.FechaNacimiento, // ajusta el nombre real de tu campo si es distinto
+                    Genero = x.Genero,                   // 0 masculino, 1 femenino (según tú)
+                    Telefono = x.Telefono ?? "",
+                    Email = x.Correo ?? "",
+                    Direccion = x.Direccion ?? "",
+                    Representante = x.Representante != null ? ((x.Representante.Nombres + " " + x.Representante.Apellidos).Trim()) : "",
                     DocumentoRepresentante = x.Representante != null ? (x.Representante.NumeroDocumento ?? "") : "",
-                    Genero = x.Genero.ToString(),
                     TieneMatricula = x.Matriculas.Any(m => m.IsActive == true)
                 })
                 .ToListAsync();
 
+            // Transformación “bonita” (edad, género legible)
+            var data = rows.Select(x => new
+            {
+                x.Nombres,
+                x.Apellidos,
+                x.Cedula,
+                Edad = CalcularEdad(x.FechaNacimiento),
+                FechaNacimiento = x.FechaNacimiento.ToString("dd/MM/yyyy"),
+                Genero = x.Genero == 0 ? "Masculino" : "Femenino",
+                x.Telefono,
+                x.Email,
+                x.Direccion,
+                x.Representante,
+                DocRepresentante = x.DocumentoRepresentante,
+                MatriculaActiva = x.TieneMatricula ? "Sí" : "No"
+            }).ToList();
+
             using var wb = new XLWorkbook();
-            var sheetName = ReporteChartHelper.GetSafeSheetName("Estudiantes");
-            var ws = wb.Worksheets.Add(sheetName);
+            var ws = wb.Worksheets.Add(ReporteChartHelper.GetSafeSheetName("Estudiantes"));
 
-            // Encabezado
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-            ws.Cell(2, 1).Value = "Listado general de estudiantes";
-            ws.Cell(3, 1).Value = $"Filtros: Estado={(string.IsNullOrWhiteSpace(estado) ? "Todos" : estado)}" +
-                                 $"{(!string.IsNullOrWhiteSpace(q) ? $" • Búsqueda='{q}'" : "")}" +
-                                 $"{(!string.IsNullOrWhiteSpace(genero) ? $" • Género='{genero}'" : "")}" +
-                                 $"{(gradoParaleloId.HasValue ? $" • GradoParaleloId={gradoParaleloId}" : "")}" +
-                                 $"{(conMatricula.HasValue ? $" • ConMatricula={(conMatricula.Value ? "Sí" : "No")}" : "")}";
-            ws.Cell(4, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
+            // ===================== ENCABEZADO =====================
+            ws.Cell(1, 1).Value = "Unidad Educativa Ana Maria Iza";
+            ws.Cell(2, 1).Value = "Listado general de estudiantes (Activos)";
+            ws.Cell(3, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
 
-            ws.Range(1, 1, 1, 8).Merge().Style.Font.SetBold().Font.SetFontSize(14);
-            ws.Range(2, 1, 2, 8).Merge().Style.Font.SetBold().Font.SetFontSize(12);
-            ws.Range(3, 1, 4, 8).Merge().Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
+            // Merge a lo ancho de la tabla (12 columnas)
+            ws.Range(1, 1, 1, 12).Merge();
+            ws.Range(2, 1, 2, 12).Merge();
+            ws.Range(3, 1, 3, 12).Merge();
 
+            ws.Cell(1, 1).Style.Font.SetBold().Font.SetFontSize(16);
+            ws.Cell(2, 1).Style.Font.SetBold().Font.SetFontSize(12);
+            ws.Cell(3, 1).Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
+
+            ws.Row(1).Height = 22;
+            ws.Row(2).Height = 18;
+
+            // Línea separadora
+            ws.Range(4, 1, 4, 12).Merge();
+            ws.Cell(4, 1).Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+            ws.Cell(4, 1).Style.Border.BottomBorderColor = XLColor.LightGray;
+
+            // ===================== TABLA =====================
             var headerRow = 6;
+
             var headers = new[]
             {
-                "Nombres", "Apellidos", "Cédula", "Estado",
-                "Representante", "Doc. Representante", "Género", "Tiene Matrícula"
-            };
+        "Nombres", "Apellidos", "Cédula",
+        "Edad", "Fec. Nacimiento", "Género",
+        "Teléfono", "Email", "Dirección",
+        "Representante", "Doc. Representante",
+        "Matrícula Activa"
+    };
 
             for (int i = 0; i < headers.Length; i++)
             {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                var cell = ws.Cell(headerRow, i + 1);
+                cell.Value = headers[i];
+                cell.Style.Font.SetBold();
+                cell.Style.Font.SetFontColor(XLColor.White);
+                cell.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#1E88E5")); // azul
+                cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                cell.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+                cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                cell.Style.Border.OutsideBorderColor = XLColor.FromHtml("#D0D0D0");
             }
 
+            ws.Row(headerRow).Height = 18;
+
             var r = headerRow + 1;
-            foreach (var x in rows)
+            foreach (var x in data)
             {
-                ws.Cell(r, 1).Value = x.Nombre;
-                ws.Cell(r, 2).Value = x.Apellido;
+                ws.Cell(r, 1).Value = x.Nombres;
+                ws.Cell(r, 2).Value = x.Apellidos;
                 ws.Cell(r, 3).Value = x.Cedula;
-                ws.Cell(r, 4).Value = x.Estado;
-                ws.Cell(r, 5).Value = x.Representante;
-                ws.Cell(r, 6).Value = x.DocumentoRepresentante;
-                ws.Cell(r, 7).Value = x.Genero;
-                ws.Cell(r, 8).Value = x.TieneMatricula ? "Sí" : "No";
+
+                ws.Cell(r, 4).Value = x.Edad;
+                ws.Cell(r, 5).Value = x.FechaNacimiento;
+                ws.Cell(r, 6).Value = x.Genero;
+
+                ws.Cell(r, 7).Value = x.Telefono;
+                ws.Cell(r, 8).Value = x.Email;
+                ws.Cell(r, 9).Value = x.Direccion;
+
+                ws.Cell(r, 10).Value = x.Representante;
+                ws.Cell(r, 11).Value = x.DocRepresentante;
+                ws.Cell(r, 12).Value = x.MatriculaActiva;
+
+                // Estilo por fila (zebra + bordes suaves)
+                var rowRange = ws.Range(r, 1, r, 12);
+                rowRange.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                rowRange.Style.Border.BottomBorderColor = XLColor.FromHtml("#E6E6E6");
+                rowRange.Style.Alignment.SetVertical(XLAlignmentVerticalValues.Center);
+
+                if ((r - (headerRow + 1)) % 2 == 1)
+                    rowRange.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#FAFAFA"));
+
                 r++;
             }
 
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
-            ws.Columns(1, headers.Length).AdjustToContents();
-            ws.SheetView.FreezeRows(headerRow);
+            // ===================== GRÁFICOS (PNG) =====================
 
-            // Gráfico: distribución por Género
-            var statsGenero = rows
-                .GroupBy(x => string.IsNullOrWhiteSpace(x.Genero) ? "(Sin género)" : x.Genero)
+            var chartsStartRow = r + 2;
+
+            // Título general
+            ws.Cell(chartsStartRow, 1).Value = "Análisis Estadístico de Estudiantes Activos";
+            ws.Range(chartsStartRow, 1, chartsStartRow, 12).Merge();
+            ws.Cell(chartsStartRow, 1).Style.Font.SetBold().Font.SetFontSize(13);
+            ws.Cell(chartsStartRow, 1).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+            chartsStartRow += 2;
+
+            // ===================== 1) GÉNERO =====================
+
+            var statsGenero = data
+                .GroupBy(x => string.IsNullOrWhiteSpace(x.Genero) ? "(Sin dato)" : x.Genero)
                 .OrderBy(g => g.Key)
                 .ToDictionary(g => g.Key, g => (double)g.Count());
 
-            using (var chartStream = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.Pie, statsGenero, 500, 300))
+            // Título gráfico
+            ws.Cell(chartsStartRow, 1).Value = "Distribución por Género";
+            ws.Range(chartsStartRow, 1, chartsStartRow, 6).Merge();
+            ws.Cell(chartsStartRow, 1).Style.Font.SetBold();
+            ws.Cell(chartsStartRow, 1).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+            using (var chartGenero = ReporteChartHelper.RenderChartPng(
+                       ReporteChartHelper.ChartKind.Pie, statsGenero, 460, 280))
             {
-                ws.AddPicture(chartStream).MoveTo(ws.Cell(r + 2, 1)).WithSize(500, 300);
+                ws.AddPicture(chartGenero)
+                  .MoveTo(ws.Cell(chartsStartRow + 1, 1))
+                  .WithSize(460, 280);
             }
 
-            using var stream = new MemoryStream();
-            wb.SaveAs(stream);
-            var content = stream.ToArray();
+            // ===================== 2) MATRÍCULA =====================
 
-            var fileName = $"Listado_Estudiantes_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+            var statsMatricula = data
+                .GroupBy(x => x.MatriculaActiva)
+                .OrderBy(g => g.Key)
+                .ToDictionary(g => g.Key, g => (double)g.Count());
 
-            return File(
-                content,
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                fileName
-            );
-        }
+            // Título gráfico
+            ws.Cell(chartsStartRow, 7).Value = "Estudiantes con Matrícula Activa";
+            ws.Range(chartsStartRow, 7, chartsStartRow, 12).Merge();
+            ws.Cell(chartsStartRow, 7).Style.Font.SetBold();
+            ws.Cell(chartsStartRow, 7).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-        [HttpGet("materias/por-maestro")]
-        public async Task<IActionResult> MateriasPorMaestro([FromQuery] long? profesorId)
-        {
-            var query = _context.Materias
-                .AsNoTracking()
-                .Include(m => m.Grado)
-                .Include(m => m.Profesor)
-                .OrderBy(m => m.Grado.Nombre);
-
-            if (profesorId > 0 && profesorId != null)
+            using (var chartMat = ReporteChartHelper.RenderChartPng(
+                       ReporteChartHelper.ChartKind.Pie, statsMatricula, 460, 280))
             {
-                query = (IOrderedQueryable<Materia>)query.Where(m => m.IdProfesor == profesorId);
+                ws.AddPicture(chartMat)
+                  .MoveTo(ws.Cell(chartsStartRow + 1, 7))
+                  .WithSize(460, 280);
             }
 
-            var rows = await query
-                .Select(m => new
-                {
-                    m.Id,
-                    Materia = m.Nombre,
-                    Profesor = m.Profesor.Nombres + " " + m.Profesor.Apellidos,
-                    Grado = m.Grado.Nombre
-                })
-                .ToListAsync();
+            // ===================== 3) EDADES =====================
 
-            using var wb = new XLWorkbook();
-            var sheetName = ReporteChartHelper.GetSafeSheetName("Materias Asignadas");
-            var ws = wb.Worksheets.Add(sheetName);
+            chartsStartRow += 18;
 
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-            ws.Cell(2, 1).Value = "Reporte de Materias Asignadas por Profesor";
-            ws.Cell(3, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
-
-            var headerRow = 5;
-            var headers = new[] { "ID", "Materia", "Profesor", "Grado" };
-            for (int i = 0; i < headers.Length; i++)
+            string AgeBucket(int edad)
             {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                if (edad <= 5) return "0–5";
+                if (edad <= 10) return "6–10";
+                if (edad <= 15) return "11–15";
+                return "16+";
             }
 
-            var r = headerRow + 1;
-            foreach (var item in rows)
+            var statsEdad = data
+                .GroupBy(x => AgeBucket(x.Edad))
+                .OrderBy(g => g.Key)
+                .ToDictionary(g => g.Key, g => (double)g.Count());
+
+            // Título gráfico
+            ws.Cell(chartsStartRow, 1).Value = "Distribución por Rangos de Edad";
+            ws.Range(chartsStartRow, 1, chartsStartRow, 12).Merge();
+            ws.Cell(chartsStartRow, 1).Style.Font.SetBold();
+            ws.Cell(chartsStartRow, 1).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+            using (var chartEdad = ReporteChartHelper.RenderChartPng(
+                       ReporteChartHelper.ChartKind.ColumnVertical, statsEdad, 960, 320))
             {
-                ws.Cell(r, 1).Value = item.Id;
-                ws.Cell(r, 2).Value = item.Materia;
-                ws.Cell(r, 3).Value = item.Profesor;
-                ws.Cell(r, 4).Value = item.Grado;
-                r++;
+                ws.AddPicture(chartEdad)
+                  .MoveTo(ws.Cell(chartsStartRow + 1, 1))
+                  .WithSize(960, 320);
             }
 
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
-            ws.Columns(1, headers.Length).AdjustToContents();
+            // Ajustes de columnas
+            ws.Columns().AdjustToContents();
+
+            // Anchos mínimos (para que “se vea bonito”)
+            ws.Column(1).Width = Math.Max(ws.Column(1).Width, 16);
+            ws.Column(2).Width = Math.Max(ws.Column(2).Width, 18);
+            ws.Column(8).Width = Math.Max(ws.Column(8).Width, 22);
+            ws.Column(9).Width = Math.Max(ws.Column(9).Width, 22);
+            ws.Column(10).Width = Math.Max(ws.Column(10).Width, 22);
+
+            // Alineaciones recomendadas
+            ws.Column(3).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Left);
+            ws.Column(4).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            ws.Column(5).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            ws.Column(6).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+            ws.Column(12).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+            // Freeze header
             ws.SheetView.FreezeRows(headerRow);
 
-            // Gráfico: conteo por Grado (barra horizontal)
-            var series = rows.GroupBy(x => x.Grado).OrderBy(g => g.Key).ToDictionary(g => g.Key ?? "(sin grado)", g => (double)g.Count());
-            using (var chartStream = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.BarHorizontal, series, 600, 300))
-            {
-                ws.AddPicture(chartStream).MoveTo(ws.Cell(r + 2, 1)).WithSize(600, 300);
-            }
+            // ❌ NO AUTOFILTER (como pediste)
+            // ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
 
+            // Opcional: “tabla” formal de Excel (se ve pro)
+            var tableRange = ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), 12);
+            tableRange.CreateTable();
+
+            // Export
             using var stream = new MemoryStream();
             wb.SaveAs(stream);
             var content = stream.ToArray();
 
-            var fileName = profesorId.HasValue
-                ? $"Materias_Asignadas_{profesorId}.xlsx"
-                : "Materias_Asignadas_Todos.xlsx";
-
-            return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+            var fileName = $"Listado_Estudiantes_Activos_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+            return File(content,
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                fileName);
         }
+
+        // Edad exacta (bien hecha)
+        private static int CalcularEdad(DateTime fechaNacimiento)
+        {
+            var today = DateTime.Today;
+            var age = today.Year - fechaNacimiento.Year;
+            if (fechaNacimiento.Date > today.AddYears(-age)) age--;
+            return age < 0 ? 0 : age;
+        }
+
+        //[HttpGet("materias/por-maestro")]
+        //public async Task<IActionResult> MateriasPorMaestro([FromQuery] long? profesorId)
+        //{
+        //    var query = _context.Materias
+        //        .AsNoTracking()
+        //        .Include(m => m.Grado)
+        //        .Include(m => m.Profesor)
+        //        .OrderBy(m => m.Grado.Nombre);
+
+        //    if (profesorId > 0 && profesorId != null)
+        //    {
+        //        query = (IOrderedQueryable<Materia>)query.Where(m => m.IdProfesor == profesorId);
+        //    }
+
+        //    var rows = await query
+        //        .Select(m => new
+        //        {
+        //            m.Id,
+        //            Materia = m.Nombre,
+        //            Profesor = m.Profesor.Nombres + " " + m.Profesor.Apellidos,
+        //            Grado = m.Grado.Nombre
+        //        })
+        //        .ToListAsync();
+
+        //    using var wb = new XLWorkbook();
+        //    var sheetName = ReporteChartHelper.GetSafeSheetName("Materias Asignadas");
+        //    var ws = wb.Worksheets.Add(sheetName);
+
+        //    ws.Cell(1, 1).Value = "Unidad Educativa AMA";
+        //    ws.Cell(2, 1).Value = "Reporte de Materias Asignadas por Profesor";
+        //    ws.Cell(3, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
+
+        //    var headerRow = 5;
+        //    var headers = new[] { "ID", "Materia", "Profesor", "Grado" };
+        //    for (int i = 0; i < headers.Length; i++)
+        //    {
+        //        ws.Cell(headerRow, i + 1).Value = headers[i];
+        //        ws.Cell(headerRow, i + 1).Style.Font.SetBold();
+        //        ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
+        //        ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+        //    }
+
+        //    var r = headerRow + 1;
+        //    foreach (var item in rows)
+        //    {
+        //        ws.Cell(r, 1).Value = item.Id;
+        //        ws.Cell(r, 2).Value = item.Materia;
+        //        ws.Cell(r, 3).Value = item.Profesor;
+        //        ws.Cell(r, 4).Value = item.Grado;
+        //        r++;
+        //    }
+
+        //    ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
+        //    ws.Columns(1, headers.Length).AdjustToContents();
+        //    ws.SheetView.FreezeRows(headerRow);
+
+        //    // Gráfico: conteo por Grado (barra horizontal)
+        //    var series = rows.GroupBy(x => x.Grado).OrderBy(g => g.Key).ToDictionary(g => g.Key ?? "(sin grado)", g => (double)g.Count());
+        //    using (var chartStream = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.BarHorizontal, series, 600, 300))
+        //    {
+        //        ws.AddPicture(chartStream).MoveTo(ws.Cell(r + 2, 1)).WithSize(600, 300);
+        //    }
+
+        //    using var stream = new MemoryStream();
+        //    wb.SaveAs(stream);
+        //    var content = stream.ToArray();
+
+        //    var fileName = profesorId.HasValue
+        //        ? $"Materias_Asignadas_{profesorId}.xlsx"
+        //        : "Materias_Asignadas_Todos.xlsx";
+
+        //    return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
+        //}
 
         [HttpGet("cursos/por-profesor/{profesorId:long}")]
         public async Task<IActionResult> CursosPorProfesor(long profesorId)
@@ -586,626 +610,351 @@ namespace TicketsAPI.Controllers
         [HttpGet("materias/por-maestro/{profesorId:long}")]
         public async Task<IActionResult> MateriasPorMaestroPorId(long profesorId)
         {
-            var rows = await _context.Materias
+            // 0) Datos del profesor (para mostrar Tutor + nombre arriba)
+            var prof = await _context.Profesors
                 .AsNoTracking()
-                .Where(m => m.IdProfesor == profesorId)
-                .Include(m => m.Grado)
-                .Include(m => m.Profesor)
-                .OrderBy(m => m.Grado.Nombre)
-                .Select(m => new
+                .Where(p => p.Id == profesorId)
+                .Select(p => new
                 {
-                    m.Id,
-                    Materia = m.Nombre,
-                    Profesor = m.Profesor.Nombres + " " + m.Profesor.Apellidos,
-                    Grado = m.Grado.Nombre
+                    p.Id,
+                    p.Nombres,
+                    p.Apellidos,
+                    p.IsTutor
                 })
+                .FirstOrDefaultAsync();
+
+            if (prof == null)
+                return NotFound("No se encontró el profesor.");
+
+            // 1) Filas planas (sin IDs) (una fila = una materia asignada)
+            var rows = await _context.GradoParalelos
+                .AsNoTracking()
+                .Where(gp => gp.ProfesorId == profesorId)
+                .OrderBy(gp => gp.Grado.Nivel)
+                .SelectMany(gp => gp.Grado.Materias
+                    .Where(m => m.IdProfesor == profesorId)
+                    .Select(m => new
+                    {
+                        Materia = m.Nombre,
+                        Profesor = (m.Profesor.Nombres + " " + m.Profesor.Apellidos),
+                        Grado = gp.Grado.Nombre,
+                        // AJUSTA según tu modelo:
+                        Paralelo = gp.Paralelo != null ? gp.Paralelo.Nombre : ""
+                    })
+                )
                 .ToListAsync();
 
             if (rows.Count == 0)
                 return NotFound("No se encontraron materias asignadas a este profesor.");
 
             using var wb = new XLWorkbook();
-            var sheetName = ReporteChartHelper.GetSafeSheetName($"Materias Asignadas - Profesor {profesorId}");
+            var sheetName = ReporteChartHelper.GetSafeSheetName($"Materias - Prof {profesorId}");
             var ws = wb.Worksheets.Add(sheetName);
 
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-            ws.Cell(2, 1).Value = $"Reporte de Materias Asignadas a Profesor {profesorId}";
-            ws.Cell(3, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
+            // ======= Estilo global =======
+            ws.Style.Font.FontName = "Calibri";
+            ws.Style.Font.FontSize = 11;
+            ws.Style.Alignment.Vertical = XLAlignmentVerticalValues.Center;
 
-            var headerRow = 5;
-            var headers = new[] { "ID", "Materia", "Profesor", "Grado" };
+            // ======= Header bonito =======
+            ws.Range("A1:D1").Merge();
+            ws.Cell("A1").Value = "UNIDAD EDUCATIVA Ana Maria IZA";
+            ws.Cell("A1").Style.Font.Bold = true;
+            ws.Cell("A1").Style.Font.FontSize = 16;
+            ws.Cell("A1").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell("A1").Style.Fill.SetBackgroundColor(XLColor.FromHtml("#0B3D91"));
+            ws.Cell("A1").Style.Font.SetFontColor(XLColor.White);
+
+            ws.Range("A2:D2").Merge();
+            ws.Cell("A2").Value = "REPORTE DE MATERIAS ASIGNADAS";
+            ws.Cell("A2").Style.Font.Bold = true;
+            ws.Cell("A2").Style.Font.FontSize = 12;
+            ws.Cell("A2").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell("A2").Style.Fill.SetBackgroundColor(XLColor.FromHtml("#E8F0FE"));
+
+            // Profesor + Tutor (visible, una sola vez)
+            var nombreProfesor = $"{prof.Nombres} {prof.Apellidos}";
+            var tutorText = prof.IsTutor ? "SÍ" : "NO";
+
+            ws.Range("A3:D3").Merge();
+            ws.Cell("A3").Value = $"PROFESOR: {nombreProfesor}";
+            ws.Cell("A3").Style.Font.Bold = true;
+            ws.Cell("A3").Style.Font.FontSize = 12;
+            ws.Cell("A3").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell("A3").Style.Fill.SetBackgroundColor(XLColor.FromHtml("#F3F4F6"));
+
+            ws.Range("A4:D4").Merge();
+            ws.Cell("A4").Value = $"ES TUTOR: {tutorText}";
+            ws.Cell("A4").Style.Font.Bold = true;
+            ws.Cell("A4").Style.Font.FontSize = 13;
+            ws.Cell("A4").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            // Color fuerte si es tutor
+            if (prof.IsTutor)
+            {
+                ws.Cell("A4").Style.Fill.SetBackgroundColor(XLColor.FromHtml("#16A34A")); // verde
+                ws.Cell("A4").Style.Font.SetFontColor(XLColor.White);
+            }
+            else
+            {
+                ws.Cell("A4").Style.Fill.SetBackgroundColor(XLColor.FromHtml("#DC2626")); // rojo
+                ws.Cell("A4").Style.Font.SetFontColor(XLColor.White);
+            }
+
+            ws.Range("A5:D5").Merge();
+            ws.Cell("A5").Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
+            ws.Cell("A5").Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Cell("A5").Style.Font.Italic = true;
+            ws.Cell("A5").Style.Font.FontSize = 10;
+            ws.Cell("A5").Style.Fill.SetBackgroundColor(XLColor.FromHtml("#F9FAFB"));
+
+            // Espacio
+            ws.Row(6).Height = 6;
+
+            // ======= Tabla =======
+            var headerRow = 7;
+            var headers = new[] { "Materia", "Profesor", "Grado", "Paralelo" };
+
             for (int i = 0; i < headers.Length; i++)
             {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                var cell = ws.Cell(headerRow, i + 1);
+                cell.Value = headers[i];
+                cell.Style.Font.SetBold();
+                cell.Style.Font.SetFontColor(XLColor.White);
+                cell.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#111827")); // casi negro
+                cell.Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+                cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                cell.Style.Border.OutsideBorderColor = XLColor.FromHtml("#0F172A");
             }
 
             var r = headerRow + 1;
             foreach (var item in rows)
             {
-                ws.Cell(r, 1).Value = item.Id;
-                ws.Cell(r, 2).Value = item.Materia;
-                ws.Cell(r, 3).Value = item.Profesor;
-                ws.Cell(r, 4).Value = item.Grado;
+                ws.Cell(r, 1).Value = item.Materia;
+                ws.Cell(r, 2).Value = item.Profesor;
+                ws.Cell(r, 3).Value = item.Grado;
+                ws.Cell(r, 4).Value = item.Paralelo;
+
+                ws.Range(r, 1, r, headers.Length).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws.Range(r, 1, r, headers.Length).Style.Border.OutsideBorderColor = XLColor.FromHtml("#D1D5DB");
                 r++;
             }
 
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
-            ws.Columns(1, headers.Length).AdjustToContents();
-            ws.SheetView.FreezeRows(headerRow);
+            var lastDataRow = r - 1;
 
-            // Gráfico: conteo por Grado (barra)
-            var series = rows.GroupBy(x => x.Grado).OrderBy(g => g.Key).ToDictionary(g => g.Key ?? "(sin grado)", g => (double)g.Count());
-            using (var chartStream = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.BarHorizontal, series, 600, 300))
+            // Tabla con tema + bandas
+            if (lastDataRow >= headerRow + 1)
             {
-                ws.AddPicture(chartStream).MoveTo(ws.Cell(r + 2, 1)).WithSize(600, 300);
+                var range = ws.Range(headerRow, 1, lastDataRow, headers.Length);
+                var table = range.CreateTable();
+                table.Theme = XLTableTheme.TableStyleMedium9;
+                table.ShowAutoFilter = true;
             }
 
+            // Ajustes visuales
+            ws.Columns(1, headers.Length).AdjustToContents();
+            ws.Column(1).Width = Math.Max(ws.Column(1).Width, 30); // Materia
+            ws.Column(2).Width = Math.Max(ws.Column(2).Width, 26); // Profesor
+            ws.Column(3).Width = Math.Max(ws.Column(3).Width, 18); // Grado
+            ws.Column(4).Width = Math.Max(ws.Column(4).Width, 12); // Paralelo
+
+            ws.SheetView.FreezeRows(headerRow);
+
+            // Alineación por columna
+            ws.Column(3).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+            ws.Column(4).Style.Alignment.Horizontal = XLAlignmentHorizontalValues.Center;
+
+            // ======= Gráfico: conteo por Grado =======
+            var series = rows
+                .GroupBy(x => string.IsNullOrWhiteSpace(x.Grado) ? "(sin grado)" : x.Grado)
+                .OrderBy(g => g.Key)
+                .ToDictionary(g => g.Key, g => (double)g.Count());
+
+            using (var chartStream = ReporteChartHelper.RenderChartPng(
+                ReporteChartHelper.ChartKind.BarHorizontal, series, 900, 360))
+            {
+                ws.AddPicture(chartStream)
+                  .MoveTo(ws.Cell(lastDataRow + 3, 1))
+                  .WithSize(900, 360);
+            }
+
+            // Exportar
             using var stream = new MemoryStream();
             wb.SaveAs(stream);
             var content = stream.ToArray();
 
             var fileName = $"Materias_Asignadas_{profesorId}.xlsx";
-
             return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
         }
 
-        // GET: /api/Reporte/estudiantes/sin-matricula/excel?periodo=2025-2026
-        [HttpGet("estudiantes/sin-matricula/excel")]
-        public async Task<IActionResult> EstudiantesSinMatriculaExcel([FromQuery] string periodo)
+
+
+        // GET: /api/Reporte/estudiantes/documentos-faltantes/excel
+        [HttpGet("estudiantes/documentos-faltantes/excel")]
+        public async Task<IActionResult> EstudiantesDocumentosFaltantesExcel()
         {
-            if (string.IsNullOrWhiteSpace(periodo))
-                return BadRequest("El período es obligatorio.");
-
-            // 1) Estudiantes activos
-            var estudiantes = _context.Estudiantes
+            // 1) Traer solo estudiantes activos + sus documentos (sin cargar de más)
+            var estudiantes = await _context.Estudiantes
                 .AsNoTracking()
-                .Where(e => e.IsActive == true) // ajusta si tu modelo usa otro campo
-                .Include(e => e.Representante)
-                .AsQueryable();
-
-            // 2) Matriculas activas del periodo
-            var matriculasPeriodo = _context.Matriculas
-                .AsNoTracking()
-                .Where(m => m.IsActive == true && m.GradoParalelo.AnioLectivo.Periodo == periodo)
-                .Select(m => new { m.EstudianteId }) // ajusta propiedad FK si se llama distinto
-                .Distinct();
-
-            // 3) Anti-join: estudiantes que NO están matriculados en ese periodo
-            // 3) Anti-join: estudiantes que NO están matriculados en ese periodo
-            var sinMatricula = await estudiantes
-                .Where(e => !matriculasPeriodo.Any(mp => mp.EstudianteId == e.Id))
-                .OrderBy(e => e.Apellido).ThenBy(e => e.Nombre)
-                .Select(e => new
-                {
-                    e.Id,
-                    e.Nombre,
-                    e.Apellido,
-                    Cedula = e.Cedula ?? "",
-                    Representante = e.Representante != null ? (e.Representante.Nombres + " " + e.Representante.Apellidos) : "",
-                    DocRepresentante = e.Representante != null ? (e.Representante.NumeroDocumento ?? "") : "",
-                    Telefono = e.Representante != null ? (e.Representante.Telefono ?? "") : "" // si tienes
-                })
-                .ToListAsync();
-
-            var totalEstudiantes = sinMatricula.Count;
-            var estudiantesConDocumentosFaltantes = sinMatricula.Count(x => string.IsNullOrWhiteSpace(x.Cedula));
-
-            // 4) Excel
-            using var wb = new XLWorkbook();
-            var ws = wb.Worksheets.Add($"Sin matrícula {periodo}");
-
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-            ws.Cell(2, 1).Value = "Estudiantes SIN matrícula";
-            ws.Cell(3, 1).Value = $"Período: {periodo}";
-            ws.Cell(4, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
-            ws.Cell(5, 1).Value = $"Total: {sinMatricula.Count}";
-
-            ws.Range(1, 1, 1, 7).Merge().Style.Font.SetBold().Font.SetFontSize(14);
-            ws.Range(2, 1, 2, 7).Merge().Style.Font.SetBold().Font.SetFontSize(12);
-            ws.Range(3, 1, 5, 7).Merge().Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
-
-            var headerRow = 7;
-            var headers = new[]
-            {
-            "ID", "Nombres", "Apellidos", "Cédula",
-            "Representante", "Doc. Representante", "Teléfono"
-        };
-
-            for (int i = 0; i < headers.Length; i++)
-            {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-            }
-
-            var r = headerRow + 1;
-            foreach (var x in sinMatricula)
-            {
-                ws.Cell(r, 1).Value = x.Id;
-                ws.Cell(r, 2).Value = x.Nombre;
-                ws.Cell(r, 3).Value = x.Apellido;
-                ws.Cell(r, 4).Value = x.Cedula;
-                ws.Cell(r, 5).Value = x.Representante;
-                ws.Cell(r, 6).Value = x.DocRepresentante;
-                ws.Cell(r, 7).Value = x.Telefono;
-                r++;
-            }
-
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
-            ws.Columns(1, headers.Length).AdjustToContents();
-            ws.SheetView.FreezeRows(headerRow);
-
-            // Gráfico: distribución de documentos faltantes (pastel)
-            var faltan = estudiantesConDocumentosFaltantes;
-            var completos = totalEstudiantes - faltan;
-            var series = new Dictionary<string, double>
-            {
-                { "Faltan", faltan },
-                { "Completos", completos }
-            };
-            using (var chartStream = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.Pie, series, 400, 300))
-            {
-                ws.AddPicture(chartStream)
-                    .MoveTo(ws.Cell(r + 2, 1))
-                    .WithSize(400, 300);
-            }
-
-            using var stream = new MemoryStream();
-            wb.SaveAs(stream);
-            var content = stream.ToArray();
-
-            var safePeriodo = periodo.Replace("/", "-").Replace(" ", "");
-            var fileName = $"Estudiantes_SinMatricula_{safePeriodo}.xlsx";
-
-            return File(content,
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                fileName);
-        }
-
-        // GET: /api/Reporte/estudiantes/por-curso/excel?periodo=2025-2026
-        [HttpGet("estudiantes/por-curso/excel")]
-        public async Task<IActionResult> EstudiantesPorCursoExcel([FromQuery] string periodo)
-        {
-            if (string.IsNullOrWhiteSpace(periodo))
-                return BadRequest("El período es obligatorio.");
-
-            // 1) Traer matrículas del período (activos)
-            var data = await _context.Matriculas
-                .AsNoTracking()
-                .Where(m => m.IsActive == true &&
-                            m.GradoParalelo.AnioLectivo.Periodo == periodo)
-                .Include(m => m.Estudiante)
-                .Include(m => m.GradoParalelo).ThenInclude(gp => gp.Grado)
-                .Include(m => m.GradoParalelo).ThenInclude(gp => gp.Paralelo)
-                .Include(m => m.GradoParalelo).ThenInclude(gp => gp.AnioLectivo)
-                .OrderBy(m => m.GradoParalelo.Grado.Nombre)
-                .ThenBy(m => m.GradoParalelo.Paralelo.Nombre)
-                .ThenBy(m => m.Estudiante.Apellido)
-                .ThenBy(m => m.Estudiante.Nombre)
-                .Select(m => new
-                {
-                    MatriculaId = m.Id,
-                    EstudianteId = m.Estudiante.Id,
-                    Nombres = m.Estudiante.Nombre,
-                    Apellidos = m.Estudiante.Apellido,
-                    Cedula = m.Estudiante.Cedula ?? "",
-                    Estado = m.EstadoMatricula,
-                    Fecha = m.FechaMatricula,
-
-                    GradoParaleloId = m.GradoParaleloId,
-                    Grado = m.GradoParalelo.Grado.Nombre,
-                    Paralelo = m.GradoParalelo.Paralelo.Nombre,
-                    Periodo = m.GradoParalelo.AnioLectivo.Periodo
-                })
-                .ToListAsync();
-
-            if (data.Count == 0)                    
-                return NotFound("No hay matrículas para ese período.");
-
-            // 2) Agrupar por curso (Grado + Paralelo)
-            var grupos = data
-                .GroupBy(x => new { x.GradoParaleloId, x.Grado, x.Paralelo })
-                .OrderBy(g => g.Key.Grado)
-                .ThenBy(g => g.Key.Paralelo)
-                .ToList();
-
-            using var wb = new XLWorkbook();
-
-            // =========================
-            // Hoja RESUMEN
-            // =========================
-            var wsResumen = wb.Worksheets.Add("Resumen");
-
-            wsResumen.Cell(1, 1).Value = "Unidad Educativa AMA";
-            wsResumen.Cell(2, 1).Value = "Estudiantes por curso (Resumen)";
-            wsResumen.Cell(3, 1).Value = $"Período: {periodo}";
-            wsResumen.Cell(4, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
-
-            wsResumen.Range(1, 1, 1, 4).Merge().Style.Font.SetBold().Font.SetFontSize(14);
-            wsResumen.Range(2, 1, 2, 4).Merge().Style.Font.SetBold().Font.SetFontSize(12);
-            wsResumen.Range(3, 1, 4, 4).Merge().Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
-
-            var hr = 6;
-            wsResumen.Cell(hr, 1).Value = "Grado";
-            wsResumen.Cell(hr, 2).Value = "Paralelo";
-            wsResumen.Cell(hr, 3).Value = "GradoParaleloId";
-            wsResumen.Cell(hr, 4).Value = "Total";
-
-            wsResumen.Range(hr, 1, hr, 4).Style.Font.SetBold();
-            wsResumen.Range(hr, 1, hr, 4).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-
-            var rr = hr + 1;
-            foreach (var g in grupos)
-            {
-                wsResumen.Cell(rr, 1).Value = g.Key.Grado;
-                wsResumen.Cell(rr, 2).Value = g.Key.Paralelo;
-                wsResumen.Cell(rr, 3).Value = g.Key.GradoParaleloId;
-                wsResumen.Cell(rr, 4).Value = g.Count();
-                rr++;
-            }
-
-            wsResumen.Range(hr, 1, Math.Max(rr - 1, hr), 4).SetAutoFilter();
-            wsResumen.Columns(1, 4).AdjustToContents();
-            wsResumen.SheetView.FreezeRows(hr);
-
-            // =========================
-            // 1 hoja por CURSO
-            // =========================
-            foreach (var g in grupos)
-            {
-                // nombre hoja <= 31 chars
-                var sheetName = $"{g.Key.Grado}-{g.Key.Paralelo}".Trim();
-                if (sheetName.Length > 31) sheetName = sheetName.Substring(0, 31);
-
-                var ws = wb.Worksheets.Add(sheetName);
-
-                ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-                ws.Cell(2, 1).Value = $"Lista: {g.Key.Grado} - {g.Key.Paralelo}";
-                ws.Cell(3, 1).Value = $"Período: {periodo}";
-                ws.Cell(4, 1).Value = $"Total: {g.Count()}";
-                ws.Cell(5, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
-
-                ws.Range(1, 1, 1, 5).Merge().Style.Font.SetBold().Font.SetFontSize(14);
-                ws.Range(2, 1, 2, 5).Merge().Style.Font.SetBold().Font.SetFontSize(12);
-                ws.Range(3, 1, 5, 5).Merge().Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
-
-                var headerRow = 7;
-                var headers = new[] { "#", "Estudiante", "Cédula", "Estado", "Fecha" };
-
-
-                for (int i = 0; i < headers.Length; i++)
-                {
-                    ws.Cell(headerRow, i + 1).Value = headers[i];
-                    ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                    ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                    ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
-                }
-
-                int row = headerRow + 1;
-                int n = 1;
-
-                foreach (var x in g)
-                {
-                    ws.Cell(row, 1).Value = n++;
-                    ws.Cell(row, 2).Value = $"{x.Apellidos} {x.Nombres}";
-                    ws.Cell(row, 3).Value = x.Cedula;
-                    ws.Cell(row, 4).Value = x.Estado;
-                    ws.Cell(row, 5).Value = x.Fecha;
-                    ws.Cell(row, 5).Style.DateFormat.Format = "dd/MM/yyyy HH:mm";
-                    row++;
-                }
-
-                ws.Range(headerRow, 1, Math.Max(row - 1, headerRow), headers.Length).SetAutoFilter();
-                ws.Columns(1, headers.Length).AdjustToContents();
-                ws.SheetView.FreezeRows(headerRow);
-            }
-
-            using var stream = new MemoryStream();
-            wb.SaveAs(stream);
-
-            var safePeriodo = periodo.Replace("/", "-").Replace(" ", "");
-            var fileName = $"Estudiantes_PorCurso_{safePeriodo}.xlsx";
-
-            return File(
-                stream.ToArray(),
-                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-                fileName
-            );
-        }
-
-        // GET: /api/reporte/estudiantes/documentos-faltantes
-        [HttpGet("estudiantes/documentos-faltantes")]
-        public async Task<IActionResult> EstudiantesDocumentosFaltantes()
-        {
-            var estudiantesConDocumentos = await _context.Estudiantes
-                .AsNoTracking()
-                .Where(e => e.Documentos.Any(d => d.Aprobado == null)) // Solo aquellos con documentos faltantes
-                .Include(e => e.Documentos)
-                .OrderBy(e => e.Apellido)
-                .ThenBy(e => e.Nombre)
+                .Where(e => e.IsActive == true)
                 .Select(e => new
                 {
                     EstudianteId = e.Id,
-                    Nombre = e.Nombre + " " + e.Apellido,
+                    Nombres = (e.Nombre ?? "").Trim(),
+                    Apellidos = (e.Apellido ?? "").Trim(),
+                    Cedula = e.Cedula ?? "",
                     DocumentosFaltantes = e.Documentos
-                        .Where(d => d.Aprobado == null) // Documentos que no han sido aprobados
-                        .Select(d => d.Nombre)
+                        .Where(d => d.IsActive == true && d.Aprobado == null)
+                        .Select(d => (d.Nombre ?? "Documento").Trim())
                         .ToList()
                 })
                 .ToListAsync();
 
-            var totalEstudiantes = estudiantesConDocumentos.Count();
-            var estudiantesConDocumentosFaltantes = estudiantesConDocumentos.Count(e => e.DocumentosFaltantes.Any());
-            var porcentajeFaltantes = totalEstudiantes > 0 ? (double)estudiantesConDocumentosFaltantes / totalEstudiantes * 100 : 0;
+            // 2) Filtrar: solo los que tienen faltantes
+            var estudiantesConFaltantes = estudiantes
+                .Where(e => e.DocumentosFaltantes != null && e.DocumentosFaltantes.Count > 0)
+                .OrderBy(e => e.Apellidos)
+                .ThenBy(e => e.Nombres)
+                .ToList();
 
-            // ====== Generar imagen del gráfico con SkiaSharp (cross-platform) ======
-            // Nota: requiere paquete NuGet `SkiaSharp`.
-            var faltan = estudiantesConDocumentosFaltantes;
-            var completos = totalEstudiantes - faltan;
-            var width = 500;
-            var height = 300;
+            var totalEstudiantesActivos = estudiantes.Count;
+            var totalConFaltantes = estudiantesConFaltantes.Count;
+            var totalCompletos = totalEstudiantesActivos - totalConFaltantes;
 
-            using var chartStream = new MemoryStream();
+            var porcentajeFaltantes = totalEstudiantesActivos > 0
+                ? (double)totalConFaltantes / totalEstudiantesActivos * 100.0
+                : 0.0;
+
+            // 3) Serie para gráfica (pie)
+            var stats = new Dictionary<string, double>
             {
-                var info = new SkiaSharp.SKImageInfo(width, height);
-                using var surface = SkiaSharp.SKSurface.Create(info);
-                var canvas = surface.Canvas;
+                ["Completos"] = totalCompletos,
+                ["Con faltantes"] = totalConFaltantes
+            };
 
-                // Fondo
-                canvas.Clear(SkiaSharp.SKColors.White);
-
-                // Pie rectangle
-                var pieRect = new SkiaSharp.SKRect(10, 10, 210, 210);
-
-                var total = (float)(faltan + completos);
-                float startAngle = -90f;
-                float sweepFaltan = total > 0 ? (float)faltan / total * 360f : 0f;
-                float sweepCompletos = 360f - sweepFaltan;
-
-                using (var paint = new SkiaSharp.SKPaint { IsAntialias = true })
-                {
-                    // Slice "Faltan"
-                    paint.Style = SkiaSharp.SKPaintStyle.Fill;
-                    paint.Color = new SkiaSharp.SKColor(0xFF, 0x45, 0x00); // OrangeRed
-                    if (sweepFaltan > 0.001f)
-                    {
-                        canvas.DrawArc(pieRect, startAngle, sweepFaltan, true, paint);
-                    }
-
-                    // Slice "Completos"
-                    paint.Color = SkiaSharp.SKColors.LightGreen;
-                    if (sweepCompletos > 0.001f)
-                    {
-                        canvas.DrawArc(pieRect, startAngle + sweepFaltan, sweepCompletos, true, paint);
-                    }
-
-                    // Borde del pie
-                    paint.Style = SkiaSharp.SKPaintStyle.Stroke;
-                    paint.Color = SkiaSharp.SKColors.Gray;
-                    paint.StrokeWidth = 1;
-                    canvas.DrawOval(pieRect, paint);
-                }
-
-                // Leyenda
-                using (var textPaint = new SkiaSharp.SKPaint
-                {
-                    IsAntialias = true,
-                    Color = SkiaSharp.SKColors.Black,
-                    TextSize = 12
-                })
-                using (var legendPaint = new SkiaSharp.SKPaint { IsAntialias = true })
-                {
-                    var legendX = pieRect.Right + 20;
-                    var legendY = pieRect.Top;
-
-                    // Faltan
-                    legendPaint.Color = new SkiaSharp.SKColor(0xFF, 0x45, 0x00);
-                    canvas.DrawRect(new SkiaSharp.SKRect(legendX, legendY, legendX + 15, legendY + 15), legendPaint);
-                    var pctFaltan = total > 0 ? (faltan / total * 100.0) : 0.0;
-                    canvas.DrawText($"Faltan: {faltan} ({pctFaltan:0.##}%)", legendX + 22, legendY + 12, textPaint);
-
-                    // Completos
-                    legendY += 25;
-                    legendPaint.Color = SkiaSharp.SKColors.LightGreen;
-                    canvas.DrawRect(new SkiaSharp.SKRect(legendX, legendY, legendX + 15, legendY + 15), legendPaint);
-                    var pctCompletos = total > 0 ? (completos / total * 100.0) : 0.0;
-                    canvas.DrawText($"Completos: {completos} ({pctCompletos:0.##}%)", legendX + 22, legendY + 12, textPaint);
-                }
-
-                // Título del gráfico
-                using (var titlePaint = new SkiaSharp.SKPaint { IsAntialias = true, Color = SkiaSharp.SKColors.Black, TextSize = 14, FakeBoldText = true })
-                {
-                    canvas.DrawText("Documentos faltantes", 10, 245, titlePaint);
-                }
-
-                using var image = surface.Snapshot();
-                using var data = image.Encode(SkiaSharp.SKEncodedImageFormat.Png, 100);
-                data.SaveTo(chartStream);
-                chartStream.Position = 0;
-            }
-
-            // ====== Crear el archivo Excel e insertar la imagen ======
+            // 4) Crear Excel
             using var wb = new XLWorkbook();
-            var sheetName = GetSafeSheetName("Estudiantes con Documentos Faltantes");
-            var ws = wb.Worksheets.Add(sheetName);
 
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
+            // ===================== HOJA 1: RESUMEN =====================
+            var ws = wb.Worksheets.Add(ReporteChartHelper.GetSafeSheetName("Doc. Faltantes"));
+
+            ws.Cell(1, 1).Value = "Unidad Educativa Ana Maria Iza";
             ws.Cell(2, 1).Value = "Reporte de Estudiantes con Documentación Faltante";
             ws.Cell(3, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
 
-            // Resumen breve
-            ws.Cell(5, 1).Value = "Total estudiantes";
-            ws.Cell(5, 2).Value = totalEstudiantes;
+            ws.Range(1, 1, 1, 6).Merge();
+            ws.Range(2, 1, 2, 6).Merge();
+            ws.Range(3, 1, 3, 6).Merge();
+
+            ws.Cell(1, 1).Style.Font.SetBold().Font.SetFontSize(16);
+            ws.Cell(2, 1).Style.Font.SetBold().Font.SetFontSize(12);
+            ws.Cell(3, 1).Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
+
+            // KPIs
+            ws.Cell(5, 1).Value = "Total estudiantes activos";
+            ws.Cell(5, 2).Value = totalEstudiantesActivos;
+
             ws.Cell(6, 1).Value = "Con documentos faltantes";
-            ws.Cell(6, 2).Value = estudiantesConDocumentosFaltantes;
-            ws.Cell(7, 1).Value = "Porcentaje con faltantes";
-            ws.Cell(7, 2).Value = $"{porcentajeFaltantes:0.##}%";
+            ws.Cell(6, 2).Value = totalConFaltantes;
 
-            // Lista de estudiantes con documentos faltantes
-            var headerRow = 9;
-            var headers = new[] { "Estudiante", "Documentos Faltantes" };
-            for (int i = 0; i < headers.Length; i++)
+            ws.Cell(7, 1).Value = "Completos";
+            ws.Cell(7, 2).Value = totalCompletos;
+
+            ws.Cell(8, 1).Value = "Porcentaje con faltantes";
+            ws.Cell(8, 2).Value = porcentajeFaltantes / 100.0;
+            ws.Cell(8, 2).Style.NumberFormat.Format = "0.00%";
+
+            ws.Range(5, 1, 8, 2).Style.Font.SetFontSize(11);
+            ws.Range(5, 1, 8, 1).Style.Font.SetBold();
+            ws.Range(5, 1, 8, 2).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+            ws.Range(5, 1, 8, 2).Style.Border.OutsideBorderColor = XLColor.FromHtml("#D0D0D0");
+
+            // Gráfica (usando tu helper SkiaSharp)
+            ws.Cell(10, 1).Value = "Gráfico: Completos vs Con faltantes";
+            ws.Range(10, 1, 10, 6).Merge();
+            ws.Cell(10, 1).Style.Font.SetBold();
+            ws.Cell(10, 1).Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+
+            using (var chart = ReporteChartHelper.RenderChartPng(ReporteChartHelper.ChartKind.Pie, stats, 900, 360))
             {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                ws.AddPicture(chart)
+                  .MoveTo(ws.Cell(11, 1))
+                  .WithSize(900, 360);
             }
 
-            var r = headerRow + 1;
-            foreach (var item in estudiantesConDocumentos)
-            {
-                ws.Cell(r, 1).Value = item.Nombre;
-                ws.Cell(r, 2).Value = string.Join("\n", item.DocumentosFaltantes); // Documentos faltantes, cada uno en una nueva línea
-                r++;
-            }
+            ws.Columns().AdjustToContents();
+            ws.Column(1).Width = Math.Max(ws.Column(1).Width, 28);
 
-            // Insertar la imagen generada con SkiaSharp debajo de la tabla
-            ws.AddPicture(chartStream)
-                .MoveTo(ws.Cell(r + 1, 1))
-                .WithSize(width, height);
+            // ✅ NO sticky
+            // ws.SheetView.FreezeRows(...);
 
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
-            ws.Columns(1, headers.Length).AdjustToContents();
-            ws.SheetView.FreezeRows(headerRow);
+            // ===================== HOJA 2: DETALLE =====================
+            var ws2 = wb.Worksheets.Add(ReporteChartHelper.GetSafeSheetName("Detalle"));
 
-            using var stream = new MemoryStream();
-            wb.SaveAs(stream);
-            var content = stream.ToArray();
+            ws2.Cell(1, 1).Value = "Unidad Educativa Ana Maria Iza";
+            ws2.Cell(2, 1).Value = "Detalle de Documentos Faltantes (Aprobado == NULL)";
+            ws2.Cell(3, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
 
-            var fileName = "Estudiantes_Documentos_Faltantes.xlsx";
+            ws2.Range(1, 1, 1, 4).Merge();
+            ws2.Range(2, 1, 2, 4).Merge();
+            ws2.Range(3, 1, 3, 4).Merge();
 
-            return File(content, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
-        }
+            ws2.Cell(1, 1).Style.Font.SetBold().Font.SetFontSize(16);
+            ws2.Cell(2, 1).Style.Font.SetBold().Font.SetFontSize(12);
+            ws2.Cell(3, 1).Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
 
-
-        // GET: /api/Reporte/cupos/excel?anioLectivoId=1&soloDisponibles=true
-        [HttpGet("cupos/excel")]
-        public async Task<IActionResult> CuposPorCursoExcel(
-            [FromQuery] long anioLectivoId,
-            [FromQuery] bool soloDisponibles = false
-        )
-        {
-            if (anioLectivoId <= 0)
-                return BadRequest("anioLectivoId es obligatorio.");
-
-            // (Opcional) traer el periodo para mostrarlo en el header
-            // Si Periodo puede ser null en BD, lo protegemos con ?? "—"
-            var anioLectivo = await _context.AnioLectivo
-                .AsNoTracking()
-                .Where(a => a.Id == anioLectivoId)
-                .Select(a => new { a.Id, Periodo = (a.Periodo ?? "—") })
-                .FirstOrDefaultAsync();
-
-            if (anioLectivo == null)
-                return NotFound("Año lectivo no encontrado.");
-
-            // ✅ Tu query, tal cual (con Includes para nombres)
-            var rows = await _context.GradoParalelos
-                .AsNoTracking()
-                .Where(x => x.AnioLectivoId == anioLectivoId)
-                .Include(x => x.Grado)
-                .Include(x => x.Paralelo)
-                .OrderBy(x => x.Grado.Nombre)
-                .ThenBy(x => x.Paralelo.Nombre)
-                .Select(x => new
-                {
-                    GradoParaleloId = x.Id,
-                    Grado = x.Grado.Nombre,
-                    Paralelo = x.Paralelo.Nombre,
-                    CuposTotales = x.Cupos,
-
-                    // ⚠️ Si Matricula.GradoParaleloId es nullable (long?),
-                    // cambia a: m.GradoParaleloId.HasValue && m.GradoParaleloId.Value == x.Id
-                    CuposOcupados = _context.Matriculas.Count(m =>
-                        m.IsActive == true &&
-                        m.GradoParaleloId == x.Id
-                    )
-                })
-                .ToListAsync();
-
-            // calcular disponibles y %
-            var result = rows.Select(x =>
-            {
-                var disp = x.CuposTotales - x.CuposOcupados;
-                if (disp < 0) disp = 0;
-
-                var pct = x.CuposTotales > 0 ? (double)x.CuposOcupados / x.CuposTotales : 0;
-
-                return new
-                {
-                    x.GradoParaleloId,
-                    x.Grado,
-                    x.Paralelo,
-                    x.CuposTotales,
-                    x.CuposOcupados,
-                    CuposDisponibles = disp,
-                    PorcentajeOcupacion = pct
-                };
-            }).ToList();
-
-            if (soloDisponibles)
-                result = result.Where(r => r.CuposDisponibles > 0).ToList();
-
-            // =========================
-            // Excel
-            // =========================
-            using var wb = new XLWorkbook();
-            var ws = wb.Worksheets.Add("Cupos");
-
-            ws.Cell(1, 1).Value = "Unidad Educativa AMA";
-            ws.Cell(2, 1).Value = "Reporte de cupos por grado y paralelo";
-            ws.Cell(3, 1).Value = $"Año lectivo: {anioLectivo.Periodo} (Id: {anioLectivoId})";
-            ws.Cell(4, 1).Value = $"Generado: {DateTime.Now:dd/MM/yyyy HH:mm}";
-            ws.Cell(5, 1).Value = $"Solo disponibles: {(soloDisponibles ? "Sí" : "No")}";
-
-            ws.Range(1, 1, 1, 7).Merge().Style.Font.SetBold().Font.SetFontSize(14);
-            ws.Range(2, 1, 2, 7).Merge().Style.Font.SetBold().Font.SetFontSize(12);
-            ws.Range(3, 1, 5, 7).Merge().Style.Font.SetFontSize(10).Font.SetFontColor(XLColor.Gray);
-
-            var headerRow = 7;
-            var headers = new[]
-            {
-                "GradoParaleloId", "Grado", "Paralelo",
-                "Cupos Totales", "Ocupados", "Disponibles", "% Ocupación"
-            };
+            var headerRow = 5;
+            var headers = new[] { "Estudiante", "Cédula", "Cantidad faltantes", "Documentos faltantes" };
 
             for (int i = 0; i < headers.Length; i++)
             {
-                ws.Cell(headerRow, i + 1).Value = headers[i];
-                ws.Cell(headerRow, i + 1).Style.Font.SetBold();
-                ws.Cell(headerRow, i + 1).Style.Fill.SetBackgroundColor(XLColor.FromHtml("#EEEEEE"));
-                ws.Cell(headerRow, i + 1).Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                var cell = ws2.Cell(headerRow, i + 1);
+                cell.Value = headers[i];
+                cell.Style.Font.SetBold().Font.SetFontColor(XLColor.White);
+                cell.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#1E88E5"));
+                cell.Style.Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
+                cell.Style.Border.OutsideBorder = XLBorderStyleValues.Thin;
+                cell.Style.Border.OutsideBorderColor = XLColor.FromHtml("#D0D0D0");
             }
 
-            var r = headerRow + 1;
-            foreach (var x in result)
-            {
-                ws.Cell(r, 1).Value = x.GradoParaleloId;
-                ws.Cell(r, 2).Value = x.Grado;
-                ws.Cell(r, 3).Value = x.Paralelo;
-                ws.Cell(r, 4).Value = x.CuposTotales;
-                ws.Cell(r, 5).Value = x.CuposOcupados;
-                ws.Cell(r, 6).Value = x.CuposDisponibles;
+            int r = headerRow + 1;
 
-                ws.Cell(r, 7).Value = x.PorcentajeOcupacion;
-                ws.Cell(r, 7).Style.NumberFormat.Format = "0%";
+            foreach (var e in estudiantesConFaltantes)
+            {
+                var nombreCompleto = $"{e.Apellidos} {e.Nombres}".Trim();
+                var docs = e.DocumentosFaltantes ?? new List<string>();
+
+                ws2.Cell(r, 1).Value = nombreCompleto;
+                ws2.Cell(r, 2).Value = e.Cedula;
+                ws2.Cell(r, 3).Value = docs.Count;
+                ws2.Cell(r, 4).Value = string.Join(Environment.NewLine, docs);
+                ws2.Cell(r, 4).Style.Alignment.WrapText = true;
+
+                var rowRange = ws2.Range(r, 1, r, 4);
+                rowRange.Style.Border.BottomBorder = XLBorderStyleValues.Thin;
+                rowRange.Style.Border.BottomBorderColor = XLColor.FromHtml("#E6E6E6");
+
+                if ((r - (headerRow + 1)) % 2 == 1)
+                    rowRange.Style.Fill.SetBackgroundColor(XLColor.FromHtml("#FAFAFA"));
 
                 r++;
             }
 
-            ws.Range(headerRow, 1, Math.Max(r - 1, headerRow), headers.Length).SetAutoFilter();
-            ws.Columns(1, headers.Length).AdjustToContents();
-            ws.SheetView.FreezeRows(headerRow);
+            // Tabla bonita
+            ws2.Columns().AdjustToContents();
+            ws2.Column(1).Width = Math.Max(ws2.Column(1).Width, 28);
+            ws2.Column(4).Width = Math.Min(Math.Max(ws2.Column(4).Width, 35), 60);
 
+            ws2.Range(headerRow, 1, Math.Max(r - 1, headerRow), 4).CreateTable().Theme = XLTableTheme.TableStyleMedium9;
+
+            // ✅ NO sticky
+            // ws2.SheetView.FreezeRows(headerRow);
+
+            // 5) Export
             using var stream = new MemoryStream();
             wb.SaveAs(stream);
 
-            var fileName = $"Cupos_{anioLectivoId}_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+            var fileName = $"Estudiantes_Documentos_Faltantes_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
 
             return File(
                 stream.ToArray(),
@@ -1213,6 +962,7 @@ namespace TicketsAPI.Controllers
                 fileName
             );
         }
+
 
         private static string GetSafeSheetName(string name)
         {

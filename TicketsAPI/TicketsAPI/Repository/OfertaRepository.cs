@@ -62,11 +62,10 @@ namespace TicketsAPI.Repository
                 }).FirstOrDefaultAsync();
 
 
-            var anioLectivoId = await _context.AnioLectivo.Where(x => x.Vigente == true).Select(c => c.Id).FirstOrDefaultAsync();
+
 
             var query = _context.GradoParalelos.Include(x => x.Grado)
-                .Where(x => x.AnioLectivoId == anioLectivoId
-                && x.Grado.Nivel == estudiante!.UltimoGradoAprobado + 1
+                .Where(x => x.Grado.Nivel == estudiante!.UltimoGradoAprobado + 1
                 )
                 .Select(x => new OfertaDTO
                 {
