@@ -23,10 +23,10 @@ namespace TicketsAPI.Services
             container.Page(page =>
             {
                 page.Size(PageSizes.A4);
-                page.Margin(24); // ✅ menos margen para que quepa en 1 hoja
+                page.Margin(24);
                 page.PageColor(Colors.White);
 
-                page.DefaultTextStyle(x => x.FontSize(10.0f).FontColor(Colors.Grey.Darken4)); // ✅ un poco más pequeño
+                page.DefaultTextStyle(x => x.FontSize(10.0f).FontColor(Colors.Grey.Darken4));
 
                 page.Header().Element(ComposeHeader);
                 page.Content().Element(ComposeContent);
@@ -45,9 +45,6 @@ namespace TicketsAPI.Services
 
                     col.Item().PaddingTop(8).Row(row =>
                     {
-                        // 🔴 ELIMINADO: LogoBox
-
-                        // 🔹 Ahora el bloque textual ocupa todo el espacio izquierdo
                         row.RelativeItem().Column(c =>
                         {
                             c.Spacing(1);
@@ -69,7 +66,6 @@ namespace TicketsAPI.Services
                             });
                         });
 
-                        // 🔹 Foto del estudiante en el extremo derecho
                         row.ConstantItem(52)
                            .Height(52)
                            .AlignRight()
@@ -85,21 +81,19 @@ namespace TicketsAPI.Services
         void ComposeContent(IContainer container)
         {
             container
-                .PaddingTop(10) // ✅ menos espacio
+                .PaddingTop(10)
                 .Column(col =>
                 {
-                    col.Spacing(10); // ✅ menos separación para 1 hoja
+                    col.Spacing(10);
 
-                    // ====== BLOQUE EN CELDAS (2 columnas) ======
+                    // ====== BLOQUE 2 COLUMNAS ======
                     col.Item().Row(row =>
                     {
-                        // Datos del estudiante (más compacto)
                         row.RelativeItem().Element(card => CardCell(card, "Datos del Estudiante", body =>
                         {
                             body.Column(c =>
                             {
                                 c.Spacing(8);
-
                                 c.Item().Element(x => InfoBoxOneLine(x, "Estudiante", _m.Estudiante));
                                 c.Item().Element(x => InfoBoxOneLine(x, "Documento", _m.DocumentoEstudiante));
                             });
@@ -109,17 +103,12 @@ namespace TicketsAPI.Services
 
                         row.RelativeItem().Element(card => CardCell(card, "Datos del Representante", body =>
                         {
-                            //InfoGrid(body,
-                            //    ("Representante", _m.Representante),
-                            //    ("Documento", _m.DocumentoRepresentante));
                             body.Column(c =>
                             {
                                 c.Spacing(8);
-
-                                c.Item().Element(x => InfoBoxOneLine(x, "Estudiante", _m.Estudiante));
-                                c.Item().Element(x => InfoBoxOneLine(x, "Documento", _m.DocumentoEstudiante));
+                                c.Item().Element(x => InfoBoxOneLine(x, "Representante", _m.Representante));
+                                c.Item().Element(x => InfoBoxOneLine(x, "Documento", _m.DocumentoRepresentante));
                             });
-
                         }));
                     });
 
@@ -130,27 +119,32 @@ namespace TicketsAPI.Services
                             ("Paralelo", _m.Paralelo));
                     }));
 
-                    // Materias
+                    // Materias header
                     col.Item().Row(r =>
                     {
                         r.RelativeItem().Text("Materias registradas").SemiBold().FontSize(11.2f);
                         r.AutoItem().Element(x => Chip(x, $"{_m.Materias?.Count ?? 0} materias", TextSoft, Colors.Grey.Lighten4));
                     });
 
+                    // Tabla materias (fluye natural)
                     col.Item().Element(ComposeMateriasTableCompact);
 
-                    // ✅ Firmas compactas y pegadas abajo
-                    col.Item().ExtendVertical().AlignBottom().Element(ComposeSignaturesCompact);
+                    // ✅ Firmas al final NATURAL, sin empujar con ExtendVertical
+                    // ✅ Si no caben, pasan completas a la siguiente página (sin partirse)
+                    col.Item()
+                        .ShowEntire()
+                        .PaddingTop(10)
+                        .Element(ComposeSignaturesCompact);
                 });
         }
 
-        // ================= TABLE MATERIAS (compacta) =================
+        // ================= TABLE MATERIAS (compacta + fluye) =================
         void ComposeMateriasTableCompact(IContainer container)
         {
             container
                 .Border(1).BorderColor(BorderSoft)
                 .CornerRadius(14)
-                .Padding(10) // ✅ menos padding
+                .Padding(10)
                 .Background(Colors.White)
                 .Table(t =>
                 {
@@ -192,21 +186,21 @@ namespace TicketsAPI.Services
 
                         t.Cell()
                             .Background(bg)
-                            .PaddingVertical(8)   // ✅ menos alto por fila
+                            .PaddingVertical(7)
                             .PaddingHorizontal(6)
                             .BorderBottom(1).BorderColor(BorderSoft)
                             .Text((i + 1).ToString()).FontSize(9.6f);
 
                         t.Cell()
                             .Background(bg)
-                            .PaddingVertical(8)
+                            .PaddingVertical(7)
                             .PaddingHorizontal(6)
                             .BorderBottom(1).BorderColor(BorderSoft)
                             .Text(materia).FontSize(9.6f);
 
                         t.Cell()
                             .Background(bg)
-                            .PaddingVertical(8)
+                            .PaddingVertical(7)
                             .PaddingHorizontal(6)
                             .BorderBottom(1).BorderColor(BorderSoft)
                             .Text(profesor).FontSize(9.6f);
@@ -214,7 +208,7 @@ namespace TicketsAPI.Services
                 });
         }
 
-        // ================= SIGNATURES (compactas) =================
+        // ================= SIGNATURES (compactas, NO hoja vacía) =================
         void ComposeSignaturesCompact(IContainer container)
         {
             container.Column(col =>
@@ -225,7 +219,7 @@ namespace TicketsAPI.Services
                 {
                     row.RelativeItem().Column(c =>
                     {
-                        c.Item().Height(42); // ✅ menos alto
+                        c.Item().Height(42);
                         c.Item().LineHorizontal(1).LineColor(BorderSoft);
                         c.Item().PaddingTop(3).Text("Firma Representante").FontSize(8.6f).FontColor(TextSoft);
                     });
@@ -278,47 +272,20 @@ namespace TicketsAPI.Services
              .Height(52)
              .Border(1)
              .BorderColor(BorderSoft)
-             .CornerRadius(999) // circular
+             .CornerRadius(999)
              .AlignCenter()
              .AlignMiddle()
              .Element(inner =>
              {
                  if (_m.FotoEstudiante != null && _m.FotoEstudiante.Length > 0)
                  {
-                     inner.Image(_m.FotoEstudiante)
-                          .FitArea();
+                     inner.Image(_m.FotoEstudiante).FitArea();
                  }
                  else
                  {
-                     inner.Text("FOTO")
-                          .FontSize(8)
-                          .FontColor(TextSoft);
+                     inner.Text("FOTO").FontSize(8).FontColor(TextSoft);
                  }
              });
-        }
-
-        void FotoEstudianteBox(IContainer c)
-        {
-            c.Border(1).BorderColor(BorderSoft)
-             .CornerRadius(12)
-             .Background(Colors.White)
-             .Padding(4)
-             .AlignCenter()
-             .AlignMiddle()
-             .Element(box =>
-             {
-                 if (_m.FotoEstudiante != null && _m.FotoEstudiante.Length > 0)
-                     box.Image(_m.FotoEstudiante).FitArea();
-                 else
-                     box.Text("SIN FOTO").FontSize(9).FontColor(TextSoft);
-             });
-        }
-
-        void LogoBox(IContainer c)
-        {
-            c.Border(1).BorderColor(BorderSoft).CornerRadius(12)
-             .AlignCenter().AlignMiddle()
-             .Text("LOGO").FontSize(9).FontColor(TextSoft);
         }
 
         static void Chip(IContainer c, string text, string fg, string bg, bool solid = false)
@@ -349,7 +316,7 @@ namespace TicketsAPI.Services
             container
                 .Border(1).BorderColor(BorderSoft)
                 .CornerRadius(14)
-                .Padding(12) // ✅ más compacto
+                .Padding(12)
                 .Background(Colors.White)
                 .Column(col =>
                 {
@@ -379,13 +346,13 @@ namespace TicketsAPI.Services
             });
         }
 
+        // ✅ SIN MinHeight (quita el espacio vacío feo)
         static void InfoBox(IContainer container, string label, string value)
         {
             container
                 .Border(1).BorderColor(Colors.Grey.Lighten2)
                 .CornerRadius(12)
                 .Padding(10)
-                .MinHeight(54)
                 .Column(col =>
                 {
                     col.Spacing(3);
@@ -403,13 +370,13 @@ namespace TicketsAPI.Services
                 });
         }
 
+        // ✅ SIN MinHeight (quita el espacio vacío feo)
         static void InfoBoxOneLine(IContainer container, string label, string value)
         {
             container
                 .Border(1).BorderColor(Colors.Grey.Lighten2)
                 .CornerRadius(12)
                 .Padding(10)
-                .MinHeight(54)
                 .Column(col =>
                 {
                     col.Spacing(3);
@@ -423,8 +390,6 @@ namespace TicketsAPI.Services
                     col.Item().Text(t =>
                     {
                         t.DefaultTextStyle(x => x.FontSize(10.4f).SemiBold().FontColor(Colors.Grey.Darken4));
-
-                        // ✅ 1 línea “bonita” con ellipsis por fallback
                         var v = safe.Length > 45 ? safe.Substring(0, 45) + "…" : safe;
                         t.Span(v);
                     });
